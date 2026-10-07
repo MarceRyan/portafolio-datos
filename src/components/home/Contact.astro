@@ -1,0 +1,97 @@
+---
+import { Icon } from 'astro-icon/components';
+import TodoNote from '../ui/TodoNote.astro';
+import { buttonClasses } from '../ui/button-classes';
+import { site } from '../../data/site';
+import { socials } from '../../data/socials';
+
+// La Fase 5 completa el envío (estados, validación, antispam). Aquí solo el formulario base.
+const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT as string | undefined;
+const field =
+  'mt-2 block w-full rounded-ui border border-soft bg-surface px-4 py-3 text-base text-ink';
+const link =
+  'inline-flex min-h-11 items-center gap-3 text-lg font-medium text-ink underline underline-offset-4';
+---
+
+<section id="contacto" aria-labelledby="contacto-title" class="wrap py-20 sm:py-28">
+  <div class="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+    <div>
+      <h2 id="contacto-title" class="max-w-[18ch] text-3xl font-extrabold sm:text-4xl">
+        ¿Tu equipo necesita decidir con mejores datos?
+      </h2>
+      <ul class="mt-8 flex flex-col gap-2">
+        <li>
+          <a href={`mailto:${site.email}`} class={link}>
+            <Icon name="ph:envelope-simple" class="size-5" aria-hidden="true" />
+            {site.email}
+          </a>
+        </li>
+        {socials.map((social) => (
+          <li>
+            <a href={social.href} target="_blank" rel="noopener noreferrer" class={link}>
+              <Icon name={`ph:${social.id}-logo`} class="size-5" aria-hidden="true" />
+              {social.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <form action={endpoint} method="POST" class="flex flex-col gap-6">
+      <div>
+        <label for="nombre" class="text-sm font-semibold text-ink">
+          Nombre
+        </label>
+        <input id="nombre" name="nombre" type="text" autocomplete="name" required class={field} />
+      </div>
+      <div>
+        <label for="correo" class="text-sm font-semibold text-ink">
+          Correo
+        </label>
+        <input
+          id="correo"
+          name="email"
+          type="email"
+          autocomplete="email"
+          inputmode="email"
+          required
+          class={field}
+        />
+      </div>
+      <div>
+        <label for="mensaje" class="text-sm font-semibold text-ink">
+          Mensaje
+        </label>
+        <textarea
+          id="mensaje"
+          name="mensaje"
+          rows="5"
+          required
+          class:list={[field, 'resize-y']}
+        ></textarea>
+      </div>
+      <input
+        type="text"
+        name="_gotcha"
+        tabindex="-1"
+        autocomplete="off"
+        class="sr-only"
+        aria-hidden="true"
+      />
+      <div class="flex flex-wrap items-center gap-4">
+        <button
+          type="submit"
+          class:list={[buttonClasses('primary', 'md'), 'disabled:opacity-50']}
+          disabled={!endpoint}
+        >
+          Enviar mensaje
+        </button>
+        {!endpoint && (
+          <TodoNote>
+            TODO(marcelo): definir PUBLIC_FORMSPREE_ENDPOINT en .env (ver .env.example).
+          </TodoNote>
+        )}
+      </div>
+    </form>
+  </div>
+</section>

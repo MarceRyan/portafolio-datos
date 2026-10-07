@@ -1,27 +1,16 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import { buttonClasses, type ButtonSize, type ButtonVariant } from './button-classes';
 
 interface Props extends HTMLAttributes<'a'> {
   href: string;
-  variant?: 'primary' | 'secondary';
-  size?: 'md' | 'sm';
+  variant?: ButtonVariant;
+  size?: ButtonSize;
 }
 
 const { variant = 'primary', size = 'md', class: className, href, ...rest } = Astro.props;
-
-const base =
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-ui font-semibold ' +
-  'transition-[background-color,transform] duration-150 ease-out active:translate-y-px';
-const sizes = {
-  md: 'h-11 px-5 text-base',
-  sm: 'h-10 px-4 text-sm',
-};
-const variants = {
-  primary: 'bg-ink text-bg hover:bg-soft',
-  secondary: 'border border-soft text-ink hover:bg-surface',
-};
 ---
 
-<a href={href} class:list={[base, sizes[size], variants[variant], className]} {...rest}>
+<a href={href} class:list={[buttonClasses(variant, size), className]} {...rest}>
   <slot />
 </a>
