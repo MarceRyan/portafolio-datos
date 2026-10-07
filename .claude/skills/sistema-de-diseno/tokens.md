@@ -2,19 +2,20 @@
 
 Paleta "azul noche, cian y ámbar". Definidos en `src/styles/global.css` como variables CSS (`:root`) y expuestos a Tailwind con `@theme inline`. El tema se fija con `data-theme` en `<html>` antes del primer pintado.
 
-| Variable    | Utilidad Tailwind          | Claro     | Oscuro    | Uso                                          |
-| ----------- | -------------------------- | --------- | --------- | -------------------------------------------- |
-| `--bg`      | `bg-bg`                    | `#F3F6FB` | `#0A1222` | Fondo de página                              |
-| `--surface` | `bg-surface`               | `#FFFFFF` | `#111C33` | Superficies elevadas                         |
-| `--ink`     | `text-ink`, `bg-ink`       | `#0B1B3A` | `#E8F0FF` | Títulos, texto principal, botón primario     |
-| `--text`    | `text-body`                | `#1B2A48` | `#CFDAF0` | Párrafos                                     |
-| `--soft`    | `text-soft`, `border-soft` | `#4F607F` | `#8FA2C4` | Texto secundario, bordes de botón secundario |
-| `--line`    | `border-line`              | `#D6DEEC` | `#22324F` | Divisores decorativos                        |
-| `--clean`   | `text-clean`, `bg-clean`   | `#0B7A75` | `#2DD4BF` | Estado "dato limpio" (cian)                  |
-| `--decide`  | `text-decide`, `bg-decide` | `#B45309` | `#FFB224` | Estado "decisión" (ámbar), foco, marcas      |
-| `--raw1`    | `bg-raw-1`                 | `#9AA9C4` | `#4D5D80` | Estado "dato crudo" (gris azulado)           |
-| `--raw2`    | `bg-raw-2`                 | `#6D7E9F` | `#7587AA` | Estado "dato crudo"                          |
-| `--raw3`    | `bg-raw-3`                 | `#CCD6E8` | `#2A3957` | Estado "dato crudo", selección de texto      |
+| Variable    | Utilidad Tailwind          | Claro     | Oscuro    | Uso                                                 |
+| ----------- | -------------------------- | --------- | --------- | --------------------------------------------------- |
+| `--bg`      | `bg-bg`                    | `#F3F6FB` | `#0A1222` | Fondo de página                                     |
+| `--surface` | `bg-surface`               | `#FFFFFF` | `#111C33` | Superficies elevadas                                |
+| `--ink`     | `text-ink`, `bg-ink`       | `#0B1B3A` | `#E8F0FF` | Títulos, texto principal, botón primario            |
+| `--text`    | `text-body`                | `#1B2A48` | `#CFDAF0` | Párrafos                                            |
+| `--soft`    | `text-soft`, `border-soft` | `#4F607F` | `#8FA2C4` | Texto secundario, bordes de botón secundario        |
+| `--line`    | `border-line`              | `#D6DEEC` | `#22324F` | Divisores decorativos                               |
+| `--clean`   | `text-clean`, `bg-clean`   | `#0B7A75` | `#2DD4BF` | Estado "dato limpio" (cian)                         |
+| `--decide`  | `text-decide`, `bg-decide` | `#B45309` | `#FFB224` | Estado "decisión" (ámbar), foco, marcas             |
+| `--raw1`    | `bg-raw-1`                 | `#9AA9C4` | `#4D5D80` | Estado "dato crudo" (gris azulado)                  |
+| `--raw2`    | `bg-raw-2`                 | `#6D7E9F` | `#7587AA` | Estado "dato crudo"                                 |
+| `--raw`     | `bg-raw`                   | `#9AA9C4` | `#7587AA` | Tono representativo del crudo (leyenda, marcadores) |
+| `--raw3`    | `bg-raw-3`                 | `#CCD6E8` | `#2A3957` | Estado "dato crudo", selección de texto             |
 
 Otros: `--header-h: 4rem`, `--radius: 0.625rem` (`rounded-ui`), clase `wrap` (contenedor de 75 rem con márgenes seguros).
 
@@ -40,3 +41,8 @@ Otros: `--header-h: 4rem`, `--radius: 0.625rem` (`rounded-ui`), clase `wrap` (co
 - `raw1` y `raw3` son solo para partículas, fondos y gráficos, nunca para texto. `raw2` solo para texto grande o gráficos.
 - `line` es decorativo: no sirve como único borde de un control interactivo (usa `soft`).
 - El color nunca es el único portador de significado: etiqueta siempre los estados crudo, limpio y decisión.
+
+## Codificación de estados (validada con dataviz)
+
+- Leyenda y marcadores usan `--raw` (claro: raw1, oscuro: raw2), `--clean` y `--decide`. Con ellos la distinción en visión normal es ΔE 22.3 (claro) y 21.2 (oscuro), y con daltonismo ΔE 12.3 o más.
+- El validador marca croma bajo en el crudo (gris azulado por diseño) y contraste 2.31:1 de `raw1` en claro: se compensa con etiquetas visibles, nunca solo color.

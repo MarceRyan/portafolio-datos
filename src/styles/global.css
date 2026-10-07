@@ -30,6 +30,8 @@
   --raw1: #9aa9c4;
   --raw2: #6d7e9f;
   --raw3: #ccd6e8;
+  /* Tono representativo del dato crudo (leyenda y marcadores). */
+  --raw: var(--raw1);
 
   --header-h: 4rem;
   --radius: 0.625rem;
@@ -49,6 +51,7 @@
     --raw1: #4d5d80;
     --raw2: #7587aa;
     --raw3: #2a3957;
+    --raw: var(--raw2);
   }
 }
 
@@ -65,6 +68,7 @@
   --raw1: #4d5d80;
   --raw2: #7587aa;
   --raw3: #2a3957;
+  --raw: var(--raw2);
 }
 
 /* Los tokens se exponen a Tailwind como utilidades que siguen al tema vigente. */
@@ -77,6 +81,7 @@
   --color-line: var(--line);
   --color-clean: var(--clean);
   --color-decide: var(--decide);
+  --color-raw: var(--raw);
   --color-raw-1: var(--raw1);
   --color-raw-2: var(--raw2);
   --color-raw-3: var(--raw3);
