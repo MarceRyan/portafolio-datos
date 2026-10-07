@@ -1,0 +1,66 @@
+# Portafolio de Marcelo Morales Rimac
+
+Portafolio personal de un Analista de Datos (MINEDU, Perú). Reemplaza dos sitios antiguos de GitHub Pages. Objetivo: que un reclutador entienda en menos de 30 segundos que construyo el camino completo entre los datos crudos y la decisión de una gerencia, con resultados reales en el sector público.
+
+Concepto visual: **"De los datos a la decisión"**. Tres estados con color propio: crudo (ciruela apagado), limpio (verde), decisión (naranja).
+
+## Stack
+
+Astro 7 (salida 100% estática), TypeScript estricto, Tailwind CSS v4 (plugin de Vite), MDX + Content Collections con zod, astro-icon (Iconify), Formspree para el formulario, Vercel Analytics y Speed Insights. Calidad: Prettier, ESLint, `astro check`, GitHub Actions.
+
+## Comandos
+
+| Comando                | Qué hace                                                                                          |
+| ---------------------- | ------------------------------------------------------------------------------------------------- |
+| `npm run dev`          | Servidor de desarrollo (`astro dev --background` para segundo plano; `astro dev stop` lo detiene) |
+| `npm run build`        | Compila a `dist/`                                                                                 |
+| `npm run preview`      | Sirve el build                                                                                    |
+| `npm run check`        | `astro check` (tipos y plantillas)                                                                |
+| `npm run lint`         | ESLint                                                                                            |
+| `npm run format`       | Prettier (escribe)                                                                                |
+| `npm run format:check` | Prettier (solo verifica)                                                                          |
+
+## Estructura
+
+- `src/pages/` rutas. `src/layouts/` BaseLayout y CasoLayout. `src/components/{layout,home,casos,ui}/`.
+- `src/data/` contenido estructurado (site, socials, nav, y luego experience, tools, certifications, now).
+- `src/content/casos/*.mdx` casos de estudio, validados por `src/content.config.ts`.
+- `src/i18n/` diccionario y utilidades. Solo español por ahora; la estructura admite inglés.
+- `src/scripts/` TypeScript del navegador (theme, decision-engine, count-up).
+- `src/styles/global.css` tokens, fuentes y capa base.
+- `.claude/skills/` skills del proyecto.
+
+## Reglas de diseño
+
+- Los colores salen de los tokens (`bg-bg`, `bg-surface`, `text-ink`, `text-body`, `text-soft`, `border-line`, `clean`, `decide`, `raw-1..3`). Nunca hex sueltos en componentes. Detalle en `.claude/skills/sistema-de-diseno/`.
+- Un solo radio (`rounded-ui`, 10 px). Tipografías: Schibsted Grotesk (títulos), Instrument Sans (texto), Caveat solo como firma provisional. Números con `tabular-nums`.
+- **En modo claro `--clean` y `--decide` solo dan 3.89:1.** Úsalos en gráficos, foco y texto grande (24 px o 18.66 px en negrita), nunca en texto pequeño.
+- Todo movimiento respeta `prefers-reduced-motion` (estado final estático).
+- **Reglas anti-IA, obligatorias:** nada de degradados morados decorativos, efecto vidrio en tarjetas, emojis como viñetas, etiquetas en MAYÚSCULAS sobre cada título, flechas "→" en botones, tarjetas idénticas en cuadrícula, barras de porcentaje de habilidades ni animaciones de aparición en cada sección. Nada de frases genéricas ("apasionado por la tecnología", "transformo datos en insights"). El caso principal es más grande que los demás.
+- Sin rayas largas (em dash) en textos visibles; usa coma, punto o guion corto.
+
+## Reglas de contenido
+
+- **No inventar métricas, fechas, logros ni experiencias.** Si falta un dato, dejar `TODO(marcelo): ...` visible y anotarlo en la lista de pendientes de la fase.
+- Casos con `confidential: true` muestran el aviso de anonimización y no exponen datos reales.
+- Los textos oficiales (hero, etapas, casos, experiencia) están en el prompt original del proyecto; no parafrasear.
+
+## Flujo de ramas
+
+Una rama por fase: `feature/fase-N-nombre`. Commits pequeños en español. **Nunca hacer push a `main` sin aprobación de Marcelo.** Cada fase termina con resumen, skills usadas, comandos de prueba y lista de TODO(marcelo), y espera su "OK".
+
+## Skills de diseño instaladas: cuál usar
+
+| Tarea                                                 | Skill                                        |
+| ----------------------------------------------------- | -------------------------------------------- |
+| Dirección visual, tokens, layout de páginas           | `design-taste-frontend`                      |
+| Componentes de UI, microinteracciones, animación      | `emil-design-eng`                            |
+| Cualquier dato: color de estados, diagramas, métricas | `dataviz`                                    |
+| Crítica al cerrar cada fase; auditoría final          | `impeccable`                                 |
+| Rediseño posterior al lanzamiento                     | `redesign-existing-projects` (no usar antes) |
+
+Prioridad ante conflicto: 1) el prompt del proyecto (concepto, paleta, tipografías, contenido, reglas anti-IA, no inventar métricas); 2) las skills mandan en la ejecución; 3) si una skill propone cambiar la identidad, se propone a Marcelo y se espera su decisión.
+
+## Skills del proyecto
+
+`sistema-de-diseno` (Fase 1). Pendientes: `agregar-caso`, `redactar-caso`, `actualizar-experiencia`, `traducir`, `revisar-y-publicar` (Fase 4).
