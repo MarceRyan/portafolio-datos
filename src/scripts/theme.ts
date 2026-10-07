@@ -62,3 +62,5 @@ systemQuery.addEventListener('change', (event) => {
 });
 
 bind();
+
+export {};
