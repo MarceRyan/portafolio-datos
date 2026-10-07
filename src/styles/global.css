@@ -12,24 +12,24 @@
 @import '@fontsource/caveat/latin-600.css';
 
 /*
- * Tokens de "De los datos a la decisión".
- * Tres estados con color propio: crudo (raw), limpio (clean), decisión (decide).
+ * Tokens de "De los datos a la decisión" (azul noche, cian y ámbar).
+ * Tres estados con color propio: crudo (gris azulado), limpio (cian), decisión (ámbar).
  * El script inline de BaseLayout fija siempre `data-theme`; el bloque con
  * `prefers-color-scheme` solo cubre el caso sin JavaScript.
  */
 :root {
   color-scheme: light;
-  --bg: #f7f2f5;
+  --bg: #f3f6fb;
   --surface: #ffffff;
-  --ink: #3a1d42;
-  --text: #3d2a41;
-  --soft: #75627a;
-  --line: #e6dae3;
-  --clean: #1f8a63;
-  --decide: #c65a12;
-  --raw1: #b79bc0;
-  --raw2: #8e7a93;
-  --raw3: #d8c3dd;
+  --ink: #0b1b3a;
+  --text: #1b2a48;
+  --soft: #4f607f;
+  --line: #d6deec;
+  --clean: #0b7a75;
+  --decide: #b45309;
+  --raw1: #9aa9c4;
+  --raw2: #6d7e9f;
+  --raw3: #ccd6e8;
 
   --header-h: 4rem;
   --radius: 0.625rem;
@@ -38,33 +38,33 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     color-scheme: dark;
-    --bg: #1f1024;
-    --surface: #2a1731;
-    --ink: #f4e9f5;
-    --text: #e4d5e6;
-    --soft: #b49db8;
-    --line: #3d2645;
-    --clean: #8fe0bc;
-    --decide: #ffb27a;
-    --raw1: #6e5576;
-    --raw2: #9c83a3;
-    --raw3: #4e3656;
+    --bg: #0a1222;
+    --surface: #111c33;
+    --ink: #e8f0ff;
+    --text: #cfdaf0;
+    --soft: #8fa2c4;
+    --line: #22324f;
+    --clean: #2dd4bf;
+    --decide: #ffb224;
+    --raw1: #4d5d80;
+    --raw2: #7587aa;
+    --raw3: #2a3957;
   }
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #1f1024;
-  --surface: #2a1731;
-  --ink: #f4e9f5;
-  --text: #e4d5e6;
-  --soft: #b49db8;
-  --line: #3d2645;
-  --clean: #8fe0bc;
-  --decide: #ffb27a;
-  --raw1: #6e5576;
-  --raw2: #9c83a3;
-  --raw3: #4e3656;
+  --bg: #0a1222;
+  --surface: #111c33;
+  --ink: #e8f0ff;
+  --text: #cfdaf0;
+  --soft: #8fa2c4;
+  --line: #22324f;
+  --clean: #2dd4bf;
+  --decide: #ffb224;
+  --raw1: #4d5d80;
+  --raw2: #7587aa;
+  --raw3: #2a3957;
 }
 
 /* Los tokens se exponen a Tailwind como utilidades que siguen al tema vigente. */

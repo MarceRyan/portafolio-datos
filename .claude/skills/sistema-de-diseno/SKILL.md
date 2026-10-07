@@ -5,7 +5,7 @@ description: Sistema de diseño del portafolio de Marcelo Morales (tokens, tipog
 
 # Sistema de diseño
 
-Concepto: "De los datos a la decisión". Crudo (ciruela apagado) → limpio (verde) → decisión (naranja).
+Concepto: "De los datos a la decisión". Crudo (gris azulado) → limpio (cian) → decisión (ámbar).
 
 ## Qué skill instalada usar
 

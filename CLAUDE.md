@@ -2,7 +2,7 @@
 
 Portafolio personal de un Analista de Datos (MINEDU, Perú). Reemplaza dos sitios antiguos de GitHub Pages. Objetivo: que un reclutador entienda en menos de 30 segundos que construyo el camino completo entre los datos crudos y la decisión de una gerencia, con resultados reales en el sector público.
 
-Concepto visual: **"De los datos a la decisión"**. Tres estados con color propio: crudo (ciruela apagado), limpio (verde), decisión (naranja).
+Concepto visual: **"De los datos a la decisión"**. Paleta azul noche, cian y ámbar. Tres estados con color propio: crudo (gris azulado), limpio (cian), decisión (ámbar).
 
 ## Stack
 
@@ -34,7 +34,7 @@ Astro 7 (salida 100% estática), TypeScript estricto, Tailwind CSS v4 (plugin de
 
 - Los colores salen de los tokens (`bg-bg`, `bg-surface`, `text-ink`, `text-body`, `text-soft`, `border-line`, `clean`, `decide`, `raw-1..3`). Nunca hex sueltos en componentes. Detalle en `.claude/skills/sistema-de-diseno/`.
 - Un solo radio (`rounded-ui`, 10 px). Tipografías: Schibsted Grotesk (títulos), Instrument Sans (texto), Caveat solo como firma provisional. Números con `tabular-nums`.
-- **En modo claro `--clean` y `--decide` solo dan 3.89:1.** Úsalos en gráficos, foco y texto grande (24 px o 18.66 px en negrita), nunca en texto pequeño.
+- `clean` y `decide` pasan 4.5:1 en ambos temas; `raw1` y `raw3` no sirven para texto. Detalle en `tokens.md`.
 - Todo movimiento respeta `prefers-reduced-motion` (estado final estático).
 - **Reglas anti-IA, obligatorias:** nada de degradados morados decorativos, efecto vidrio en tarjetas, emojis como viñetas, etiquetas en MAYÚSCULAS sobre cada título, flechas "→" en botones, tarjetas idénticas en cuadrícula, barras de porcentaje de habilidades ni animaciones de aparición en cada sección. Nada de frases genéricas ("apasionado por la tecnología", "transformo datos en insights"). El caso principal es más grande que los demás.
 - Sin rayas largas (em dash) en textos visibles; usa coma, punto o guion corto.
