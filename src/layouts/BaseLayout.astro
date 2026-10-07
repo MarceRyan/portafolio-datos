@@ -1,0 +1,63 @@
+---
+import '../styles/global.css';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { site } from '../data/site';
+import { useTranslations } from '../i18n/utils';
+// Precarga de las dos fuentes que pintan el primer fragmento visible (evita CLS).
+import displayFont from '@fontsource/schibsted-grotesk/files/schibsted-grotesk-latin-800-normal.woff2?url';
+import bodyFont from '@fontsource/instrument-sans/files/instrument-sans-latin-400-normal.woff2?url';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = site.description } = Astro.props;
+const pageTitle = title ? `${title} | ${site.name}` : site.defaultTitle;
+const t = useTranslations('es');
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#f7f2f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1f1024" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
+    <!-- Fija el tema antes del primer pintado para evitar el parpadeo. -->
+    <script is:inline>
+      (() => {
+        let theme = null;
+        try {
+          theme = localStorage.getItem('theme');
+        } catch {
+          // Almacenamiento bloqueado: se usa la preferencia del sistema.
+        }
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <a
+      href="#contenido"
+      class="fixed left-4 top-4 z-50 -translate-y-24 rounded-ui bg-ink px-4 py-3 text-sm font-semibold text-bg focus:translate-y-0"
+    >
+      {t('a11y.skip')}
+    </a>
+    <Header />
+    <main id="contenido" class="pt-[var(--header-h)]">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

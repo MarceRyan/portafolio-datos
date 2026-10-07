@@ -1,0 +1,34 @@
+---
+import { Icon } from 'astro-icon/components';
+import { useTranslations } from '../../i18n/utils';
+
+const t = useTranslations('es');
+---
+
+<button
+  type="button"
+  data-theme-toggle
+  aria-pressed="false"
+  aria-label={t('theme.toggle')}
+  class="theme-toggle inline-flex size-11 items-center justify-center rounded-ui text-ink transition-[background-color,transform] duration-150 ease-out hover:bg-surface active:translate-y-px"
+>
+  <Icon name="ph:moon" class="icon-moon size-5" aria-hidden="true" />
+  <Icon name="ph:sun" class="icon-sun size-5" aria-hidden="true" />
+</button>
+
+<style>
+  /* Se muestra el icono de la acción disponible: luna en claro, sol en oscuro. */
+  .icon-sun {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .icon-moon {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .icon-sun {
+    display: block;
+  }
+</style>
+
+<script>
+  import '../../scripts/theme';
+</script>

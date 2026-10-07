@@ -1,0 +1,48 @@
+---
+import { site } from '../../data/site';
+import { socials } from '../../data/socials';
+import { useTranslations } from '../../i18n/utils';
+
+const t = useTranslations('es');
+// El año se renderiza al compilar y un script lo corrige en el navegador,
+// así el pie no queda desactualizado entre despliegues.
+const buildYear = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-line">
+  <div class="wrap flex flex-col gap-8 py-10 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <!-- TODO(marcelo): reemplazar por la firma escaneada en SVG (src/assets/). -->
+      <p class="font-script text-4xl leading-none text-ink">{t('footer.signature')}</p>
+      <p class="mt-3 text-sm text-soft">{t('footer.location')}</p>
+    </div>
+
+    <div class="flex flex-col gap-3 sm:items-end">
+      <ul class="flex gap-6">
+        {socials.map((social) => (
+          <li>
+            <a
+              href={social.href}
+              rel="noopener noreferrer"
+              class="text-sm font-medium text-body underline underline-offset-4 hover:text-ink"
+            >
+              {social.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="text-sm text-soft">
+        &copy;{' '}
+        <span data-year class="tabular-nums">
+          {buildYear}
+        </span>{' '}
+        {site.fullName}
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const year = document.querySelector('[data-year]');
+  if (year) year.textContent = String(new Date().getFullYear());
+</script>

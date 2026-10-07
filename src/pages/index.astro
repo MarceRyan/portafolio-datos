@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// TODO(marcelo): página temporal de la Fase 1. La Fase 2 la reemplaza por la página principal.
+const states = [
+  { name: 'Dato crudo', tokens: ['bg-raw-1', 'bg-raw-2', 'bg-raw-3'], note: 'Ciruela apagado' },
+  { name: 'Dato limpio', tokens: ['bg-clean'], note: 'Verde' },
+  { name: 'Decisión', tokens: ['bg-decide'], note: 'Naranja' },
+];
+---
+
+<BaseLayout title="Fundación">
+  <section class="wrap py-16 sm:py-24">
+    <h1 class="max-w-3xl font-display text-5xl font-black sm:text-6xl">Marcelo Morales Rimac</h1>
+    <p class="mt-6 max-w-[60ch] text-lg text-body">
+      Base del sitio lista: tokens, tipografía y tema. Esta página solo sirve para verificarlos.
+    </p>
+
+    <ul class="mt-14 grid gap-10 sm:grid-cols-3">
+      {states.map((state) => (
+        <li>
+          <div class="flex h-20 overflow-hidden rounded-ui border border-line">
+            {state.tokens.map((token) => (
+              <div class:list={['flex-1', token]} />
+            ))}
+          </div>
+          <p class="mt-3 font-display text-xl font-bold text-ink">{state.name}</p>
+          <p class="text-sm text-soft">{state.note}</p>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-16 grid gap-8 sm:grid-cols-2">
+      <div>
+        <p class="font-display text-3xl font-extrabold text-ink">Schibsted Grotesk</p>
+        <p class="mt-2 text-soft">Títulos en 500, 700, 800 y 900.</p>
+      </div>
+      <div>
+        <p class="text-3xl font-medium text-ink">Instrument Sans</p>
+        <p class="mt-2 text-soft">
+          Texto en 400, 500 y 600. Números tabulares: <span class="tabular-nums">32.42%</span>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

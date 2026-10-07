@@ -1,0 +1,134 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '../ui/Button.astro';
+import ThemeToggle from '../ui/ThemeToggle.astro';
+import { nav } from '../../data/nav';
+import { site } from '../../data/site';
+import { useTranslations } from '../../i18n/utils';
+
+const t = useTranslations('es');
+const { pathname } = Astro.url;
+
+const items = nav.map((item) => ({
+  ...item,
+  current: item.matchPrefix ? pathname.startsWith(item.matchPrefix) : false,
+}));
+---
+
+<header
+  class="fixed inset-x-0 top-0 z-40 border-b border-line bg-bg"
+  style="height: var(--header-h)"
+>
+  <div class="wrap flex h-full items-center justify-between gap-6">
+    <a href="/" class="font-display text-lg font-extrabold tracking-tight text-ink">
+      {site.name}
+    </a>
+
+    <nav aria-label={t('nav.primary')} class="hidden lg:block">
+      <ul class="flex items-center gap-8">
+        {items.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={item.current ? 'page' : undefined}
+              class="text-[0.95rem] font-medium text-body underline-offset-8 transition-colors duration-150 hover:text-ink hover:underline aria-[current=page]:text-ink aria-[current=page]:underline"
+            >
+              {t(item.label)}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-1">
+      <ThemeToggle />
+      <Button href={site.cvPath} size="sm" class="ml-2 hidden lg:inline-flex" download>
+        <Icon name="ph:download-simple" class="size-4" aria-hidden="true" />
+        {t('nav.cv')}
+      </Button>
+      <button
+        type="button"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label={t('nav.menuOpen')}
+        data-label-open={t('nav.menuOpen')}
+        data-label-close={t('nav.menuClose')}
+        class="menu-toggle inline-flex size-11 items-center justify-center rounded-ui text-ink transition-[background-color,transform] duration-150 ease-out hover:bg-surface active:translate-y-px lg:hidden"
+      >
+        <Icon name="ph:list" class="icon-open size-6" aria-hidden="true" />
+        <Icon name="ph:x" class="icon-close size-6" aria-hidden="true" />
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-nav" hidden class="border-b border-line bg-bg lg:hidden">
+    <nav aria-label={t('nav.primary')} class="wrap py-4">
+      <ul class="flex flex-col">
+        {items.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={item.current ? 'page' : undefined}
+              class="flex min-h-12 items-center text-lg font-medium text-body aria-[current=page]:text-ink aria-[current=page]:underline"
+            >
+              {t(item.label)}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <Button href={site.cvPath} class="mt-3 w-full" download>
+        <Icon name="ph:download-simple" class="size-5" aria-hidden="true" />
+        {t('nav.cv')}
+      </Button>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .icon-close {
+    display: none;
+  }
+  .menu-toggle[aria-expanded='true'] .icon-open {
+    display: none;
+  }
+  .menu-toggle[aria-expanded='true'] .icon-close {
+    display: block;
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const panel = document.getElementById('mobile-nav');
+  const labels = {
+    open: toggle?.dataset.labelOpen ?? '',
+    close: toggle?.dataset.labelClose ?? '',
+  };
+
+  function setOpen(open: boolean): void {
+    if (!toggle || !panel) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? labels.close : labels.open);
+    panel.hidden = !open;
+  }
+
+  toggle?.addEventListener('click', () => {
+    setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  panel?.addEventListener('click', (event) => {
+    if ((event.target as HTMLElement).closest('a')) setOpen(false);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+
+  // Al ensanchar la ventana el menú móvil deja de tener sentido.
+  matchMedia('(min-width: 1024px)').addEventListener('change', (event) => {
+    if (event.matches) setOpen(false);
+  });
+</script>
