@@ -1,0 +1,84 @@
+---
+import { Icon } from 'astro-icon/components';
+import { community } from '../../data/community';
+
+interface Props {
+  /** `h1` no aplica aquí; en la portada y en /sobre-mi la sección usa h2. */
+  id?: string;
+}
+
+const { id = 'comunidad' } = Astro.props;
+---
+
+<section {id} aria-labelledby={`${id}-title`} class="wrap py-20 sm:py-28">
+  <h2 id={`${id}-title`} class="text-3xl font-extrabold sm:text-4xl">
+    Voluntariado
+  </h2>
+
+  <div class="mt-10 grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+    <div>
+      <p class="font-display text-2xl leading-snug font-bold text-ink sm:text-3xl">
+        {community.role} en {community.organization}, desde {community.since}.
+      </p>
+      <p class="mt-5 max-w-[56ch] text-lg text-body">{community.summary}</p>
+    </div>
+
+    <div>
+      <h3 class="text-lg font-bold">Talleres que moderé</h3>
+      <div class="community-line relative mt-5" data-community-line>
+        <span
+          aria-hidden="true"
+          class="community-line__rail absolute top-3 bottom-3 left-[1.375rem] w-px bg-clean"
+        ></span>
+        <ol class="flex flex-col gap-3">
+          {community.workshops.map((workshop, index) => (
+            <li
+              class="community-line__item relative flex items-center gap-4 rounded-ui border border-line bg-surface py-3 pr-4 pl-3 text-ink"
+              style={`--i:${index}`}
+            >
+              <span
+                aria-hidden="true"
+                class="relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full bg-clean text-bg"
+              >
+                <Icon name="ph:chalkboard-teacher-fill" class="size-4" />
+              </span>
+              {workshop}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Estado final por defecto: sin JavaScript todo se ve. El script "arma" la lista
+     antes de entrar en pantalla y la dispara una sola vez. */
+  .community-line[data-armed] .community-line__rail {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  .community-line[data-armed] .community-line__item {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  .community-line[data-in] .community-line__rail {
+    transform: scaleY(1);
+    transition: transform 900ms cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  .community-line[data-in] .community-line__item {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 360ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--i) * 140ms),
+      transform 360ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--i) * 140ms),
+      border-color 150ms ease;
+  }
+  .community-line__item:hover {
+    border-color: var(--clean);
+  }
+</style>
+
+<script>
+  import '../../scripts/community-line';
+</script>
