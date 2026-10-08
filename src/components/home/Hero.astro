@@ -3,7 +3,7 @@ import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import Button from '../ui/Button.astro';
-import TodoNote from '../ui/TodoNote.astro';
+import Placeholder from '../ui/Placeholder.astro';
 import { socials } from '../../data/socials';
 
 // Si existe src/assets/photo/perfil.(jpg|png|webp|avif) se usa; si no, silueta + TODO.
@@ -76,9 +76,12 @@ const corner = 'absolute size-6 border-decide';
           />
         ) : (
           <div class="flex size-full flex-col items-center justify-between">
-            <TodoNote class="m-4 bg-bg text-center text-xs">
-              TODO(marcelo): foto profesional vertical 4:5 en src/assets/photo/perfil.jpg
-            </TodoNote>
+            <Placeholder
+              class="m-4 bg-bg text-center"
+              todo="TODO(marcelo): foto profesional vertical 4:5 en src/assets/photo/perfil.jpg"
+            >
+              Foto profesional
+            </Placeholder>
             <svg
               viewBox="0 0 160 200"
               class="w-3/4 text-raw-2"

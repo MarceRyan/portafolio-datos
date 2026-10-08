@@ -1,0 +1,16 @@
+---
+// Marcador neutro para contenido que aún no está. El texto visible es normal;
+// el pendiente real vive en `todo` y se busca con: grep -rn "TODO(marcelo)" src
+interface Props {
+  class?: string;
+  todo: string;
+}
+const { class: className, todo } = Astro.props;
+---
+
+<p
+  data-todo={todo}
+  class:list={['rounded-ui border border-dashed border-soft px-3 py-2 text-sm text-ink', className]}
+>
+  <slot />
+</p>

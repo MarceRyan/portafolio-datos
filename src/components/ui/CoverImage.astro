@@ -48,8 +48,11 @@ const cover = match?.[1].default;
     ]}
   >
     <Icon name="ph:image-fill" class="size-8" aria-hidden="true" />
-    <p class="max-w-[28ch] text-xs text-ink">
-      TODO(marcelo): captura del tablero en src/assets/images/casos/{slug}.png
+    <p
+      data-todo={`TODO(marcelo): captura en src/assets/images/casos/${slug}.png`}
+      class="max-w-[28ch] text-sm text-ink"
+    >
+      Captura del tablero
     </p>
   </div>
 )}

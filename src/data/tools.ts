@@ -82,10 +82,25 @@ export const tools: readonly Tool[] = [
     icon: 'simple-icons:googleforms',
     context: 'Registro diario de asistencia',
   },
-  // TODO(marcelo): indicar dónde trabajé con archivos de texto y CSV, JSON y páginas web.
-  { stage: 'fuentes', name: 'Texto y CSV', icon: 'ph:file-csv-fill' },
-  { stage: 'fuentes', name: 'JSON', icon: 'simple-icons:json' },
-  { stage: 'fuentes', name: 'Páginas web', icon: 'ph:globe-fill' },
+  // TODO(marcelo): confirmar o ajustar las descripciones de abajo con tus casos reales.
+  {
+    stage: 'fuentes',
+    name: 'Texto y CSV',
+    icon: 'ph:file-csv-fill',
+    context: 'Archivos planos que se leen por columnas y se validan antes de cargarlos',
+  },
+  {
+    stage: 'fuentes',
+    name: 'JSON',
+    icon: 'simple-icons:json',
+    context: 'Datos anidados de aplicaciones y servicios que se aplanan en tablas',
+  },
+  {
+    stage: 'fuentes',
+    name: 'Páginas web',
+    icon: 'ph:globe-fill',
+    context: 'Información publicada en portales que se extrae de forma automática',
+  },
   {
     stage: 'extraccion',
     name: 'Python',
@@ -128,10 +143,24 @@ export const tools: readonly Tool[] = [
     icon: 'simple-icons:microsoftsqlserver',
     context: 'Destino de migraciones automatizadas',
   },
-  // TODO(marcelo): indicar dónde apliqué PostgreSQL, Snowflake y el modelado dimensional.
-  { stage: 'modelado', name: 'PostgreSQL', icon: 'simple-icons:postgresql' },
-  { stage: 'modelado', name: 'Snowflake', icon: 'simple-icons:snowflake' },
-  { stage: 'modelado', name: 'Modelado dimensional', monogram: 'MD' },
+  {
+    stage: 'modelado',
+    name: 'PostgreSQL',
+    icon: 'simple-icons:postgresql',
+    context: 'Base de datos relacional de código abierto para guardar y consultar tablas',
+  },
+  {
+    stage: 'modelado',
+    name: 'Snowflake',
+    icon: 'simple-icons:snowflake',
+    context: 'Almacén de datos en la nube que separa el almacenamiento del cómputo',
+  },
+  {
+    stage: 'modelado',
+    name: 'Modelado dimensional',
+    monogram: 'MD',
+    context: 'Organiza los datos en hechos y dimensiones para responder preguntas de negocio',
+  },
   {
     stage: 'decision',
     name: 'Power BI y DAX',

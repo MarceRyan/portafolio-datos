@@ -31,7 +31,7 @@ const columns = stages.map((stage) => ({
 
     <p class="mt-4 max-w-[62ch] text-lg text-body">
       Cinco etapas separan un archivo suelto de una decisión. En cada una uso herramientas
-      distintas: pasa el cursor sobre una para ver dónde la apliqué.
+      distintas: pasa el cursor sobre una para ver qué hace en el flujo.
     </p>
 
     <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-body" aria-label="Leyenda">
@@ -83,7 +83,7 @@ const columns = stages.map((stage) => ({
                   {tool.name}
                 </button>
                 <span id={tool.id} role="tooltip" class="tool-tip">
-                  {tool.context ?? 'TODO(marcelo): indicar dónde apliqué esta herramienta.'}
+                  {tool.context}
                 </span>
               </li>
             ))}

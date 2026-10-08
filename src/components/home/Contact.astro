@@ -1,6 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
-import TodoNote from '../ui/TodoNote.astro';
+import Placeholder from '../ui/Placeholder.astro';
 import { buttonClasses } from '../ui/button-classes';
 import { site } from '../../data/site';
 import { socials } from '../../data/socials';
@@ -87,9 +87,13 @@ const link =
           Enviar mensaje
         </button>
         {!endpoint && (
-          <TodoNote>
-            TODO(marcelo): definir PUBLIC_FORMSPREE_ENDPOINT en .env (ver .env.example).
-          </TodoNote>
+          <Placeholder todo="TODO(marcelo): definir PUBLIC_FORMSPREE_ENDPOINT en .env (ver .env.example).">
+            El formulario se activa pronto. Mientras tanto, escríbeme a{' '}
+            <a href={`mailto:${site.email}`} class="font-semibold underline underline-offset-4">
+              {site.email}
+            </a>
+            .
+          </Placeholder>
         )}
       </div>
     </form>
