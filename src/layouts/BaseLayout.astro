@@ -3,7 +3,10 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 import { site } from '../data/site';
+import { socials } from '../data/socials';
 import { useTranslations } from '../i18n/utils';
 // Precarga de las dos fuentes que pintan el primer fragmento visible (evita CLS).
 import displayFont from '@fontsource/schibsted-grotesk/files/schibsted-grotesk-latin-800-normal.woff2?url';
@@ -14,11 +17,33 @@ interface Props {
   description?: string;
   /** Páginas temporales o de trabajo: se excluyen de los buscadores. */
   noindex?: boolean;
+  /** Imagen para redes (ruta en public/). */
+  image?: string;
+  /** Solo la portada declara a la persona en datos estructurados. */
+  person?: boolean;
 }
 
-const { title, description = site.description, noindex = false } = Astro.props;
+const {
+  title,
+  description = site.description,
+  noindex = false,
+  image = '/og/default.png',
+  person = false,
+} = Astro.props;
 const pageTitle = title ? `${title} | ${site.name}` : site.defaultTitle;
 const t = useTranslations('es');
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = new URL(image, Astro.site);
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.fullName,
+  jobTitle: site.role,
+  url: new URL('/', Astro.site).href,
+  email: `mailto:${site.email}`,
+  address: { '@type': 'PostalAddress', addressLocality: 'Lima', addressCountry: 'PE' },
+  sameAs: socials.map((social) => social.href),
+};
 ---
 
 <!doctype html>
@@ -28,7 +53,23 @@ const t = useTranslations('es');
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.href} />
     <meta name="generator" content={Astro.generator} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="es_PE" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={imageUrl.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.fullName}, ${site.role}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl.href} />
+    {person && <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />}
     <ClientRouter />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
@@ -64,5 +105,7 @@ const t = useTranslations('es');
       <slot />
     </main>
     <Footer />
+    <Analytics />
+    <SpeedInsights />
   </body>
 </html>

@@ -5,10 +5,17 @@ import icon from 'astro-icon';
 
 import mdx from '@astrojs/mdx';
 
+import sitemap from '@astrojs/sitemap';
+
 // https://astro.build/config
 export default defineConfig({
-  // TODO(marcelo): definir `site` con el dominio final de Vercel (Fase 6).
-  // Lo necesitan el sitemap y las URL canónicas (Fase 5).
+  // Dominio público: SITE_URL (definido por ti) o el dominio de producción que Vercel inyecta.
+  // TODO(marcelo): definir SITE_URL en Vercel si usas un dominio propio. Lo usan sitemap, canonical y Open Graph.
+  site:
+    process.env.SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : 'http://localhost:4321'),
   output: 'static',
   // /cv lleva al PDF del CV (public/cv/Marcelo-Morales-CV.pdf).
   redirects: { '/cv': '/cv/Marcelo-Morales-CV.pdf' },
@@ -20,5 +27,5 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [icon({ iconDir: 'src/assets/icons' }), mdx()],
+  integrations: [icon({ iconDir: 'src/assets/icons' }), mdx(), sitemap()],
 });
