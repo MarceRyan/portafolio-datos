@@ -1,0 +1,51 @@
+---
+title: Extracción automatizada de avances docentes
+slug: extraccion-avances-docentes
+question: '¿Cómo saber el avance de cada docente sin descargar reportes a mano?'
+summary: Web scraping del campus virtual del SIFODS y migración a SQL Server con Python, reduciendo procesos manuales.
+category: ingenieria
+stack: [Selenium, Python, SQL Server]
+organization: MINEDU, programa Educación Básica para Todos
+role: Analista de Datos
+confidential: true
+featured: true
+order: 2
+---
+
+import Flow from '../../components/casos/Flow.astro';
+
+## Contexto
+
+El campus virtual del SIFODS concentra las notas y los avances de los docentes.
+
+## Problema
+
+Para conocer el avance de cada docente había que descargar reportes a mano.
+
+## Datos
+
+Notas y avances de docentes publicados en el campus virtual del SIFODS.
+
+## Arquitectura
+
+<Flow
+  caption="Del campus virtual a una base de datos consultable, sin descargas manuales."
+  rows={[
+    {
+      columns: [
+        [{ label: 'Campus virtual del SIFODS', state: 'raw' }],
+        [{ label: 'Scraping automatizado', tool: 'Selenium', state: 'raw' }],
+        [{ label: 'Migración de los datos', tool: 'Python', state: 'clean' }],
+        [{ label: 'Base de datos', tool: 'SQL Server', state: 'clean' }],
+      ],
+    },
+  ]}
+/>
+
+## Solución
+
+Web scraping con Selenium del campus virtual del SIFODS y migración a SQL Server con Python.
+
+## Resultados
+
+Menos procesos manuales para obtener el avance de cada docente.

@@ -21,3 +21,14 @@ export const toolRef = {
   java: { name: 'Java', icon: 'simple-icons:openjdk' },
   mysql: { name: 'MySQL', icon: 'simple-icons:mysql' },
 } as const satisfies Record<string, ToolRef>;
+
+const byName = new Map<string, ToolRef>(Object.values(toolRef).map((tool) => [tool.name, tool]));
+
+/** Resuelve nombres del frontmatter a herramientas; los desconocidos usan un monograma. */
+export function resolveTool(name: string): ToolRef {
+  return byName.get(name) ?? { name, monogram: name.slice(0, 3).toUpperCase() };
+}
+
+export function resolveTools(names: readonly string[]): ToolRef[] {
+  return names.map(resolveTool);
+}

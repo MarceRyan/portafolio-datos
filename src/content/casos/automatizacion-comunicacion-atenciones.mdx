@@ -1,0 +1,56 @@
+---
+title: Automatización de la comunicación y registro de atenciones
+slug: automatizacion-comunicacion-atenciones
+question: '¿Cómo comunicarse con muchos docentes y registrar cada atención de forma ordenada?'
+summary: Envío masivo de correos con Power Automate, más un sistema de gestión de llamadas y formularios de asistencia en Apps Script.
+category: automatizacion
+stack: [Power Automate, Apps Script, Formularios]
+organization: MINEDU, programa Educación Básica para Todos
+role: Analista de Datos
+confidential: true
+featured: false
+order: 5
+---
+
+import Flow from '../../components/casos/Flow.astro';
+
+## Contexto
+
+Parte de mi trabajo en el MINEDU es la comunicación con los docentes y el registro de las atenciones.
+
+## Problema
+
+Comunicarse con muchos docentes a la vez y dejar registrada cada llamada y cada asistencia, sin depender de procesos manuales.
+
+## Arquitectura
+
+<Flow
+  caption="Tres automatizaciones independientes: comunicación, llamadas y asistencia."
+  rows={[
+    {
+      label: 'Comunicación',
+      columns: [
+        [{ label: 'Envío masivo de correos', tool: 'Power Automate', state: 'clean' }],
+        [{ label: 'Docentes', state: 'decide' }],
+      ],
+    },
+    {
+      label: 'Llamadas',
+      columns: [
+        [{ label: 'Sistema de gestión de llamadas', tool: 'Apps Script', state: 'clean' }],
+        [{ label: 'Registro de atenciones', state: 'decide' }],
+      ],
+    },
+    {
+      label: 'Asistencia',
+      columns: [
+        [{ label: 'Formularios de asistencia', tool: 'Apps Script', state: 'raw' }],
+        [{ label: 'Registro diario', state: 'decide' }],
+      ],
+    },
+  ]}
+/>
+
+## Solución
+
+Envío masivo de correos con Power Automate y apoyo en un sistema de gestión de llamadas y en formularios de asistencia desarrollados en Apps Script.
