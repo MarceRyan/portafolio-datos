@@ -98,9 +98,6 @@ function init(canvas: HTMLCanvasElement): (() => void) | null {
   const desktop = matchMedia('(min-width: 768px)');
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
-  const toggle = document.querySelector<HTMLButtonElement>('[data-engine-toggle]');
-  // null = seguir la preferencia del sistema; true/false = decisión explícita de quien visita.
-  let userPlay: boolean | null = null;
   let palette = readPalette();
   let width = 0;
   let height = 0;
@@ -210,7 +207,7 @@ function init(canvas: HTMLCanvasElement): (() => void) | null {
     drawGrid();
     drawGates();
     particles.forEach(drawParticle);
-    drawNode(now, shouldRun());
+    drawNode(now, !reduceMotion.matches);
   }
 
   function step(now: number): void {
@@ -229,24 +226,7 @@ function init(canvas: HTMLCanvasElement): (() => void) | null {
   }
 
   function shouldRun(): boolean {
-    const allowed = userPlay ?? !reduceMotion.matches;
-    return visible && desktop.matches && allowed && !document.hidden;
-  }
-
-  function updateToggle(): void {
-    if (!toggle) return;
-    const playing = userPlay ?? !reduceMotion.matches;
-    toggle.querySelector('[data-engine-toggle-label]')!.textContent = playing
-      ? 'Pausar animación'
-      : 'Reproducir animación';
-    toggle.querySelector('[data-icon-pause]')?.classList.toggle('hidden', !playing);
-    toggle.querySelector('[data-icon-play]')?.classList.toggle('hidden', playing);
-  }
-
-  function onToggle(): void {
-    userPlay = !(userPlay ?? !reduceMotion.matches);
-    updateToggle();
-    sync();
+    return visible && desktop.matches && !reduceMotion.matches && !document.hidden;
   }
 
   function sync(): void {
@@ -281,26 +261,18 @@ function init(canvas: HTMLCanvasElement): (() => void) | null {
     attributeFilter: ['data-theme'],
   });
 
-  toggle?.addEventListener('click', onToggle);
-  updateToggle();
-
   desktop.addEventListener('change', sync);
-  const onMotionChange = (): void => {
-    updateToggle();
-    sync();
-  };
-  reduceMotion.addEventListener('change', onMotionChange);
+  reduceMotion.addEventListener('change', sync);
   document.addEventListener('visibilitychange', sync);
 
   // Al salir de la página se libera todo, para no acumular observadores entre navegaciones.
   return () => {
     cancelAnimationFrame(frame);
-    toggle?.removeEventListener('click', onToggle);
     resizeObserver.disconnect();
     intersectionObserver.disconnect();
     themeObserver.disconnect();
     desktop.removeEventListener('change', sync);
-    reduceMotion.removeEventListener('change', onMotionChange);
+    reduceMotion.removeEventListener('change', sync);
     document.removeEventListener('visibilitychange', sync);
   };
 }
