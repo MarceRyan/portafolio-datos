@@ -1,0 +1,26 @@
+---
+// Leyenda de los tres estados del dato. Los colores nunca son el único portador de sentido:
+// cada nodo y cada etapa también llevan su nombre.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+
+const items = [
+  { label: 'Dato crudo', swatch: 'bg-raw' },
+  { label: 'Dato limpio', swatch: 'bg-clean' },
+  { label: 'Decisión', swatch: 'bg-decide' },
+] as const;
+---
+
+<ul
+  class:list={['flex flex-wrap gap-x-6 gap-y-2 text-sm text-body', className]}
+  aria-label="Leyenda"
+>
+  {items.map((item) => (
+    <li class="flex items-center gap-2">
+      <span aria-hidden="true" class:list={['size-3 rounded-full', item.swatch]} />
+      {item.label}
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,64 @@
+---
+import CoverImage from '../ui/CoverImage.astro';
+import ToolChips from '../ui/ToolChips.astro';
+import { categoryLabels } from '../../data/categories';
+import { resolveTools } from '../../data/tool-refs';
+import type { Caso } from '../../data/casos';
+
+interface Props {
+  caso: Caso;
+  size?: 'lg' | 'md';
+  headingLevel?: 'h2' | 'h3';
+  /** Nombre de transición de vista de la portada (debe ser único en la página). */
+  transitionName?: string;
+}
+
+const { caso, size = 'md', headingLevel = 'h2', transitionName } = Astro.props;
+const { data } = caso;
+const Heading = headingLevel;
+const impact = data.impact?.[0];
+---
+
+<article class="group relative flex h-full flex-col overflow-hidden rounded-ui border border-line bg-surface">
+  <div
+    class:list={['overflow-hidden border-b border-line', size === 'lg' ? 'h-64 sm:h-80' : 'h-48']}
+    transition:name={transitionName ?? `card-${data.slug}`}
+  >
+    <CoverImage
+      slug={data.slug}
+      cover={data.cover}
+      alt={`Captura del proyecto: ${data.title}`}
+      sizes={
+        size === 'lg' ? '(min-width: 1024px) 48rem, 100vw' : '(min-width: 1024px) 32rem, 100vw'
+      }
+      class="transition-transform duration-300 ease-out [@media(hover:hover)]:group-hover:scale-[1.03]"
+    />
+  </div>
+
+  <div class="flex flex-1 flex-col gap-3 p-5 sm:p-6">
+    <p class="text-sm font-semibold text-soft">{categoryLabels[data.category]}</p>
+    <Heading
+      class:list={[
+        'font-display leading-tight font-extrabold text-ink',
+        size === 'lg' ? 'text-2xl sm:text-3xl' : 'text-xl',
+      ]}
+    >
+      <a
+        href={`/casos/${data.slug}`}
+        class="underline-offset-4 after:absolute after:inset-0 hover:underline"
+      >
+        {data.title}
+      </a>
+    </Heading>
+    <p class="max-w-[48ch] text-body">{data.question}</p>
+
+    {impact && (
+      <p class="flex items-baseline gap-3">
+        <span class="font-display text-3xl font-black text-decide">{impact.value}</span>
+        <span class="text-sm text-body">{impact.label}</span>
+      </p>
+    )}
+
+    <ToolChips tools={resolveTools(data.stack)} variant="icons" class="mt-auto pt-2" />
+  </div>
+</article>

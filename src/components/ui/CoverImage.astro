@@ -6,6 +6,8 @@ import { Icon } from 'astro-icon/components';
 interface Props {
   /** Slug del caso: busca src/assets/images/casos/<slug>.(png|jpg|jpeg|webp|avif). */
   slug: string;
+  /** Portada declarada en el frontmatter del caso; tiene prioridad sobre la convención por slug. */
+  cover?: ImageMetadata;
   alt: string;
   sizes?: string;
   class?: string;
@@ -14,6 +16,7 @@ interface Props {
 
 const {
   slug,
+  cover: declared,
   alt,
   sizes = '(min-width: 1024px) 40rem, 100vw',
   class: className,
@@ -28,7 +31,7 @@ const match = Object.entries(covers).find(([path]) => {
   const file = path.split('/').pop() ?? '';
   return file.replace(/\.[^.]+$/, '') === slug;
 });
-const cover = match?.[1].default;
+const cover = declared ?? match?.[1].default;
 ---
 
 {cover ? (

@@ -1,0 +1,158 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from './BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import CoverImage from '../components/ui/CoverImage.astro';
+import ToolChips from '../components/ui/ToolChips.astro';
+import { categoryLabels } from '../data/categories';
+import { parseImpact } from '../data/impact';
+import { resolveTools } from '../data/tool-refs';
+import type { Caso } from '../data/casos';
+
+interface Props {
+  caso: Caso;
+  next?: Caso;
+}
+
+const { caso, next } = Astro.props;
+const { data } = caso;
+
+const meta = [
+  { label: 'Organización', value: data.organization },
+  { label: 'Rol', value: data.role },
+  { label: 'Período', value: data.period },
+].filter((item): item is { label: string; value: string } => Boolean(item.value));
+
+const hasLinks = Boolean(data.links.repo || data.links.demo);
+---
+
+<BaseLayout title={data.title} description={data.summary}>
+  <article>
+    <header class="wrap pt-10 pb-12 sm:pt-14">
+      <a
+        href="/casos"
+        class="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-ink underline underline-offset-4"
+      >
+        <Icon name="ph:caret-left-bold" class="size-4" aria-hidden="true" />
+        Volver a casos
+      </a>
+
+      <p class="mt-8 text-sm font-semibold text-soft">{categoryLabels[data.category]}</p>
+      <h1 class="mt-2 max-w-[22ch] text-4xl font-extrabold sm:text-5xl lg:text-6xl">
+        {data.title}
+      </h1>
+      <p class="mt-6 max-w-[36ch] font-display text-2xl leading-snug font-bold text-ink sm:text-3xl">
+        {data.question}
+      </p>
+
+      {meta.length > 0 && (
+        <dl class="mt-10 grid gap-6 sm:grid-cols-3">
+          {meta.map((item) => (
+            <div>
+              <dt class="text-sm text-soft">{item.label}</dt>
+              <dd class="mt-1 font-semibold text-ink">{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+
+      {data.impact && (
+        <dl class="mt-10 flex flex-wrap gap-x-12 gap-y-6">
+          {data.impact.map((item) => {
+            const target = parseImpact(item.value);
+            return (
+              <div>
+                <dd
+                  aria-hidden="true"
+                  data-count-to={target?.value}
+                  data-decimals={target?.decimals}
+                  data-suffix={target?.suffix}
+                  class="font-display text-6xl leading-none font-black text-decide sm:text-7xl"
+                >
+                  {item.value}
+                </dd>
+                <dt class="mt-3 max-w-[30ch] text-body">
+                  <span class="sr-only">{item.value}, </span>
+                  {item.label}
+                </dt>
+              </div>
+            );
+          })}
+        </dl>
+      )}
+
+      <ToolChips tools={resolveTools(data.stack)} class="mt-10" />
+
+      {data.confidential && (
+        <p
+          role="note"
+          class="mt-8 max-w-[62ch] rounded-ui border border-line bg-surface px-4 py-3 text-sm text-body"
+        >
+          Los datos de este caso fueron anonimizados por confidencialidad institucional.
+        </p>
+      )}
+    </header>
+
+    <div class="wrap">
+      <div
+        class="aspect-[16/9] overflow-hidden rounded-ui border border-line"
+        transition:name={`cover-${data.slug}`}
+      >
+        <CoverImage
+          slug={data.slug}
+          cover={data.cover}
+          alt={`Captura del proyecto: ${data.title}`}
+          sizes="(min-width: 1200px) 72rem, 100vw"
+          loading="eager"
+        />
+      </div>
+    </div>
+
+    <div class="wrap prose-case mt-4 pb-16">
+      <slot />
+
+      {hasLinks && (
+        <div class="mt-12 flex flex-wrap gap-3">
+          {data.links.repo && (
+            <Button href={data.links.repo} target="_blank" rel="noopener noreferrer">
+              <Icon name="ph:github-logo" class="size-5" aria-hidden="true" />
+              Ver repositorio
+            </Button>
+          )}
+          {data.links.demo && (
+            <Button
+              href={data.links.demo}
+              variant="secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ver demostración
+            </Button>
+          )}
+        </div>
+      )}
+    </div>
+  </article>
+
+  {next && (
+    <aside aria-labelledby="siguiente-caso" class="border-t border-line bg-surface py-14">
+      <div class="wrap flex flex-wrap items-center justify-between gap-6">
+        <div>
+          <h2 id="siguiente-caso" class="text-sm font-semibold text-soft">
+            Siguiente caso
+          </h2>
+          <p class="mt-2 max-w-[32ch] font-display text-2xl font-extrabold text-ink">
+            {next.data.title}
+          </p>
+        </div>
+        <Button href={`/casos/${next.data.slug}`} variant="secondary">
+          Leer el caso
+        </Button>
+      </div>
+    </aside>
+  )}
+
+  <script>
+    import '../scripts/count-up';
+  </script>
+</BaseLayout>

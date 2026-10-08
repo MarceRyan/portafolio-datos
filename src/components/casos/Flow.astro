@@ -1,0 +1,89 @@
+---
+/**
+ * Diagrama de arquitectura de un caso: el dato viaja de izquierda a derecha (de arriba
+ * abajo en móvil) y cambia de color con su estado: crudo, limpio o decisión.
+ * Se genera en el build como HTML y SVG de iconos: sin librerías de diagramas en el navegador.
+ */
+import { Icon } from 'astro-icon/components';
+import StateLegend from '../ui/StateLegend.astro';
+import ToolIcon from '../ui/ToolIcon.astro';
+import { resolveTool } from '../../data/tool-refs';
+import type { DataState } from '../../data/tools';
+
+interface FlowNode {
+  label: string;
+  /** Nombre de la herramienta (se resuelve a su icono). */
+  tool?: string;
+  state: DataState;
+}
+
+interface FlowRow {
+  label?: string;
+  /** Cada columna es una etapa; varios nodos en una columna ocurren en paralelo. */
+  columns: FlowNode[][];
+}
+
+interface Props {
+  rows: FlowRow[];
+  caption: string;
+}
+
+const { rows, caption } = Astro.props;
+
+const border: Record<DataState, string> = {
+  raw: 'border-raw',
+  clean: 'border-clean',
+  decide: 'border-decide',
+};
+const stateName: Record<DataState, string> = {
+  raw: 'dato crudo',
+  clean: 'dato limpio',
+  decide: 'decisión',
+};
+---
+
+<figure class="flow my-10 rounded-ui border border-line bg-bg p-5 sm:p-6">
+  <ul class="flex flex-col gap-8">
+    {rows.map((row) => (
+      <li>
+        {row.label && <p class="mb-3 text-sm font-semibold text-soft">{row.label}</p>}
+        <ol class="flex flex-col md:flex-row md:flex-wrap md:items-center md:gap-y-4">
+          {row.columns.map((column, index) => (
+            <li class="flex flex-col items-stretch md:flex-row md:items-center">
+              <ul class="flex flex-col gap-3">
+                {column.map((node) => {
+                  const tool = node.tool ? resolveTool(node.tool) : undefined;
+                  return (
+                    <li
+                      class:list={[
+                        'flex min-h-12 items-center gap-3 rounded-ui border bg-surface px-3.5 py-2.5 md:w-48',
+                        border[node.state],
+                      ]}
+                    >
+                      {tool && <ToolIcon icon={tool.icon} monogram={tool.monogram} />}
+                      <span class="text-sm leading-snug font-medium text-ink">
+                        {node.label}
+                        <span class="sr-only"> ({stateName[node.state]})</span>
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+              {index < row.columns.length - 1 && (
+                <span aria-hidden="true" class="flex justify-center py-1 text-soft md:px-2 md:py-0">
+                  <Icon name="ph:caret-down-bold" class="size-5 md:hidden" />
+                  <Icon name="ph:caret-right-bold" class="hidden size-5 md:block" />
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </li>
+    ))}
+  </ul>
+
+  <figcaption class="mt-6 flex flex-col gap-3 border-t border-line pt-4">
+    <StateLegend />
+    <p class="text-sm text-soft">{caption}</p>
+  </figcaption>
+</figure>

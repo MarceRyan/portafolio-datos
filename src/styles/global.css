@@ -151,6 +151,29 @@
   padding-right: max(1.25rem, env(safe-area-inset-right));
 }
 
+/* Texto largo de los casos de estudio. */
+@layer components {
+  .prose-case > h2 {
+    margin-top: 3.5rem;
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+    font-weight: 800;
+  }
+  .prose-case > p,
+  .prose-case > ul,
+  .prose-case > ol {
+    max-width: 65ch;
+    margin-top: 1rem;
+    font-size: 1.0625rem;
+  }
+  .prose-case > h2 + p {
+    margin-top: 0.75rem;
+  }
+  .prose-case a {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
