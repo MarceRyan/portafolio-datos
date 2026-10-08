@@ -1,0 +1,55 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  /** Slug del caso: busca src/assets/images/casos/<slug>.(png|jpg|jpeg|webp|avif). */
+  slug: string;
+  alt: string;
+  sizes?: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const {
+  slug,
+  alt,
+  sizes = '(min-width: 1024px) 40rem, 100vw',
+  class: className,
+  loading = 'lazy',
+} = Astro.props;
+
+const covers = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/images/casos/*.{png,jpg,jpeg,webp,avif}',
+  { eager: true },
+);
+const match = Object.entries(covers).find(([path]) => {
+  const file = path.split('/').pop() ?? '';
+  return file.replace(/\.[^.]+$/, '') === slug;
+});
+const cover = match?.[1].default;
+---
+
+{cover ? (
+  <Image
+    src={cover}
+    alt={alt}
+    widths={[480, 800, 1200]}
+    sizes={sizes}
+    loading={loading}
+    class:list={['size-full object-cover', className]}
+  />
+) : (
+  <div
+    class:list={[
+      'flex size-full flex-col items-center justify-center gap-2 bg-raw-3 p-4 text-center text-soft',
+      className,
+    ]}
+  >
+    <Icon name="ph:image-fill" class="size-8" aria-hidden="true" />
+    <p class="max-w-[28ch] text-xs text-ink">
+      TODO(marcelo): captura del tablero en src/assets/images/casos/{slug}.png
+    </p>
+  </div>
+)}

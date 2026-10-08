@@ -23,7 +23,7 @@ Astro 7 (salida 100% estática), TypeScript estricto, Tailwind CSS v4 (plugin de
 ## Estructura
 
 - `src/pages/` rutas. `src/layouts/` BaseLayout y CasoLayout. `src/components/{layout,home,casos,ui}/`.
-- `src/data/` contenido estructurado (site, socials, nav, tools, certifications, now, casos-destacados temporal).
+- `src/data/` contenido estructurado (site, socials, nav, tools, tool-refs, experience, certifications, now, casos-preview temporal).
 - `src/content/casos/*.mdx` casos de estudio, validados por `src/content.config.ts`.
 - `src/i18n/` diccionario y utilidades. Solo español por ahora; la estructura admite inglés.
 - `src/scripts/` TypeScript del navegador (theme, decision-engine, count-up).

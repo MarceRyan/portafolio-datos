@@ -1,0 +1,28 @@
+---
+import ToolIcon from './ToolIcon.astro';
+import type { ToolRef } from '../../data/tool-refs';
+
+interface Props {
+  tools: readonly ToolRef[];
+  /** `icons` muestra solo logos (con nombre accesible); `labeled` agrega el nombre visible. */
+  variant?: 'icons' | 'labeled';
+  class?: string;
+}
+
+const { tools, variant = 'labeled', class: className } = Astro.props;
+---
+
+<ul class:list={['flex flex-wrap gap-2', className]}>
+  {tools.map((tool) => (
+    <li
+      class:list={[
+        'flex items-center gap-2 rounded-ui border border-line bg-bg text-sm font-medium text-ink',
+        variant === 'labeled' ? 'min-h-9 px-3' : 'size-9 justify-center',
+      ]}
+      title={variant === 'icons' ? tool.name : undefined}
+    >
+      <ToolIcon icon={tool.icon} monogram={tool.monogram} />
+      {variant === 'labeled' ? tool.name : <span class="sr-only">{tool.name}</span>}
+    </li>
+  ))}
+</ul>
