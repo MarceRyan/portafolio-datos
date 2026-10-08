@@ -11,9 +11,11 @@ import bodyFont from '@fontsource/instrument-sans/files/instrument-sans-latin-40
 interface Props {
   title?: string;
   description?: string;
+  /** Páginas temporales o de trabajo: se excluyen de los buscadores. */
+  noindex?: boolean;
 }
 
-const { title, description = site.description } = Astro.props;
+const { title, description = site.description, noindex = false } = Astro.props;
 const pageTitle = title ? `${title} | ${site.name}` : site.defaultTitle;
 const t = useTranslations('es');
 ---
@@ -26,6 +28,7 @@ const t = useTranslations('es');
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0a1222" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
