@@ -1,0 +1,87 @@
+---
+import CoverImage from '../ui/CoverImage.astro';
+import { casosPreview } from '../../data/casos-preview';
+
+const items = casosPreview.filter((caso) => caso.decision);
+const [main, ...rest] = items;
+const imageLink = 'block overflow-hidden rounded-ui border border-line';
+const zoom =
+  'transition-transform duration-300 ease-out [@media(hover:hover)]:group-hover:scale-[1.02]';
+---
+
+<section id="decisiones" aria-labelledby="decisiones-title" class="wrap py-20 sm:py-28">
+  <h2 id="decisiones-title" class="text-3xl font-extrabold sm:text-4xl">
+    Decisiones que ayudé a tomar
+  </h2>
+
+  <div class="mt-12 grid gap-x-8 gap-y-12 lg:grid-cols-12">
+    {main && (
+      <article class="group flex flex-col lg:col-span-7 lg:row-span-2">
+        <a
+          href={`/casos/${main.slug}`}
+          tabindex="-1"
+          aria-hidden="true"
+          class:list={[imageLink, 'min-h-[18rem] flex-1']}
+        >
+          <CoverImage
+            slug={main.slug}
+            alt={`Captura del tablero: ${main.title}`}
+            sizes="(min-width: 1024px) 44rem, 100vw"
+            loading="eager"
+            class={zoom}
+          />
+        </a>
+        <div class="mt-5 flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+          <h3 class="max-w-[24ch] text-2xl font-extrabold sm:text-3xl">
+            <a href={`/casos/${main.slug}`} class="underline-offset-4 hover:underline">
+              {main.title}
+            </a>
+          </h3>
+          {main.decision?.result && (
+            <div>
+              <p
+                aria-hidden="true"
+                data-count-to={main.decision.result.value}
+                data-decimals={main.decision.result.decimals}
+                data-suffix={main.decision.result.suffix}
+                class="font-display text-5xl leading-none font-black text-decide sm:text-6xl"
+              >
+                {`${main.decision.result.value.toFixed(main.decision.result.decimals)}${main.decision.result.suffix}`}
+              </p>
+              <p class="sr-only">
+                {`${main.decision.result.value.toFixed(main.decision.result.decimals)}${main.decision.result.suffix}`}
+              </p>
+              <p class="mt-2 max-w-[28ch] text-sm text-body">{main.decision.result.label}</p>
+            </div>
+          )}
+        </div>
+      </article>
+    )}
+
+    {rest.map((caso) => (
+      <article class="group flex flex-col lg:col-span-5">
+        <a
+          href={`/casos/${caso.slug}`}
+          tabindex="-1"
+          aria-hidden="true"
+          class:list={[imageLink, 'aspect-[16/10]']}
+        >
+          <CoverImage slug={caso.slug} alt={`Captura del tablero: ${caso.title}`} class={zoom} />
+        </a>
+        <h3 class="mt-4 max-w-[30ch] text-xl font-bold">
+          <a href={`/casos/${caso.slug}`} class="underline-offset-4 hover:underline">
+            {caso.title}
+          </a>
+        </h3>
+      </article>
+    ))}
+  </div>
+
+  <p class="mt-12 text-sm text-soft">
+    Los datos de estos casos fueron anonimizados por confidencialidad institucional.
+  </p>
+</section>
+
+<script>
+  import '../../scripts/count-up';
+</script>

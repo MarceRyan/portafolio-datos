@@ -1,0 +1,57 @@
+---
+import Button from '../ui/Button.astro';
+import CoverImage from '../ui/CoverImage.astro';
+import ToolChips from '../ui/ToolChips.astro';
+import { categoryLabels, casosPreview } from '../../data/casos-preview';
+
+// Mosaico de 6 celdas con ritmo: 2+1+1 arriba y 1+2+1 abajo (4 columnas).
+const spans = [
+  'lg:col-span-2',
+  'lg:col-span-1',
+  'lg:col-span-1',
+  'lg:col-span-1',
+  'lg:col-span-2',
+  'lg:col-span-1',
+];
+---
+
+<section id="proyectos" aria-labelledby="proyectos-title" class="wrap pb-20 sm:pb-28">
+  <h2 id="proyectos-title" class="text-3xl font-extrabold sm:text-4xl">
+    Proyectos que construí
+  </h2>
+
+  <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    {casosPreview.map((caso, index) => (
+      <li class:list={['flex', spans[index]]}>
+        <article class="group relative flex w-full flex-col overflow-hidden rounded-ui border border-line bg-surface">
+          <div class="h-44 overflow-hidden border-b border-line">
+            <CoverImage
+              slug={caso.slug}
+              alt={`Captura del proyecto: ${caso.title}`}
+              sizes="(min-width: 1024px) 36rem, 100vw"
+              class="transition-transform duration-300 ease-out [@media(hover:hover)]:group-hover:scale-[1.03]"
+            />
+          </div>
+          <div class="flex flex-1 flex-col gap-3 p-5">
+            <p class="text-sm font-semibold text-soft">{categoryLabels[caso.category]}</p>
+            <h3 class="font-display text-lg leading-snug font-bold text-ink">
+              <a
+                href={`/casos/${caso.slug}`}
+                class="underline-offset-4 after:absolute after:inset-0 hover:underline"
+              >
+                {caso.title}
+              </a>
+            </h3>
+            <ToolChips tools={caso.stack} variant="icons" class="mt-auto pt-2" />
+          </div>
+        </article>
+      </li>
+    ))}
+  </ul>
+
+  <div class="mt-10">
+    <Button href="/casos" variant="secondary">
+      Ver casos
+    </Button>
+  </div>
+</section>
