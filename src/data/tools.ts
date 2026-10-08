@@ -5,6 +5,8 @@ export interface Stage {
   id: StageId;
   number: number;
   name: string;
+  /** Qué ocurre con el dato en esta etapa (definición general, no un logro). */
+  description: string;
   /** Estado del dato al salir de la etapa: dato crudo, limpio o decisión. */
   state: DataState;
 }
@@ -27,15 +29,45 @@ export const stageStates: Record<DataState, string> = {
 };
 
 export const stages: readonly Stage[] = [
-  { id: 'fuentes', number: 1, name: 'Fuentes', state: 'raw' },
-  { id: 'extraccion', number: 2, name: 'Extracción', state: 'raw' },
-  { id: 'transformacion', number: 3, name: 'Transformación', state: 'clean' },
-  { id: 'modelado', number: 4, name: 'Modelado', state: 'clean' },
-  { id: 'decision', number: 5, name: 'Decisión', state: 'decide' },
+  {
+    id: 'fuentes',
+    number: 1,
+    name: 'Fuentes',
+    description: 'El dato nace disperso: hojas, formularios, archivos y páginas.',
+    state: 'raw',
+  },
+  {
+    id: 'extraccion',
+    number: 2,
+    name: 'Extracción',
+    description: 'Lo traigo a un solo lugar, sin descargas manuales.',
+    state: 'raw',
+  },
+  {
+    id: 'transformacion',
+    number: 3,
+    name: 'Transformación',
+    description: 'Lo limpio, lo valido y le doy una estructura común.',
+    state: 'clean',
+  },
+  {
+    id: 'modelado',
+    number: 4,
+    name: 'Modelado',
+    description: 'Lo organizo en una base lista para consultar y cruzar.',
+    state: 'clean',
+  },
+  {
+    id: 'decision',
+    number: 5,
+    name: 'Decisión',
+    description: 'Lo convierto en tableros, proyecciones y avisos que alguien usa.',
+    state: 'decide',
+  },
 ];
 
 // TODO(marcelo): agregar los SVG oficiales en src/assets/icons/ para las herramientas
-// con monograma (SSIS, SQL, Power Query, DAX, Campus SIFODS, Modelado dimensional),
+// con monograma (SSIS, SQL, Power Query, DAX, Modelado dimensional),
 // respetando los lineamientos de marca de cada empresa.
 export const tools: readonly Tool[] = [
   {
@@ -46,16 +78,14 @@ export const tools: readonly Tool[] = [
   },
   {
     stage: 'fuentes',
-    name: 'Campus SIFODS',
-    monogram: 'SF',
-    context: 'Notas y avances de docentes',
-  },
-  {
-    stage: 'fuentes',
     name: 'Formularios',
     icon: 'simple-icons:googleforms',
     context: 'Registro diario de asistencia',
   },
+  // TODO(marcelo): indicar dónde trabajé con archivos de texto y CSV, JSON y páginas web.
+  { stage: 'fuentes', name: 'Texto y CSV', icon: 'ph:file-csv-fill' },
+  { stage: 'fuentes', name: 'JSON', icon: 'simple-icons:json' },
+  { stage: 'fuentes', name: 'Páginas web', icon: 'ph:globe-fill' },
   {
     stage: 'extraccion',
     name: 'Python',
@@ -122,4 +152,16 @@ export const tools: readonly Tool[] = [
   },
 ];
 
-export const alsoUse = 'También uso RStudio, Oracle Database, Git, Scrum y Kanban.';
+export interface ExtraSkill {
+  name: string;
+  icon: string;
+}
+
+/** "También uso": herramientas y metodologías que no pertenecen a una sola etapa. */
+export const alsoUse: readonly ExtraSkill[] = [
+  { name: 'RStudio', icon: 'simple-icons:rstudioide' },
+  { name: 'Oracle Database', icon: 'simple-icons:oracle' },
+  { name: 'Git', icon: 'simple-icons:git' },
+  { name: 'Scrum', icon: 'ph:arrows-clockwise-fill' },
+  { name: 'Kanban', icon: 'ph:kanban-fill' },
+];

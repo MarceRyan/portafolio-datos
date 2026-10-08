@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import ToolIcon from '../ui/ToolIcon.astro';
 import { alsoUse, stages, stageStates, tools } from '../../data/tools';
 
@@ -28,6 +29,11 @@ const columns = stages.map((stage) => ({
       Así llega un dato a una decisión
     </h2>
 
+    <p class="mt-4 max-w-[62ch] text-lg text-body">
+      Cinco etapas separan un archivo suelto de una decisión. En cada una uso herramientas
+      distintas: pasa el cursor sobre una para ver dónde la apliqué.
+    </p>
+
     <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-body" aria-label="Leyenda">
       {legend.map((item) => (
         <li class="flex items-center gap-2">
@@ -50,6 +56,7 @@ const columns = stages.map((stage) => ({
               {stage.name}
               <span class="sr-only">({stageStates[stage.state]})</span>
             </h3>
+            <p class="mt-2 text-sm leading-snug text-soft">{stage.description}</p>
           </div>
 
           {index === 0 && (
@@ -85,7 +92,17 @@ const columns = stages.map((stage) => ({
       ))}
     </ol>
 
-    <p class="mt-12 text-body">{alsoUse}</p>
+    <div class="mt-14 border-t border-line pt-8">
+      <h3 class="text-lg font-bold">También uso</h3>
+      <ul class="mt-4 flex flex-wrap gap-3">
+        {alsoUse.map((skill) => (
+          <li class="flex min-h-11 items-center gap-3 rounded-ui border border-line bg-bg px-4 text-[0.95rem] font-medium text-ink">
+            <Icon name={skill.icon} class="size-5 shrink-0" aria-hidden="true" />
+            {skill.name}
+          </li>
+        ))}
+      </ul>
+    </div>
   </div>
 </section>
 
