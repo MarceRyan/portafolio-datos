@@ -24,7 +24,8 @@ Astro 7 (salida 100% estática), TypeScript estricto, Tailwind CSS v4 (plugin de
 
 - `src/pages/` rutas. `src/layouts/` BaseLayout y CasoLayout. `src/components/{layout,home,casos,ui}/`.
 - `src/data/` contenido estructurado (site, socials, nav, tools, tool-refs, experience, certifications, now, casos-preview temporal).
-- `src/content/casos/*.mdx` casos de estudio, validados por `src/content.config.ts`.
+- `src/content/casos/*.mdx` casos de estudio, validados por `src/content.config.ts`. Las capturas van en `src/assets/images/casos/<slug>.png` (o `cover` en el frontmatter). El diagrama de arquitectura se escribe con `<Flow rows={...} />` (`src/components/casos/Flow.astro`).
+- Transiciones de vista (`ClientRouter`): los scripts del navegador usan delegación de eventos y `astro:page-load`; la portada de cada caso comparte `transition:name="cover-<slug>"` entre la tarjeta y la página.
 - `src/i18n/` diccionario y utilidades. Solo español por ahora; la estructura admite inglés.
 - `src/scripts/` TypeScript del navegador (theme, decision-engine, count-up).
 - `src/styles/global.css` tokens, fuentes y capa base.
@@ -41,7 +42,8 @@ Astro 7 (salida 100% estática), TypeScript estricto, Tailwind CSS v4 (plugin de
 
 ## Reglas de contenido
 
-- **No inventar métricas, fechas, logros ni experiencias.** Si falta un dato, dejar `TODO(marcelo): ...` visible y anotarlo en la lista de pendientes de la fase.
+- **No inventar métricas, fechas, logros ni experiencias.** Si falta un dato, anotar `TODO(marcelo): ...` en el código (comentario o atributo `todo` de `Placeholder`) y en la lista de pendientes de la fase. En pantalla va un texto neutro ("Foto profesional", "Captura del tablero"), nunca la palabra TODO.
+- Las secciones de un caso sin datos reales se omiten; no se rellenan con texto genérico.
 - Casos con `confidential: true` muestran el aviso de anonimización y no exponen datos reales.
 - Los textos oficiales (hero, etapas, casos, experiencia) están en el prompt original del proyecto; no parafrasear.
 

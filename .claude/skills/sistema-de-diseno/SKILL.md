@@ -21,7 +21,7 @@ Si una skill contradice la identidad de este proyecto (paleta, fuentes, concepto
 
 1. Lee `tokens.md` (valores, contrastes y reglas de uso) antes de tocar estilos.
 2. Usa solo los tokens de `src/styles/global.css` mediante utilidades (`bg-bg`, `text-ink`, `border-line`, etc.). No escribas hex en componentes.
-3. Reutiliza los componentes base: `Button` (`primary`, `secondary`; `md`, `sm`), `ThemeToggle`, `Header`, `Footer`.
+3. Reutiliza los componentes base: `Button` (`primary`, `secondary`; `md`, `sm`), `ThemeToggle`, `Header`, `Footer`, `ToolChips`, `CoverImage`, `Placeholder` y, para diagramas, `Flow`.
 4. Aplica un solo radio: `rounded-ui`. Interactivos: mínimo 40 px de alto (44 px en iconos), `active:translate-y-px`, transición solo de color y transform en 150 ms.
 5. Agrega movimiento únicamente si comunica algo (jerarquía, historia, retroalimentación, cambio de estado) y respeta `prefers-reduced-motion`.
 6. Prueba en claro y oscuro, desde 360 px, con teclado (foco visible).
@@ -37,7 +37,8 @@ Si una skill contradice la identidad de este proyecto (paleta, fuentes, concepto
 - Animaciones de aparición en cada sección.
 - Frases genéricas ("apasionado por la tecnología", "transformo datos en insights").
 - Rayas largas (em dash) en textos visibles.
-- Inventar métricas: usa `TODO(marcelo): ...`.
+- Inventar métricas: anota `TODO(marcelo): ...` en el código y muestra un texto neutro en pantalla (nunca la palabra TODO).
+- Diagramas con librerías pesadas en el navegador: los diagramas de casos son HTML generado en el build (`Flow`), con los tres estados de color y su leyenda.
 
 ## Tipografía
 

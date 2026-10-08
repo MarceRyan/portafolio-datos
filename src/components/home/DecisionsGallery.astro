@@ -1,9 +1,12 @@
 ---
 import CoverImage from '../ui/CoverImage.astro';
-import { casosPreview } from '../../data/casos-preview';
+import { getCasos } from '../../data/casos';
+import { parseImpact } from '../../data/impact';
 
-const items = casosPreview.filter((caso) => caso.decision);
-const [main, ...rest] = items;
+const casos = await getCasos();
+const [main, ...rest] = casos.filter((caso) => caso.data.featured);
+const mainImpact = main?.data.impact?.[0];
+const mainTarget = mainImpact ? parseImpact(mainImpact.value) : null;
 const imageLink = 'block overflow-hidden rounded-ui border border-line';
 const zoom =
   'transition-transform duration-300 ease-out [@media(hover:hover)]:group-hover:scale-[1.02]';
@@ -18,14 +21,16 @@ const zoom =
     {main && (
       <article class="group flex flex-col lg:col-span-7 lg:row-span-2">
         <a
-          href={`/casos/${main.slug}`}
+          href={`/casos/${main.data.slug}`}
           tabindex="-1"
           aria-hidden="true"
+          transition:name={`cover-${main.data.slug}`}
           class:list={[imageLink, 'min-h-[18rem] flex-1']}
         >
           <CoverImage
-            slug={main.slug}
-            alt={`Captura del tablero: ${main.title}`}
+            slug={main.data.slug}
+            cover={main.data.cover}
+            alt={`Captura del tablero: ${main.data.title}`}
             sizes="(min-width: 1024px) 44rem, 100vw"
             loading="eager"
             class={zoom}
@@ -33,25 +38,23 @@ const zoom =
         </a>
         <div class="mt-5 flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
           <h3 class="max-w-[24ch] text-2xl font-extrabold sm:text-3xl">
-            <a href={`/casos/${main.slug}`} class="underline-offset-4 hover:underline">
-              {main.title}
+            <a href={`/casos/${main.data.slug}`} class="underline-offset-4 hover:underline">
+              {main.data.title}
             </a>
           </h3>
-          {main.decision?.result && (
+          {mainImpact && (
             <div>
               <p
                 aria-hidden="true"
-                data-count-to={main.decision.result.value}
-                data-decimals={main.decision.result.decimals}
-                data-suffix={main.decision.result.suffix}
+                data-count-to={mainTarget?.value}
+                data-decimals={mainTarget?.decimals}
+                data-suffix={mainTarget?.suffix}
                 class="font-display text-5xl leading-none font-black text-decide sm:text-6xl"
               >
-                {`${main.decision.result.value.toFixed(main.decision.result.decimals)}${main.decision.result.suffix}`}
+                {mainImpact.value}
               </p>
-              <p class="sr-only">
-                {`${main.decision.result.value.toFixed(main.decision.result.decimals)}${main.decision.result.suffix}`}
-              </p>
-              <p class="mt-2 max-w-[28ch] text-sm text-body">{main.decision.result.label}</p>
+              <p class="sr-only">{mainImpact.value}</p>
+              <p class="mt-2 max-w-[28ch] text-sm text-body">{mainImpact.label}</p>
             </div>
           )}
         </div>
@@ -61,16 +64,22 @@ const zoom =
     {rest.map((caso) => (
       <article class="group flex flex-col lg:col-span-5">
         <a
-          href={`/casos/${caso.slug}`}
+          href={`/casos/${caso.data.slug}`}
           tabindex="-1"
           aria-hidden="true"
+          transition:name={`cover-${caso.data.slug}`}
           class:list={[imageLink, 'aspect-[16/10]']}
         >
-          <CoverImage slug={caso.slug} alt={`Captura del tablero: ${caso.title}`} class={zoom} />
+          <CoverImage
+            slug={caso.data.slug}
+            cover={caso.data.cover}
+            alt={`Captura del tablero: ${caso.data.title}`}
+            class={zoom}
+          />
         </a>
         <h3 class="mt-4 max-w-[30ch] text-xl font-bold">
-          <a href={`/casos/${caso.slug}`} class="underline-offset-4 hover:underline">
-            {caso.title}
+          <a href={`/casos/${caso.data.slug}`} class="underline-offset-4 hover:underline">
+            {caso.data.title}
           </a>
         </h3>
       </article>
