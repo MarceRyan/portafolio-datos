@@ -1,0 +1,49 @@
+---
+title: TODO(marcelo) título corto del caso
+slug: todo-slug-en-minusculas-con-guiones
+question: '¿TODO(marcelo) la pregunta de negocio que originó el caso?'
+summary: TODO(marcelo) una frase con qué se construyó y con qué herramientas.
+category: analisis # ingenieria | analisis | bi | automatizacion
+stack: [] # nombres de herramientas; deben existir en src/data/tool-refs.ts
+organization: TODO(marcelo) # opcional
+role: TODO(marcelo) # opcional
+period: TODO(marcelo) # opcional, p. ej. "Ene 2025 a Mar 2025"
+# impact: # opcional; solo cifras reales dadas por Marcelo
+#   - value: 'TODO'
+#     label: 'TODO'
+confidential: false # true si hay datos institucionales: muestra el aviso de anonimización
+# links:
+#   repo: https://github.com/...
+#   demo: https://...
+featured: false
+order: 99 # posición en las listas; ver los casos existentes
+---
+
+import Flow from '../../components/casos/Flow.astro';
+
+{/* Borra cualquier sección para la que no haya datos reales. No rellenes con texto genérico. */}
+
+## Contexto
+
+## Problema
+
+## Datos
+
+## Arquitectura
+
+<Flow
+  caption="TODO(marcelo) cómo viaja el dato de la fuente a la decisión."
+  rows={[
+    {
+      columns: [
+        [{ label: 'Fuente', state: 'raw' }],
+        [{ label: 'Transformación', tool: 'SQL', state: 'clean' }],
+        [{ label: 'Resultado para decidir', state: 'decide' }],
+      ],
+    },
+  ]}
+/>
+
+## Solución
+
+## Resultados

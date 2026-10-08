@@ -65,4 +65,6 @@ Prioridad ante conflicto: 1) el prompt del proyecto (concepto, paleta, tipograf√
 
 ## Skills del proyecto
 
-`sistema-de-diseno` (Fase 1). Pendientes: `agregar-caso`, `redactar-caso`, `actualizar-experiencia`, `traducir`, `revisar-y-publicar` (Fase 4).
+`sistema-de-diseno` (UI, tokens, componentes), `agregar-caso` (con `plantilla-caso.mdx`), `redactar-caso`, `actualizar-experiencia`, `traducir` y `revisar-y-publicar` (solo se ejecuta si Marcelo la invoca; incluye `checklist.md`).
+
+CI: `.github/workflows/ci.yml` corre check, lint, format:check y build en cada PR. La plantilla de PR est√° en `.github/pull_request_template.md`.
