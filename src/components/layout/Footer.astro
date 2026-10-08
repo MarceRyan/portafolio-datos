@@ -18,7 +18,23 @@ const buildYear = new Date().getFullYear();
     </div>
 
     <div class="flex flex-col gap-3 sm:items-end">
-      <ul class="flex gap-6">
+      <ul class="flex flex-wrap gap-x-6 gap-y-2 sm:justify-end">
+        <li>
+          <a
+            href="/sobre-mi"
+            class="text-sm font-medium text-body underline underline-offset-4 hover:text-ink"
+          >
+            Sobre mí
+          </a>
+        </li>
+        <li>
+          <a
+            href="/cv"
+            class="text-sm font-medium text-body underline underline-offset-4 hover:text-ink"
+          >
+            CV
+          </a>
+        </li>
         {socials.map((social) => (
           <li>
             <a
@@ -43,6 +59,8 @@ const buildYear = new Date().getFullYear();
 </footer>
 
 <script>
-  const year = document.querySelector('[data-year]');
-  if (year) year.textContent = String(new Date().getFullYear());
+  document.addEventListener('astro:page-load', () => {
+    const year = document.querySelector('[data-year]');
+    if (year) year.textContent = String(new Date().getFullYear());
+  });
 </script>

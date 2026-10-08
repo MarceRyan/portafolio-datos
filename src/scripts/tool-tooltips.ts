@@ -4,6 +4,7 @@
  * - Teclado: aparecen al enfocar. Escape cierra.
  * - Táctil: un toque abre y otro cierra.
  * Por debajo de `md` el texto se muestra siempre en línea (ver DecisionEngine.astro).
+ * Todo se delega en `document`, así que sobrevive a las transiciones de vista.
  */
 const SHOW_DELAY_MS = 250;
 const WARM_MS = 400;
@@ -13,6 +14,10 @@ const desktop = matchMedia('(min-width: 768px)');
 let warmUntil = 0;
 let showTimer: number | undefined;
 let current: HTMLButtonElement | null = null;
+
+function buttonFrom(target: EventTarget | null): HTMLButtonElement | null {
+  return target instanceof Element ? target.closest<HTMLButtonElement>('[data-tool]') : null;
+}
 
 function tipFor(button: HTMLButtonElement): HTMLElement | null {
   const id = button.getAttribute('aria-describedby');
@@ -30,6 +35,16 @@ function keepInViewport(tip: HTMLElement): void {
   tip.style.setProperty('--shift', `${shift}px`);
 }
 
+function hide(button: HTMLButtonElement): void {
+  window.clearTimeout(showTimer);
+  tipFor(button)?.removeAttribute('data-open');
+  button.setAttribute('aria-expanded', 'false');
+  if (current === button) {
+    current = null;
+    warmUntil = performance.now() + WARM_MS;
+  }
+}
+
 function show(button: HTMLButtonElement, instant: boolean): void {
   window.clearTimeout(showTimer);
   if (current && current !== button) hide(current);
@@ -42,49 +57,47 @@ function show(button: HTMLButtonElement, instant: boolean): void {
   current = button;
 }
 
-function hide(button: HTMLButtonElement): void {
+document.addEventListener('pointerover', (event) => {
+  if (!desktop.matches || event.pointerType !== 'mouse') return;
+  const button = buttonFrom(event.target);
+  if (!button || buttonFrom(event.relatedTarget) === button) return;
+  if (performance.now() < warmUntil || current) show(button, true);
+  else showTimer = window.setTimeout(() => show(button, false), SHOW_DELAY_MS);
+});
+
+document.addEventListener('pointerout', (event) => {
+  if (event.pointerType !== 'mouse') return;
+  const button = buttonFrom(event.target);
+  if (!button || buttonFrom(event.relatedTarget) === button) return;
+  hide(button);
+});
+
+document.addEventListener('focusin', (event) => {
+  const button = buttonFrom(event.target);
+  if (button && desktop.matches) show(button, true);
+});
+
+document.addEventListener('focusout', (event) => {
+  const button = buttonFrom(event.target);
+  if (button) hide(button);
+});
+
+document.addEventListener('click', (event) => {
+  const button = buttonFrom(event.target);
+  // El ratón ya abre por hover; el clic solo alterna con el dedo.
+  if (!button || !desktop.matches || (event as PointerEvent).pointerType === 'mouse') return;
+  if (current === button) hide(button);
+  else show(button, true);
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && current) hide(current);
+});
+
+// Al navegar, el DOM anterior desaparece: se limpia el estado.
+document.addEventListener('astro:before-swap', () => {
   window.clearTimeout(showTimer);
-  const tip = tipFor(button);
-  tip?.removeAttribute('data-open');
-  button.setAttribute('aria-expanded', 'false');
-  if (current === button) {
-    current = null;
-    warmUntil = performance.now() + WARM_MS;
-  }
-}
-
-function init(): void {
-  document.querySelectorAll<HTMLButtonElement>('[data-tool]').forEach((button) => {
-    button.addEventListener('pointerenter', (event) => {
-      if (!desktop.matches || event.pointerType !== 'mouse') return;
-      if (performance.now() < warmUntil || current) show(button, true);
-      else showTimer = window.setTimeout(() => show(button, false), SHOW_DELAY_MS);
-    });
-
-    button.addEventListener('pointerleave', (event) => {
-      if (event.pointerType !== 'mouse') return;
-      hide(button);
-    });
-
-    button.addEventListener('focus', () => {
-      if (desktop.matches) show(button, true);
-    });
-
-    button.addEventListener('blur', () => hide(button));
-
-    button.addEventListener('click', (event) => {
-      // El ratón ya abre por hover; el clic solo alterna con el dedo.
-      if (!desktop.matches || (event as PointerEvent).pointerType === 'mouse') return;
-      if (current === button) hide(button);
-      else show(button, true);
-    });
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && current) hide(current);
-  });
-}
-
-init();
+  current = null;
+});
 
 export {};

@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseCard from '../../components/casos/CaseCard.astro';
+import { categoryLabels, type CasoCategory } from '../../data/categories';
+import { getCasos } from '../../data/casos';
+
+const casos = await getCasos();
+
+const present = (Object.keys(categoryLabels) as CasoCategory[]).filter((category) =>
+  casos.some((caso) => caso.data.category === category),
+);
+
+// Ritmo de 6 columnas: 4+2, 3+3, 2+4. Con un filtro activo todas pasan a 3+3.
+const spans = [
+  'lg:col-span-4',
+  'lg:col-span-2',
+  'lg:col-span-3',
+  'lg:col-span-3',
+  'lg:col-span-2',
+  'lg:col-span-4',
+];
+---
+
+<BaseLayout
+  title="Casos"
+  description="Proyectos de datos que construí: tableros, automatizaciones e ingeniería de datos."
+>
+  <section class="wrap pt-12 pb-20 sm:pt-16 sm:pb-28">
+    <h1 class="text-4xl font-extrabold sm:text-5xl">Casos</h1>
+    <p class="mt-5 max-w-[56ch] text-lg text-body">
+      Cada caso parte de una pregunta de negocio y termina en lo que se pudo decidir con los datos.
+    </p>
+
+    <div
+      role="group"
+      aria-label="Filtrar por categoría"
+      class="mt-10 flex flex-wrap gap-2"
+      data-case-filters
+    >
+      <button
+        type="button"
+        data-filter="all"
+        aria-pressed="true"
+        class="filter-chip inline-flex min-h-11 items-center gap-2 rounded-ui border border-soft px-4 text-sm font-semibold text-ink transition-[background-color,transform] duration-150 ease-out hover:bg-surface active:scale-[0.97] aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:text-bg"
+      >
+        Todos
+        <span class="tabular-nums">{casos.length}</span>
+      </button>
+      {present.map((category) => (
+        <button
+          type="button"
+          data-filter={category}
+          aria-pressed="false"
+          class="filter-chip inline-flex min-h-11 items-center gap-2 rounded-ui border border-soft px-4 text-sm font-semibold text-ink transition-[background-color,transform] duration-150 ease-out hover:bg-surface active:scale-[0.97] aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:text-bg"
+        >
+          {categoryLabels[category]}
+          <span class="tabular-nums">
+            {casos.filter((caso) => caso.data.category === category).length}
+          </span>
+        </button>
+      ))}
+    </div>
+    <p class="sr-only" role="status" aria-live="polite" data-filter-status></p>
+
+    <ul data-cases class="cases-grid mt-10 grid gap-6 lg:grid-cols-6">
+      {casos.map((caso, index) => (
+        <li data-category={caso.data.category} class:list={['flex', spans[index]]}>
+          <CaseCard
+            caso={caso}
+            size={index === 0 ? 'lg' : 'md'}
+            transitionName={`cover-${caso.data.slug}`}
+          />
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Con un filtro activo el mosaico se normaliza para no dejar huecos. */
+  .cases-grid[data-filtered='true'] > li {
+    grid-column: span 3 / span 3;
+  }
+  @media (max-width: 1023.98px) {
+    .cases-grid[data-filtered='true'] > li {
+      grid-column: auto;
+    }
+  }
+</style>
+
+<script>
+  import '../../scripts/case-filter';
+</script>

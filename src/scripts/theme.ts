@@ -1,9 +1,12 @@
 /**
  * Tema claro/oscuro.
- * El valor inicial lo fija un script inline en <head> (BaseLayout) antes del
- * primer pintado para evitar el parpadeo; este módulo solo gestiona el botón,
- * la persistencia y los cambios del sistema.
+ * El valor inicial lo fija un script inline en <head> (BaseLayout) antes del primer
+ * pintado para evitar el parpadeo. Este módulo gestiona el botón, la persistencia y los
+ * cambios del sistema. Usa delegación de eventos y los eventos de las transiciones de
+ * vista (ClientRouter), así que sigue funcionando al navegar entre páginas.
  */
+import type { TransitionBeforeSwapEvent } from 'astro:transitions/client';
+
 type Theme = 'light' | 'dark';
 
 const STORAGE_KEY = 'theme';
@@ -44,23 +47,27 @@ function apply(theme: Theme): void {
   });
 }
 
-function bind(): void {
+function sync(): void {
   apply(readStored() ?? (systemQuery.matches ? 'dark' : 'light'));
-
-  document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const next: Theme = current() === 'dark' ? 'light' : 'dark';
-      writeStored(next);
-      apply(next);
-    });
-  });
 }
+
+document.addEventListener('click', (event) => {
+  if (!(event.target instanceof Element) || !event.target.closest('[data-theme-toggle]')) return;
+  const next: Theme = current() === 'dark' ? 'light' : 'dark';
+  writeStored(next);
+  apply(next);
+});
 
 // Sin preferencia guardada, el tema acompaña al sistema operativo.
 systemQuery.addEventListener('change', (event) => {
   if (readStored() === null) apply(event.matches ? 'dark' : 'light');
 });
 
-bind();
+// El documento nuevo llega sin `data-theme`: se le copia el vigente antes del cambio.
+document.addEventListener('astro:before-swap', ((event: TransitionBeforeSwapEvent) => {
+  event.newDocument.documentElement.dataset.theme = current();
+}) as EventListener);
+
+document.addEventListener('astro:page-load', sync);
 
 export {};

@@ -1,0 +1,20 @@
+---
+import { render } from 'astro:content';
+import CasoLayout from '../../layouts/CasoLayout.astro';
+import { getCasos } from '../../data/casos';
+
+export async function getStaticPaths() {
+  const casos = await getCasos();
+  return casos.map((caso, index) => ({
+    params: { slug: caso.data.slug },
+    props: { caso, next: casos[(index + 1) % casos.length] },
+  }));
+}
+
+const { caso, next } = Astro.props;
+const { Content } = await render(caso);
+---
+
+<CasoLayout caso={caso} next={next}>
+  <Content />
+</CasoLayout>

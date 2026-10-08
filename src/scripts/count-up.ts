@@ -41,6 +41,6 @@ function init(): void {
   });
 }
 
-init();
+document.addEventListener('astro:page-load', init);
 
 export {};

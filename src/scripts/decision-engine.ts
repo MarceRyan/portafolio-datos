@@ -90,10 +90,10 @@ function createParticle(u: number): Particle {
   };
 }
 
-function init(canvas: HTMLCanvasElement): void {
+function init(canvas: HTMLCanvasElement): (() => void) | null {
   const ctx = canvas.getContext('2d');
   const host = canvas.parentElement;
-  if (!ctx || !host) return;
+  if (!ctx || !host) return null;
 
   const desktop = matchMedia('(min-width: 768px)');
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -239,28 +239,56 @@ function init(canvas: HTMLCanvasElement): void {
     }
   }
 
-  new ResizeObserver(() => {
+  const resizeObserver = new ResizeObserver(() => {
     resize();
     sync();
-  }).observe(host);
+  });
+  resizeObserver.observe(host);
 
-  new IntersectionObserver((entries) => {
+  const intersectionObserver = new IntersectionObserver((entries) => {
     visible = entries.some((entry) => entry.isIntersecting);
     sync();
-  }).observe(host);
+  });
+  intersectionObserver.observe(host);
 
   // El tema cambia `data-theme`: se vuelven a leer los colores de los tokens.
-  new MutationObserver(() => {
+  const themeObserver = new MutationObserver(() => {
     palette = readPalette();
     if (!shouldRun()) draw(performance.now());
-  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  });
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme'],
+  });
 
   desktop.addEventListener('change', sync);
   reduceMotion.addEventListener('change', sync);
   document.addEventListener('visibilitychange', sync);
+
+  // Al salir de la página se libera todo, para no acumular observadores entre navegaciones.
+  return () => {
+    cancelAnimationFrame(frame);
+    resizeObserver.disconnect();
+    intersectionObserver.disconnect();
+    themeObserver.disconnect();
+    desktop.removeEventListener('change', sync);
+    reduceMotion.removeEventListener('change', sync);
+    document.removeEventListener('visibilitychange', sync);
+  };
 }
 
-const canvas = document.querySelector<HTMLCanvasElement>('[data-engine-canvas]');
-if (canvas) init(canvas);
+let dispose: (() => void) | null = null;
+
+function teardown(): void {
+  dispose?.();
+  dispose = null;
+}
+
+document.addEventListener('astro:page-load', () => {
+  teardown();
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-engine-canvas]');
+  if (canvas) dispose = init(canvas);
+});
+document.addEventListener('astro:before-swap', teardown);
 
 export {};

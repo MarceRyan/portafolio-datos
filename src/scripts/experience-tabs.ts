@@ -1,5 +1,5 @@
 /**
- * Pestañas de la línea de tiempo horizontal.
+ * Pestañas del recorrido profesional.
  * Sin JavaScript todos los paneles quedan visibles; con él se muestra uno por vez.
  * Teclado: flechas, Inicio y Fin cambian de pestaña (patrón WAI-ARIA de tabs).
  */
@@ -52,6 +52,8 @@ function init(root: HTMLElement): void {
   });
 }
 
-document.querySelectorAll<HTMLElement>('[data-exp-tabs]').forEach(init);
+document.addEventListener('astro:page-load', () => {
+  document.querySelectorAll<HTMLElement>('[data-exp-tabs]').forEach(init);
+});
 
 export {};

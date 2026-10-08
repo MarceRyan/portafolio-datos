@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout title="Página no encontrada" noindex>
+  <section class="wrap flex min-h-[60dvh] flex-col items-start justify-center gap-6 py-20">
+    <p class="font-display text-7xl leading-none font-black text-decide tabular-nums sm:text-8xl">
+      404
+    </p>
+    <h1 class="max-w-[22ch] text-3xl font-extrabold sm:text-4xl">No encontré esa página</h1>
+    <p class="max-w-[52ch] text-lg text-body">
+      El enlace puede estar mal escrito o la página ya no existe. Puedes volver al inicio o revisar
+      los casos.
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <Button href="/">Volver al inicio</Button>
+      <Button href="/casos" variant="secondary">
+        Ver casos
+      </Button>
+    </div>
+  </section>
+</BaseLayout>

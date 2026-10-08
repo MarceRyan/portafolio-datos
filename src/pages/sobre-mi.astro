@@ -1,0 +1,87 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import ExperienceExplorer from '../components/experience/ExperienceExplorer.astro';
+import Now from '../components/home/Now.astro';
+import { site } from '../data/site';
+
+// Talleres de la comunidad Data Science Research Perú (DSRP) que moderé.
+const workshops = [
+  'De escribir código a programar con IA',
+  'Taller práctico de IA',
+  'Análisis avanzado',
+  'Documentación y razonamiento con Claude',
+  'Potencia tu pipeline con IA',
+];
+---
+
+<BaseLayout
+  title="Sobre mí"
+  description="Mi recorrido profesional, la comunidad en la que participo y lo que hago hoy."
+>
+  <section class="wrap pt-12 pb-16 sm:pt-16 sm:pb-20">
+    <h1 class="text-4xl font-extrabold sm:text-5xl">Sobre mí</h1>
+    <p class="mt-6 max-w-[62ch] text-xl leading-relaxed text-body">
+      Soy {site.fullName}, analista de datos en el Ministerio de Educación del Perú desde enero de
+      2025. Mi recorrido empezó en logística y administración, pasó por TI y soporte técnico en
+      Pasco, y llegó a los datos con el Servicio de Mesa de Ayuda del MINEDU en octubre de 2024.
+    </p>
+    <p class="mt-5 max-w-[62ch] text-xl leading-relaxed text-body">
+      Tengo más de 2 años de experiencia en análisis, automatización y visualización de datos, y
+      busco puestos de Analista de Datos, Analista BI o Ingeniero de Datos.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <Button href="/casos">Ver casos</Button>
+      <Button href={site.cvPath} variant="secondary" download>
+        <Icon name="ph:download-simple" class="size-5" aria-hidden="true" />
+        Descargar CV
+      </Button>
+    </div>
+  </section>
+
+  <section aria-labelledby="recorrido-title" class="border-y border-line bg-surface py-20 sm:py-24">
+    <div class="wrap">
+      <h2 id="recorrido-title" class="text-3xl font-extrabold sm:text-4xl">
+        Trayectoria
+      </h2>
+      <div class="mt-12">
+        <ExperienceExplorer />
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="comunidad-title" class="wrap py-20 sm:py-28">
+    <h2 id="comunidad-title" class="text-3xl font-extrabold sm:text-4xl">
+      Comunidad
+    </h2>
+    <div class="mt-10 grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
+      <div>
+        <p class="font-display text-2xl leading-snug font-bold text-ink sm:text-3xl">
+          Moderador voluntario en Data Science Research Perú (DSRP), desde julio de 2026.
+        </p>
+        <p class="mt-5 max-w-[56ch] text-lg text-body">
+          Facilito los talleres y el espacio de preguntas, apoyo al ponente y cierro cada sesión con
+          un resumen propio.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-lg font-bold">Talleres</h3>
+        <ul class="mt-4 flex flex-col gap-3">
+          {workshops.map((workshop) => (
+            <li class="flex items-center gap-3 rounded-ui border border-line bg-surface px-4 py-3 text-ink">
+              <Icon
+                name="ph:chalkboard-teacher-fill"
+                class="size-5 shrink-0 text-soft"
+                aria-hidden="true"
+              />
+              {workshop}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Now />
+</BaseLayout>

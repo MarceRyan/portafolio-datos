@@ -103,29 +103,34 @@ const items = nav.map((item) => ({
 </style>
 
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-  const panel = document.getElementById('mobile-nav');
-  const labels = {
-    open: toggle?.dataset.labelOpen ?? '',
-    close: toggle?.dataset.labelClose ?? '',
-  };
+  // Delegación de eventos: el header se vuelve a renderizar en cada navegación (ClientRouter).
+  const getToggle = () => document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const getPanel = () => document.getElementById('mobile-nav');
 
   function setOpen(open: boolean): void {
+    const toggle = getToggle();
+    const panel = getPanel();
     if (!toggle || !panel) return;
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? labels.close : labels.open);
+    toggle.setAttribute(
+      'aria-label',
+      (open ? toggle.dataset.labelClose : toggle.dataset.labelOpen) ?? '',
+    );
     panel.hidden = !open;
   }
 
-  toggle?.addEventListener('click', () => {
-    setOpen(toggle.getAttribute('aria-expanded') !== 'true');
-  });
-
-  panel?.addEventListener('click', (event) => {
-    if ((event.target as HTMLElement).closest('a')) setOpen(false);
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element)) return;
+    const toggle = event.target.closest('[data-menu-toggle]');
+    if (toggle) {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+      return;
+    }
+    if (event.target.closest('#mobile-nav a')) setOpen(false);
   });
 
   document.addEventListener('keydown', (event) => {
+    const toggle = getToggle();
     if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
       setOpen(false);
       toggle.focus();
