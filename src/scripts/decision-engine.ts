@@ -4,7 +4,7 @@
  * - En la Transformación se ordenan en carriles y pasan a dato limpio.
  * - Tras el Modelado convergen en el nodo de Decisión, que late como máximo cada 700 ms.
  * Cada partícula avanza por un recorrido normalizado `u` (0 a 1), así el dibujo estático
- * (movimiento reducido) y el animado comparten la misma geometría.
+ * y el animado comparten la misma geometría. Siempre se anima; con movimiento reducido va calmado.
  */
 type RGB = readonly [number, number, number];
 
@@ -30,6 +30,8 @@ interface Particle {
 const STAGES = 5;
 const LANES = 5;
 const TRAVEL_SECONDS = 11;
+// Con movimiento reducido el flujo sigue, pero 2,5 veces más lento y sin el latido del nodo.
+const CALM_FACTOR = 2.5;
 const PULSE_MIN_GAP_MS = 700;
 const PULSE_DURATION_MS = 600;
 const GRID_STEP = 24;
@@ -214,7 +216,7 @@ function init(canvas: HTMLCanvasElement): (() => void) | null {
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
     for (const p of particles) {
-      p.u += (dt / TRAVEL_SECONDS) * p.speed;
+      p.u += (dt / (TRAVEL_SECONDS * (reduceMotion.matches ? CALM_FACTOR : 1))) * p.speed;
       if (p.u >= 1) {
         Object.assign(p, createParticle(0));
         // El nodo late como máximo una vez cada 700 ms, sin importar cuántas lleguen.
@@ -226,7 +228,7 @@ function init(canvas: HTMLCanvasElement): (() => void) | null {
   }
 
   function shouldRun(): boolean {
-    return visible && desktop.matches && !reduceMotion.matches && !document.hidden;
+    return visible && desktop.matches && !document.hidden;
   }
 
   function sync(): void {
