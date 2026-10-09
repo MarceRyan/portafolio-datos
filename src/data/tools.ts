@@ -191,6 +191,7 @@ export const alsoUse: readonly ExtraSkill[] = [
   { name: 'RStudio', icon: 'simple-icons:rstudioide' },
   { name: 'Oracle Database', icon: 'simple-icons:oracle' },
   { name: 'Git', icon: 'simple-icons:git' },
+  { name: 'Claude', icon: 'simple-icons:claude' },
   { name: 'Scrum', icon: 'ph:arrows-clockwise-fill' },
   { name: 'Kanban', icon: 'ph:kanban-fill' },
 ];

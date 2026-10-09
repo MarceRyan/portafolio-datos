@@ -20,6 +20,7 @@ export const toolRef = {
   forms: { name: 'Formularios', icon: 'simple-icons:googleforms' },
   java: { name: 'Java', icon: 'simple-icons:openjdk' },
   mysql: { name: 'MySQL', icon: 'simple-icons:mysql' },
+  claude: { name: 'Claude', icon: 'simple-icons:claude' },
 } as const satisfies Record<string, ToolRef>;
 
 const byName = new Map<string, ToolRef>(Object.values(toolRef).map((tool) => [tool.name, tool]));

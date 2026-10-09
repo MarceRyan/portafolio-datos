@@ -3,9 +3,10 @@ title: Programa de documentación SQL
 slug: centro-operaciones-sql
 # TODO(marcelo): confirmar la pregunta de negocio.
 question: '¿Cómo operar una base de datos heredada cuando sus consultas están desordenadas?'
-summary: Programa de documentación que ordena por tarea las consultas de una base de datos heredada, con cada paso listo para copiar y comprobar.
+summary: Programa de documentación que ordena por tarea las consultas de una base de datos heredada y mis propios scripts, con cada paso listo para copiar y comprobar.
 category: ingenieria
-stack: [SQL Server, SQL]
+# TODO(marcelo): confirmar que usaste Claude en este proyecto.
+stack: [SQL Server, SQL, Claude]
 organization: MINEDU, programa Educación Básica para Todos
 role: Analista de Datos
 confidential: true
@@ -32,7 +33,10 @@ Las tareas de la base (abrir un curso, cargar los archivos del día, publicar, c
   rows={[
     {
       columns: [
-        [{ label: 'Consultas heredadas, sin orden', tool: 'SQL Server', state: 'raw' }],
+        [
+          { label: 'Consultas heredadas, sin orden', tool: 'SQL Server', state: 'raw' },
+          { label: 'Mis propios scripts', tool: 'SQL', state: 'raw' },
+        ],
         [{ label: 'Consultas agrupadas por tarea', tool: 'SQL', state: 'clean' }],
         [{ label: 'Operación diaria con pasos comprobables', state: 'decide' }],
       ],
@@ -42,6 +46,6 @@ Las tareas de la base (abrir un curso, cargar los archivos del día, publicar, c
 
 ## Solución
 
-Diseñé un programa de documentación que organiza las consultas por momento de trabajo: empezar el día, abrir un curso o grupo, las tareas de cada día, los dinamizadores, el cierre y la referencia.
+Diseñé un programa de documentación que organiza las consultas heredadas y los scripts que escribí yo por momento de trabajo: empezar el día, abrir un curso o grupo, las tareas de cada día, los dinamizadores, el cierre y la referencia.
 
 Cada tarea es una secuencia de pasos numerados. Un paso indica si modifica datos, trae la consulta lista para copiar con los campos por llenar resaltados, una consulta de comprobación para verificar el resultado y un ejemplo con datos inventados que muestra qué pasa al ejecutarlo.
