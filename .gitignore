@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# capturas originales sin anonimizar: nunca se suben
+src/assets/images/casos/_originales/

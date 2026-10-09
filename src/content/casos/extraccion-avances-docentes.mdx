@@ -1,18 +1,20 @@
 ---
-title: Extracción automatizada de avances docentes
+title: Extracción y carga automatizada de avances docentes
 slug: extraccion-avances-docentes
 question: '¿Cómo saber el avance de cada docente sin descargar reportes a mano?'
-summary: Web scraping del campus virtual del SIFODS y migración a SQL Server con Python, reduciendo procesos manuales.
+summary: Web scraping del campus virtual del SIFODS con Selenium y Python, y un paquete de SSIS que carga notas, intentos y progreso a SQL Server.
 category: ingenieria
-stack: [Selenium, Python, SQL Server]
+stack: [Selenium, Python, SSIS, SQL Server]
 organization: MINEDU, programa Educación Básica para Todos
 role: Analista de Datos
 confidential: true
-featured: true
-order: 2
+featured: false
+order: 4
 ---
 
 import Flow from '../../components/casos/Flow.astro';
+
+{/* TODO(marcelo): confirmar cada cuánto corre el paquete y qué ejecutan las tareas de proceso. */}
 
 ## Contexto
 
@@ -24,19 +26,29 @@ Para conocer el avance de cada docente había que descargar reportes a mano.
 
 ## Datos
 
-Notas y avances de docentes publicados en el campus virtual del SIFODS.
+Notas, intentos y progreso de docentes publicados en el campus virtual del SIFODS.
 
 ## Arquitectura
 
 <Flow
-  caption="Del campus virtual a una base de datos consultable, sin descargas manuales."
+  caption="Del campus virtual a las tablas de hechos, sin descargas manuales."
   rows={[
     {
+      label: 'Extracción',
       columns: [
         [{ label: 'Campus virtual del SIFODS', state: 'raw' }],
         [{ label: 'Scraping automatizado', tool: 'Selenium', state: 'raw' }],
         [{ label: 'Migración de los datos', tool: 'Python', state: 'clean' }],
         [{ label: 'Base de datos', tool: 'SQL Server', state: 'clean' }],
+      ],
+    },
+    {
+      label: 'Carga',
+      columns: [
+        [{ label: 'Descarga de los Excel', tool: 'SSIS', state: 'raw' }],
+        [{ label: 'Carga de notas, intentos y progreso', tool: 'SSIS', state: 'raw' }],
+        [{ label: 'Capa staging y validación', tool: 'SSIS', state: 'clean' }],
+        [{ label: 'Capas fact y progreso diario', tool: 'SQL Server', state: 'clean' }],
       ],
     },
   ]}
@@ -45,6 +57,8 @@ Notas y avances de docentes publicados en el campus virtual del SIFODS.
 ## Solución
 
 Web scraping con Selenium del campus virtual del SIFODS y migración a SQL Server con Python.
+
+La carga la ordena un paquete de SSIS. Descarga los Excel, carga las notas, los intentos y el progreso, retira los registros de docentes con error, pasa por la capa staging y su validación, y termina en las capas fact de notas, intentos y progreso. Al final carga la base de llamadas y el progreso diario.
 
 ## Resultados
 

@@ -1,0 +1,48 @@
+---
+title: Tablero de seguimiento de Acciones Formativas
+slug: seguimiento-acciones-formativas
+# TODO(marcelo): confirmar la pregunta de negocio.
+question: '¿Cómo avanza cada acción formativa y cuáles necesitan atención esta semana?'
+summary: Tablero en Power BI que reúne el avance de todas las acciones formativas, programas y cursos en una sola vista, con su evolución y el detalle por acción.
+category: bi
+stack: [Power BI]
+organization: MINEDU, programa Educación Básica para Todos
+role: Analista de Datos
+confidential: true
+featured: true
+order: 2
+---
+
+import Flow from '../../components/casos/Flow.astro';
+
+{/* TODO(marcelo): contar de dónde vienen los datos, cada cuánto se actualiza y quién usa el tablero. */}
+
+## Problema
+
+Seguir el avance de muchas acciones formativas a la vez, entre programas y cursos, sin revisar un reporte por cada una.
+
+## Arquitectura
+
+<Flow
+  caption="Del corte de participaciones a una vista por acción formativa."
+  rows={[
+    {
+      columns: [
+        [{ label: 'Participaciones por acción formativa', state: 'raw' }],
+        [{ label: 'Estados de avance por corte', state: 'clean' }],
+        [
+          { label: 'Indicadores y cobertura del corte', tool: 'Power BI', state: 'decide' },
+          { label: 'Detalle por acción formativa', tool: 'Power BI', state: 'decide' },
+        ],
+      ],
+    },
+  ]}
+/>
+
+## Solución
+
+El tablero tiene tres vistas: inicio, detalle de la acción formativa y evolución. Se filtra por año, tipo de oferta, estado, programa y acción formativa.
+
+La vista de inicio muestra cuatro estados de avance (aprobados, desaprobados, en proceso y no inicia) y la cobertura del último corte, es decir, cuántas ofertas activas llegaron actualizadas. A su lado va la evolución de esos estados en el tiempo y el estado actual de cada acción formativa.
+
+La tabla inferior baja al detalle: participaciones, culminaron, aprobados, desaprobados, en proceso y no inicia por acción formativa, con la variación de los últimos 7 días y los días sin movimiento.

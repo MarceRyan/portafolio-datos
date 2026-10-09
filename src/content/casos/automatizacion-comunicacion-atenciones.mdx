@@ -1,51 +1,45 @@
 ---
-title: Automatización de la comunicación y registro de atenciones
+title: Registro de atenciones y panel de control
 slug: automatizacion-comunicacion-atenciones
-question: '¿Cómo comunicarse con muchos docentes y registrar cada atención de forma ordenada?'
-summary: Envío masivo de correos con Power Automate, más un sistema de gestión de llamadas y formularios de asistencia en Apps Script.
+question: '¿Cuántas atenciones se hacen, por qué canal y en qué horario?'
+summary: Sistema de gestión de llamadas y formularios de asistencia en Apps Script, con un panel de control en Power BI que cuenta las atenciones por canal, turno y hora.
 category: automatizacion
-stack: [Power Automate, Apps Script, Formularios]
+stack: [Apps Script, Formularios, Power BI]
 organization: MINEDU, programa Educación Básica para Todos
 role: Analista de Datos
 confidential: true
 featured: false
-order: 5
+order: 7
 ---
 
 import Flow from '../../components/casos/Flow.astro';
 
 ## Contexto
 
-Parte de mi trabajo en el MINEDU es la comunicación con los docentes y el registro de las atenciones.
+Parte de mi trabajo en el MINEDU es el registro de las atenciones a los docentes.
 
 ## Problema
 
-Comunicarse con muchos docentes a la vez y dejar registrada cada llamada y cada asistencia, sin depender de procesos manuales.
+Dejar registrada cada llamada y cada asistencia sin depender de procesos manuales, y ver cuántas atenciones se hacen por canal y por horario.
 
 ## Arquitectura
 
 <Flow
-  caption="Tres automatizaciones independientes: comunicación, llamadas y asistencia."
+  caption="Del registro de cada atención al panel de control."
   rows={[
-    {
-      label: 'Comunicación',
-      columns: [
-        [{ label: 'Envío masivo de correos', tool: 'Power Automate', state: 'clean' }],
-        [{ label: 'Docentes', state: 'decide' }],
-      ],
-    },
     {
       label: 'Llamadas',
       columns: [
-        [{ label: 'Sistema de gestión de llamadas', tool: 'Apps Script', state: 'clean' }],
-        [{ label: 'Registro de atenciones', state: 'decide' }],
+        [{ label: 'Sistema de gestión de llamadas', tool: 'Apps Script', state: 'raw' }],
+        [{ label: 'Registro de atenciones', state: 'clean' }],
+        [{ label: 'Panel de control', tool: 'Power BI', state: 'decide' }],
       ],
     },
     {
       label: 'Asistencia',
       columns: [
         [{ label: 'Formularios de asistencia', tool: 'Apps Script', state: 'raw' }],
-        [{ label: 'Registro diario', state: 'decide' }],
+        [{ label: 'Registro diario', state: 'clean' }],
       ],
     },
   ]}
@@ -53,4 +47,6 @@ Comunicarse con muchos docentes a la vez y dejar registrada cada llamada y cada 
 
 ## Solución
 
-Envío masivo de correos con Power Automate y apoyo en un sistema de gestión de llamadas y en formularios de asistencia desarrollados en Apps Script.
+Un sistema de gestión de llamadas y formularios de asistencia desarrollados en Apps Script.
+
+El panel de control en Power BI cuenta las atenciones realizadas y las reparte por turno (mañana, tarde y noche) y por rango de hora. Separa los canales: anexo telefónico, sala de Teams, Telegram institucional y WhatsApp. Incluye el registro diario por turno, su evolución y el conteo de actividades por dinamizador. Se filtra por fecha, dinamizador y equipo líder.

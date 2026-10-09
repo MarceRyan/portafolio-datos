@@ -1,0 +1,42 @@
+---
+title: Correos masivos con Excel personalizado
+slug: correos-masivos-excel-personalizado
+# TODO(marcelo): confirmar la pregunta de negocio.
+question: '¿Cómo enviar a cada destinatario su propio archivo sin armar los correos uno por uno?'
+summary: Flujo automatizado que envía correos masivos y adjunta a cada destinatario un archivo de Excel personalizado.
+category: automatizacion
+# TODO(marcelo): confirmar si el flujo es de Power Automate, de Power Apps o de ambos.
+stack: [Power Automate, Excel]
+organization: MINEDU, programa Educación Básica para Todos
+role: Analista de Datos
+confidential: true
+featured: false
+order: 8
+---
+
+import Flow from '../../components/casos/Flow.astro';
+
+{/* TODO(marcelo): de dónde sale la lista de destinatarios, cómo se genera el Excel de cada uno y cuántos correos envía. */}
+
+## Problema
+
+Enviar correos a muchos destinatarios cuando cada uno debe recibir un archivo distinto.
+
+## Arquitectura
+
+<Flow
+  caption="De una lista de destinatarios a un correo con su propio archivo."
+  rows={[
+    {
+      columns: [
+        [{ label: 'Lista de destinatarios', tool: 'Excel', state: 'raw' }],
+        [{ label: 'Archivo personalizado por destinatario', tool: 'Excel', state: 'clean' }],
+        [{ label: 'Envío masivo de correos', tool: 'Power Automate', state: 'decide' }],
+      ],
+    },
+  ]}
+/>
+
+## Solución
+
+Un flujo automatizado recorre la lista de destinatarios, prepara el archivo de Excel que le corresponde a cada uno y envía el correo con ese archivo adjunto.

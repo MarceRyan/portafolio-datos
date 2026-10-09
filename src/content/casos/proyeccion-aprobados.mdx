@@ -1,0 +1,49 @@
+---
+title: Proyección de aprobados por ritmo diario
+slug: proyeccion-aprobados
+# TODO(marcelo): confirmar la pregunta de negocio.
+question: '¿A cuántos aprobados llegaremos al cierre si se mantiene el ritmo actual?'
+summary: Informe que proyecta los aprobados al ritmo promedio por día hábil y compara el ritmo del equipo completo con el del equipo que continúa.
+category: analisis
+# TODO(marcelo): indicar con qué herramientas se genera el informe.
+stack: []
+organization: MINEDU, programa Educación Básica para Todos
+role: Analista de Datos
+confidential: true
+featured: true
+order: 3
+---
+
+import Flow from '../../components/casos/Flow.astro';
+
+{/* TODO(marcelo): explicar la metodología de la proyección y con qué se construye el informe. */}
+
+## Problema
+
+Saber con anticipación a cuántos aprobados se llegaría al cierre, y cuánto cambia el ritmo cuando el equipo de dinamizadores se reduce.
+
+## Arquitectura
+
+<Flow
+  caption="Del avance diario real a la proyección de cierre."
+  rows={[
+    {
+      columns: [
+        [{ label: 'Avance diario por estado', state: 'raw' }],
+        [{ label: 'Ritmo promedio por día hábil', state: 'clean' }],
+        [
+          { label: 'Proyección de aprobados', state: 'decide' },
+          { label: 'Comparación entre equipos', state: 'decide' },
+        ],
+      ],
+    },
+  ]}
+/>
+
+## Solución
+
+El informe tiene dos partes.
+
+La primera es la tendencia: una línea sólida con los datos reales y una punteada con la proyección al ritmo promedio de aprobados por día hábil, con cada semana sombreada para ubicar el avance.
+
+La segunda compara dos fases: el equipo completo de dinamizadores y el equipo reducido que continúa después. Se compara el ritmo en personas por día de cada estado (aprobado, desaprobado, en proceso y no inició) y no el porcentaje sobre el total, porque el ritmo ya es una cifra absoluta y no tiene el problema de comparar bases de distinto tamaño.

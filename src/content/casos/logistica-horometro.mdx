@@ -1,0 +1,43 @@
+---
+title: Logística y Horómetro
+slug: logistica-horometro
+# TODO(marcelo): confirmar la pregunta de negocio.
+question: '¿Cómo controlar equipos, turnos y costos sin repartir la información en varios archivos?'
+summary: Aplicación en Apps Script para controlar equipos, turnos, costos de alquiler, combustible y reportes desde un único lugar.
+category: automatizacion
+stack: [Apps Script]
+# TODO(marcelo): indicar para quién se hizo (organización o proyecto personal), tu rol y el período.
+confidential: false
+featured: false
+order: 9
+---
+
+import Flow from '../../components/casos/Flow.astro';
+
+{/* TODO(marcelo): contar cómo se registra el horómetro, cómo se calculan los costos y qué reportes genera. */}
+
+## Problema
+
+Controlar los equipos, sus turnos, el costo de alquiler y el combustible desde un único lugar.
+
+## Arquitectura
+
+<Flow
+  caption="Del registro de cada turno a los reportes de costos."
+  rows={[
+    {
+      columns: [
+        [
+          { label: 'Equipos y turnos', state: 'raw' },
+          { label: 'Combustible', state: 'raw' },
+        ],
+        [{ label: 'Control de horas y costos de alquiler', tool: 'Apps Script', state: 'clean' }],
+        [{ label: 'Reportes', tool: 'Apps Script', state: 'decide' }],
+      ],
+    },
+  ]}
+/>
+
+## Solución
+
+Una aplicación en Apps Script que controla equipos, turnos, costos de alquiler, combustible y reportes desde un único lugar.

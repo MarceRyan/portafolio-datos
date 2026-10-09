@@ -10,7 +10,7 @@ const present = (Object.keys(categoryLabels) as CasoCategory[]).filter((category
   casos.some((caso) => caso.data.category === category),
 );
 
-// Ritmo de 6 columnas: 4+2, 3+3, 2+4. Con un filtro activo todas pasan a 3+3.
+// Ritmo de 6 columnas: 4+2, 3+3, 2+4 y 2+2+2. Con un filtro activo todas pasan a 3+3.
 const spans = [
   'lg:col-span-4',
   'lg:col-span-2',
@@ -18,6 +18,9 @@ const spans = [
   'lg:col-span-3',
   'lg:col-span-2',
   'lg:col-span-4',
+  'lg:col-span-2',
+  'lg:col-span-2',
+  'lg:col-span-2',
 ];
 ---
 

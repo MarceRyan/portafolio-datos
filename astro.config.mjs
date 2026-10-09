@@ -17,8 +17,8 @@ export default defineConfig({
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : 'http://localhost:4321'),
   output: 'static',
-  // /cv lleva al PDF del CV (public/cv/Marcelo-Morales-CV.pdf).
-  redirects: { '/cv': '/cv/Marcelo-Morales-CV.pdf' },
+  // /cv lleva al PDF del CV (public/cv/CV_Marcelo_Morales_Rimac_Documentado.pdf).
+  redirects: { '/cv': '/cv/CV_Marcelo_Morales_Rimac_Documentado.pdf' },
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],

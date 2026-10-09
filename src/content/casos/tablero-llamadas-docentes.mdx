@@ -1,0 +1,46 @@
+---
+title: Seguimiento de llamadas a docentes
+slug: tablero-llamadas-docentes
+# TODO(marcelo): confirmar la pregunta de negocio.
+question: '¿A qué docentes ya se llamó, quiénes contestaron y en qué condición de avance están?'
+summary: Vista de Power BI que cruza las llamadas a docentes con su condición de avance en el curso.
+category: bi
+stack: [Power BI]
+organization: MINEDU, programa Educación Básica para Todos
+role: Analista de Datos
+confidential: true
+featured: false
+order: 6
+---
+
+import Flow from '../../components/casos/Flow.astro';
+
+{/* TODO(marcelo): contar de dónde sale el registro de llamadas y quién usa esta vista. */}
+
+## Problema
+
+Saber a qué docentes ya se contactó, cuántas llamadas se contestaron y si el contacto alcanza a quienes más lo necesitan según su avance.
+
+## Arquitectura
+
+<Flow
+  caption="Del registro de cada llamada a una vista por docente."
+  rows={[
+    {
+      columns: [
+        [
+          { label: 'Registro de llamadas', state: 'raw' },
+          { label: 'Condición de avance del docente', state: 'raw' },
+        ],
+        [{ label: 'Resumen por docente', state: 'clean' }],
+        [{ label: 'Vista de llamadas', tool: 'Power BI', state: 'decide' }],
+      ],
+    },
+  ]}
+/>
+
+## Solución
+
+La vista resume los docentes contactados, las llamadas realizadas, las contestadas y las no contestadas, la duración promedio y la última llamada registrada. Agrupa a los docentes contactados por su condición de avance: aprobado, desaprobado, en proceso y no inició.
+
+Se filtra por dinamizador, curso, estado de la llamada, número de documento y fecha. Debajo van la evolución de llamadas por día, el resumen por docente y el detalle de cada llamada con su tipo, duración y observación.
