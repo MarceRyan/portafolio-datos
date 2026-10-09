@@ -1,0 +1,48 @@
+---
+title: Segundo cerebro de la base de datos
+slug: segundo-cerebro-base-de-datos
+# TODO(marcelo): confirmar la pregunta de negocio.
+question: '¿Qué tablas y procedimientos toca cada proceso de la base de datos?'
+summary: Mapa de notas enlazadas que conecta los procesos de una base de datos heredada con sus tablas, procedimientos almacenados y capas.
+category: ingenieria
+# TODO(marcelo): indicar con qué herramienta construiste el segundo cerebro.
+stack: [SQL Server]
+organization: MINEDU, programa Educación Básica para Todos
+role: Analista de Datos
+confidential: true
+featured: false
+order: 6
+---
+
+import Flow from '../../components/casos/Flow.astro';
+
+{/* TODO(marcelo): contar con qué herramienta lo armaste y cómo lo mantienes al día. */}
+
+## Contexto
+
+Heredé una base de datos cuyas consultas estaban muy desordenadas. Para entenderla tuve que estudiarlas una por una.
+
+## Problema
+
+Estudiar las consultas por separado no mostraba cómo se relacionan: qué proceso usa qué tabla y qué procedimiento depende de cuál.
+
+## Arquitectura
+
+<Flow
+  caption="De las consultas estudiadas a un mapa navegable de la base."
+  rows={[
+    {
+      columns: [
+        [{ label: 'Consultas y objetos de la base', tool: 'SQL Server', state: 'raw' }],
+        [{ label: 'Una nota por proceso, tabla y procedimiento', state: 'clean' }],
+        [{ label: 'Mapa de relaciones', state: 'decide' }],
+      ],
+    },
+  ]}
+/>
+
+## Solución
+
+Diseñé un segundo cerebro: una nota por cada proceso, tabla y procedimiento almacenado, enlazadas entre sí.
+
+El mapa parte de una nota de inicio y agrupa el contenido en mapas de procesos, de objetos, de conceptos, de casos y de herramientas. Cada proceso queda conectado con las tablas y los procedimientos que toca y con las capas por las que pasa el dato: landing, staging y fact. También reúne un glosario, las alertas y riesgos, y las preguntas abiertas.

@@ -1,9 +1,9 @@
 ---
-title: 'Centro de operaciones SQL: guía por tarea'
+title: Programa de documentación SQL
 slug: centro-operaciones-sql
 # TODO(marcelo): confirmar la pregunta de negocio.
-question: '¿Cómo operar la base de datos cada día sin depender de la memoria de una sola persona?'
-summary: Documentación operativa de la base de datos, organizada por tarea, con las consultas listas para copiar y un mapa que enlaza procesos, tablas y procedimientos.
+question: '¿Cómo operar una base de datos heredada cuando sus consultas están desordenadas?'
+summary: Programa de documentación que ordena por tarea las consultas de una base de datos heredada, con cada paso listo para copiar y comprobar.
 category: ingenieria
 stack: [SQL Server, SQL]
 organization: MINEDU, programa Educación Básica para Todos
@@ -13,28 +13,27 @@ featured: false
 order: 5
 ---
 
-import { Image } from 'astro:assets';
 import Flow from '../../components/casos/Flow.astro';
-import mapa from '../../assets/images/casos/centro-operaciones-sql-mapa.png';
 
-{/* TODO(marcelo): contar con qué construiste la guía y el mapa, y quién los usa. */}
+{/* TODO(marcelo): contar con qué construiste el programa y quién más lo usa. */}
+
+## Contexto
+
+Heredé una base de datos cuyas consultas estaban muy desordenadas. Para poder operarla tuve que estudiarlas una por una.
 
 ## Problema
 
-Las tareas de la base (abrir un curso, cargar los archivos del día, publicar, cerrar un curso, emitir constancias) dependen de consultas y procedimientos que hay que ejecutar en orden y con los datos correctos.
+Las tareas de la base (abrir un curso, cargar los archivos del día, publicar, cerrar un curso, emitir constancias) dependían de consultas sueltas que había que ejecutar en orden y con los datos correctos.
 
 ## Arquitectura
 
 <Flow
-  caption="De las consultas sueltas a una guía por tarea y un mapa de la base."
+  caption="De las consultas heredadas a una guía por tarea."
   rows={[
     {
       columns: [
-        [{ label: 'Consultas y procedimientos de la base', tool: 'SQL Server', state: 'raw' }],
-        [
-          { label: 'Guía por tarea', tool: 'SQL', state: 'clean' },
-          { label: 'Mapa de procesos y objetos', state: 'clean' },
-        ],
+        [{ label: 'Consultas heredadas, sin orden', tool: 'SQL Server', state: 'raw' }],
+        [{ label: 'Consultas agrupadas por tarea', tool: 'SQL', state: 'clean' }],
         [{ label: 'Operación diaria con pasos comprobables', state: 'decide' }],
       ],
     },
@@ -43,19 +42,6 @@ Las tareas de la base (abrir un curso, cargar los archivos del día, publicar, c
 
 ## Solución
 
-La guía está organizada por momento de trabajo: empezar el día, abrir un curso o grupo, las tareas de cada día, los dinamizadores, el cierre y la referencia.
+Diseñé un programa de documentación que organiza las consultas por momento de trabajo: empezar el día, abrir un curso o grupo, las tareas de cada día, los dinamizadores, el cierre y la referencia.
 
 Cada tarea es una secuencia de pasos numerados. Un paso indica si modifica datos, trae la consulta lista para copiar con los campos por llenar resaltados, una consulta de comprobación para verificar el resultado y un ejemplo con datos inventados que muestra qué pasa al ejecutarlo.
-
-<figure>
-  <Image
-    src={mapa}
-    alt="Mapa de notas enlazadas: procesos, tablas y procedimientos almacenados de la base de datos."
-    widths={[480, 800, 1200]}
-    sizes="(min-width: 1024px) 44rem, 100vw"
-    class="rounded-ui border border-line"
-  />
-  <figcaption>El mapa enlaza cada proceso con las tablas y los procedimientos que toca.</figcaption>
-</figure>
-
-El mapa conecta los procesos con los objetos de la base: tablas, procedimientos almacenados y las capas por las que pasa el dato (landing, staging y fact).
