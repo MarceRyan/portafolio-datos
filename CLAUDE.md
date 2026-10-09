@@ -37,7 +37,7 @@ Astro 7 (salida 100% estática), TypeScript estricto, Tailwind CSS v4 (plugin de
 - Un solo radio (`rounded-ui`, 10 px). Tipografías: Schibsted Grotesk (títulos), Instrument Sans (texto), Caveat solo como firma provisional. Números con `tabular-nums`.
 - `clean` y `decide` pasan 4.5:1 en ambos temas; `raw1` y `raw3` no sirven para texto. Detalle en `tokens.md`.
 - Todo movimiento respeta `prefers-reduced-motion` (estado final estático).
-- **Reglas anti-IA, obligatorias:** nada de degradados morados decorativos, efecto vidrio en tarjetas, emojis como viñetas, etiquetas en MAYÚSCULAS sobre cada título, flechas "→" en botones, tarjetas idénticas en cuadrícula, barras de porcentaje de habilidades ni animaciones de aparición en cada sección. Nada de frases genéricas ("apasionado por la tecnología", "transformo datos en insights"). El caso principal es más grande que los demás.
+- **Reglas anti-IA, obligatorias:** nada de degradados morados decorativos, efecto vidrio en tarjetas, emojis como viñetas, etiquetas en MAYÚSCULAS sobre cada título, flechas "→" en botones, tarjetas idénticas en cuadrícula, barras de porcentaje de habilidades ni animaciones de aparición en cada sección. Nada de frases genéricas ("apasionado por la tecnología", "transformo datos en insights"). Excepción decidida por Marcelo: las tarjetas de casos usan cuadros del mismo tamaño (portadas 16:9 de 1600×900) para no recortar ni deformar las capturas.
 - Sin rayas largas (em dash) en textos visibles; usa coma, punto o guion corto.
 
 ## Reglas de contenido

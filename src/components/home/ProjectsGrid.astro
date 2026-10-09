@@ -7,19 +7,6 @@ import { getCasos } from '../../data/casos';
 import { resolveTools } from '../../data/tool-refs';
 
 const casos = await getCasos();
-
-// Mosaico de 9 celdas con ritmo: 2+1+1, 1+2+1 y 1+1+2 (4 columnas).
-const spans = [
-  'lg:col-span-2',
-  'lg:col-span-1',
-  'lg:col-span-1',
-  'lg:col-span-1',
-  'lg:col-span-2',
-  'lg:col-span-1',
-  'lg:col-span-1',
-  'lg:col-span-1',
-  'lg:col-span-2',
-];
 ---
 
 <section id="proyectos" aria-labelledby="proyectos-title" class="wrap pb-20 sm:pb-28">
@@ -27,9 +14,9 @@ const spans = [
     Proyectos que construí
   </h2>
 
-  <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-    {casos.map((caso, index) => (
-      <li class:list={['flex', spans[index]]}>
+  <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {casos.map((caso) => (
+      <li class="flex">
         <article class="group relative flex w-full flex-col overflow-hidden rounded-ui border border-line bg-surface">
           {/* Los casos destacados ya usan el nombre de transición en "Decisiones". */}
           <div

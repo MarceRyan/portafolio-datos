@@ -9,19 +9,6 @@ const casos = await getCasos();
 const present = (Object.keys(categoryLabels) as CasoCategory[]).filter((category) =>
   casos.some((caso) => caso.data.category === category),
 );
-
-// Ritmo de 6 columnas: 4+2, 3+3, 2+2+2 y 3+3. Con un filtro activo todas pasan a 3+3.
-const spans = [
-  'lg:col-span-4',
-  'lg:col-span-2',
-  'lg:col-span-3',
-  'lg:col-span-3',
-  'lg:col-span-2',
-  'lg:col-span-2',
-  'lg:col-span-2',
-  'lg:col-span-3',
-  'lg:col-span-3',
-];
 ---
 
 <BaseLayout
@@ -65,31 +52,15 @@ const spans = [
     </div>
     <p class="sr-only" role="status" aria-live="polite" data-filter-status></p>
 
-    <ul data-cases class="cases-grid mt-10 grid gap-6 lg:grid-cols-6">
-      {casos.map((caso, index) => (
-        <li data-category={caso.data.category} class:list={['flex', spans[index]]}>
-          <CaseCard
-            caso={caso}
-            size={index === 0 ? 'lg' : 'md'}
-            transitionName={`cover-${caso.data.slug}`}
-          />
+    <ul data-cases class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {casos.map((caso) => (
+        <li data-category={caso.data.category} class="flex">
+          <CaseCard caso={caso} transitionName={`cover-${caso.data.slug}`} />
         </li>
       ))}
     </ul>
   </section>
 </BaseLayout>
-
-<style>
-  /* Con un filtro activo el mosaico se normaliza para no dejar huecos. */
-  .cases-grid[data-filtered='true'] > li {
-    grid-column: span 3 / span 3;
-  }
-  @media (max-width: 1023.98px) {
-    .cases-grid[data-filtered='true'] > li {
-      grid-column: auto;
-    }
-  }
-</style>
 
 <script>
   import '../../scripts/case-filter';
