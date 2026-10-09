@@ -368,10 +368,13 @@ const teardown = (): void => {
   disposers = [];
 };
 
-document.addEventListener('astro:page-load', () => {
+const start = (): void => {
   teardown();
   disposers = [...document.querySelectorAll<HTMLCanvasElement>('[data-lab-variant]')].map(mount);
-});
+};
+document.addEventListener('astro:page-load', start);
+// Si el script llega después del aviso de carga (pasa en desarrollo), arranca igual.
+if (document.readyState !== 'loading') start();
 document.addEventListener('astro:before-swap', teardown);
 
 export {};

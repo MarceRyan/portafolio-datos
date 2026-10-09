@@ -286,11 +286,14 @@ function teardown(): void {
   dispose = null;
 }
 
-document.addEventListener('astro:page-load', () => {
+const start = (): void => {
   teardown();
   const canvas = document.querySelector<HTMLCanvasElement>('[data-engine-canvas]');
   if (canvas) dispose = init(canvas);
-});
+};
+document.addEventListener('astro:page-load', start);
+// Si el script llega después del aviso de carga (pasa en desarrollo), arranca igual.
+if (document.readyState !== 'loading') start();
 document.addEventListener('astro:before-swap', teardown);
 
 export {};
