@@ -21,6 +21,7 @@ export const toolRef = {
   java: { name: 'Java', icon: 'simple-icons:openjdk' },
   mysql: { name: 'MySQL', icon: 'simple-icons:mysql' },
   claude: { name: 'Claude', icon: 'simple-icons:claude' },
+  rstudio: { name: 'RStudio', icon: 'simple-icons:rstudioide' },
 } as const satisfies Record<string, ToolRef>;
 
 const byName = new Map<string, ToolRef>(Object.values(toolRef).map((tool) => [tool.name, tool]));
