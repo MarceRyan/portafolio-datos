@@ -33,7 +33,7 @@ const spans = [
         <article class="group relative flex w-full flex-col overflow-hidden rounded-ui border border-line bg-surface">
           {/* Los casos destacados ya usan el nombre de transición en "Decisiones". */}
           <div
-            class="h-44 overflow-hidden border-b border-line"
+            class="aspect-[16/9] overflow-hidden border-b border-line"
             transition:name={
               caso.data.featured ? `project-${caso.data.slug}` : `cover-${caso.data.slug}`
             }

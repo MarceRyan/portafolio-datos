@@ -25,7 +25,7 @@ const zoom =
           tabindex="-1"
           aria-hidden="true"
           transition:name={`cover-${main.data.slug}`}
-          class:list={[imageLink, 'min-h-[18rem] flex-1']}
+          class:list={[imageLink, 'aspect-[16/9]']}
         >
           <CoverImage
             slug={main.data.slug}
@@ -68,7 +68,7 @@ const zoom =
           tabindex="-1"
           aria-hidden="true"
           transition:name={`cover-${caso.data.slug}`}
-          class:list={[imageLink, 'aspect-[16/10]']}
+          class:list={[imageLink, 'aspect-[16/9]']}
         >
           <CoverImage
             slug={caso.data.slug}

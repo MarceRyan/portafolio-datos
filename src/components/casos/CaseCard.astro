@@ -21,7 +21,7 @@ const impact = data.impact?.[0];
 
 <article class="group relative flex h-full flex-col overflow-hidden rounded-ui border border-line bg-surface">
   <div
-    class:list={['overflow-hidden border-b border-line', size === 'lg' ? 'h-64 sm:h-80' : 'h-48']}
+    class="aspect-[16/9] overflow-hidden border-b border-line"
     transition:name={transitionName ?? `card-${data.slug}`}
   >
     <CoverImage
