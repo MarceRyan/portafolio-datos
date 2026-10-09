@@ -3,7 +3,10 @@ import CoverImage from '../ui/CoverImage.astro';
 import { getCasos } from '../../data/casos';
 import { parseImpact } from '../../data/impact';
 
-const featured = (await getCasos()).filter((caso) => caso.data.featured);
+const casos = await getCasos();
+const [main, ...rest] = casos.filter((caso) => caso.data.featured);
+const mainImpact = main?.data.impact?.[0];
+const mainTarget = mainImpact ? parseImpact(mainImpact.value) : null;
 const imageLink = 'block aspect-[16/9] overflow-hidden rounded-ui border border-line';
 const zoom =
   'transition-transform duration-300 ease-out [@media(hover:hover)]:group-hover:scale-[1.02]';
@@ -14,52 +17,76 @@ const zoom =
     Decisiones que ayudé a tomar
   </h2>
 
-  {/* Tres cuadros del mismo tamaño; el caso con cifra la muestra bajo su título. */}
-  <div class="mt-12 grid gap-x-8 gap-y-12 md:grid-cols-3">
-    {featured.map((caso, index) => {
-      const impact = caso.data.impact?.[0];
-      const target = impact ? parseImpact(impact.value) : null;
-      return (
-        <article class="group">
-          <a
-            href={`/casos/${caso.data.slug}`}
-            tabindex="-1"
-            aria-hidden="true"
-            transition:name={`cover-${caso.data.slug}`}
-            class={imageLink}
-          >
-            <CoverImage
-              slug={caso.data.slug}
-              cover={caso.data.cover}
-              alt={`Captura del tablero: ${caso.data.title}`}
-              sizes="(min-width: 768px) 26rem, 100vw"
-              loading={index === 0 ? 'eager' : 'lazy'}
-              class={zoom}
-            />
+  {/* Caso principal: la captura a la izquierda y su cifra a la derecha. */}
+  {main && (
+    <article class="group mt-12 grid items-center gap-x-10 gap-y-6 lg:grid-cols-12">
+      <a
+        href={`/casos/${main.data.slug}`}
+        tabindex="-1"
+        aria-hidden="true"
+        transition:name={`cover-${main.data.slug}`}
+        class:list={[imageLink, 'lg:col-span-8']}
+      >
+        <CoverImage
+          slug={main.data.slug}
+          cover={main.data.cover}
+          alt={`Captura del tablero: ${main.data.title}`}
+          sizes="(min-width: 1024px) 50rem, 100vw"
+          loading="eager"
+          class={zoom}
+        />
+      </a>
+      <div class="lg:col-span-4">
+        <h3 class="max-w-[20ch] text-2xl font-extrabold sm:text-3xl">
+          <a href={`/casos/${main.data.slug}`} class="underline-offset-4 hover:underline">
+            {main.data.title}
           </a>
-          <h3 class="mt-4 max-w-[26ch] text-xl font-bold">
-            <a href={`/casos/${caso.data.slug}`} class="underline-offset-4 hover:underline">
-              {caso.data.title}
-            </a>
-          </h3>
-          {impact && (
-            <div class="mt-4">
-              <p
-                aria-hidden="true"
-                data-count-to={target?.value}
-                data-decimals={target?.decimals}
-                data-suffix={target?.suffix}
-                class="font-display text-4xl leading-none font-black text-decide"
-              >
-                {impact.value}
-              </p>
-              <p class="sr-only">{impact.value}</p>
-              <p class="mt-2 max-w-[28ch] text-sm text-body">{impact.label}</p>
-            </div>
-          )}
-        </article>
-      );
-    })}
+        </h3>
+        <p class="mt-4 max-w-[36ch] text-lg text-body">{main.data.question}</p>
+        {mainImpact && (
+          <div class="mt-8 border-t border-line pt-6">
+            <p
+              aria-hidden="true"
+              data-count-to={mainTarget?.value}
+              data-decimals={mainTarget?.decimals}
+              data-suffix={mainTarget?.suffix}
+              class="font-display text-6xl leading-none font-black text-decide sm:text-7xl"
+            >
+              {mainImpact.value}
+            </p>
+            <p class="sr-only">{mainImpact.value}</p>
+            <p class="mt-3 max-w-[28ch] text-sm text-body">{mainImpact.label}</p>
+          </div>
+        )}
+      </div>
+    </article>
+  )}
+
+  <div class="mt-14 grid gap-x-10 gap-y-12 md:grid-cols-2">
+    {rest.map((caso) => (
+      <article class="group">
+        <a
+          href={`/casos/${caso.data.slug}`}
+          tabindex="-1"
+          aria-hidden="true"
+          transition:name={`cover-${caso.data.slug}`}
+          class={imageLink}
+        >
+          <CoverImage
+            slug={caso.data.slug}
+            cover={caso.data.cover}
+            alt={`Captura del tablero: ${caso.data.title}`}
+            sizes="(min-width: 768px) 36rem, 100vw"
+            class={zoom}
+          />
+        </a>
+        <h3 class="mt-4 max-w-[30ch] text-xl font-bold">
+          <a href={`/casos/${caso.data.slug}`} class="underline-offset-4 hover:underline">
+            {caso.data.title}
+          </a>
+        </h3>
+      </article>
+    ))}
   </div>
 
   <p class="mt-12 text-sm text-soft">

@@ -4,7 +4,7 @@ export interface CountTarget {
   suffix: string;
 }
 
-/** Convierte "32.42%" en valor numérico, decimales y sufijo para el conteo animado. */
+/** Convierte "37.15%" en valor numérico, decimales y sufijo para el conteo animado. */
 export function parseImpact(text: string): CountTarget | null {
   const match = /^(\d+(?:\.\d+)?)(.*)$/.exec(text.trim());
   if (!match) return null;
