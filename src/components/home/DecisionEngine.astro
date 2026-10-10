@@ -30,10 +30,9 @@ const columns = stages.map((stage) => ({
     </h2>
 
     <p class="mt-4 max-w-[62ch] text-lg text-body">
-      Acompaño la información desde donde nace hasta la persona que decide. Creo programas que
-      recolectan los datos por sí solos, los limpio, los ordeno en un solo lugar y los convierto en
-      tableros que se entienden de un vistazo. Pasa el cursor sobre una herramienta para ver qué
-      hace en cada paso.
+      Los datos suelen estar desordenados: repartidos en hojas, formularios, correos y páginas web.
+      Creo programas que los recolectan solos, los limpio, los reúno en un solo lugar y los
+      convierto en tableros claros, para que quien decide lo haga con evidencia.
     </p>
 
     <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-body" aria-label="Leyenda">
@@ -44,6 +43,9 @@ const columns = stages.map((stage) => ({
         </li>
       ))}
     </ul>
+    <p class="mt-3 hidden text-sm text-soft md:block">
+      Pasa el cursor sobre una herramienta para ver qué hace en cada paso.
+    </p>
 
     <ol class="mt-12 grid gap-12 md:grid-cols-5 md:grid-rows-[auto_13rem_auto] md:gap-0">
       {columns.map((stage, index) => (

@@ -1,9 +1,9 @@
 /**
  * Motor de decisiones: registros que recorren las cinco etapas de izquierda a derecha.
- * - Fuentes y Extracción: registros sueltos que giran; algunos vienen "sucios" (huecos).
- * - Transformación: los sucios se descartan y el resto se alinea en filas de tabla.
- * - Modelado: pasan por dos tablas de dimensiones y se unen en la tabla de hechos.
- * - Decisión: saltan a un gráfico de barras; al completarse se traza la tendencia.
+ * - Encontrar y Recolectar: registros sueltos que giran; algunos vienen "sucios" (huecos).
+ * - Limpiar: los sucios se descartan y el resto se alinea en filas de tabla.
+ * - Ordenar: pasan por dos tablas de dimensiones y se unen en la tabla de hechos.
+ * - Decidir: saltan a un gráfico de barras; al completarse se traza la tendencia.
  * Siempre se anima; con movimiento reducido va más lento y sin el latido final.
  */
 type RGB = readonly [number, number, number];
