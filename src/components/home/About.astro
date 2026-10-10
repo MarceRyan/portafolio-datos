@@ -1,8 +1,26 @@
 ---
 import { Icon } from 'astro-icon/components';
 import Button from '../ui/Button.astro';
+import ToolChips from '../ui/ToolChips.astro';
 import ExperienceList from '../experience/ExperienceList.astro';
 import { site } from '../../data/site';
+import { resolveTools } from '../../data/tool-refs';
+
+// Tecnologías con las que trabajo a diario (nombres de src/data/tool-refs.ts).
+const tech = resolveTools([
+  'SQL',
+  'SQL Server',
+  'Python',
+  'Power BI',
+  'SSIS',
+  'Excel',
+  'Google Sheets',
+  'Apps Script',
+  'Power Automate',
+  'Selenium',
+  'RStudio',
+  'Claude',
+]);
 ---
 
 <section
@@ -14,27 +32,43 @@ import { site } from '../../data/site';
     <h2 id="sobre-mi-title" class="text-3xl font-extrabold sm:text-4xl">
       Sobre mí
     </h2>
-    <div class="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-16">
-      <div class="flex max-w-[62ch] flex-col gap-4 text-lg leading-relaxed text-body">
-        <p>
-          Soy analista de datos, con formación en Ingeniería de Sistemas y Computación y más de dos
-          años de experiencia. Reúno información de distintas fuentes, la ordeno y la convierto en
-          tableros y reportes que ayudan a tomar decisiones.
+
+    <div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
+      <div class="max-w-[62ch]">
+        <p class="font-display text-2xl leading-snug font-bold text-ink sm:text-3xl">
+          De ordenar procesos a ordenar datos.
         </p>
-        <p>
-          También automatizo tareas repetitivas y uso modelos predictivos para anticipar escenarios.
-          Antes de llegar a los datos trabajé en logística, administración y soporte técnico.
-        </p>
-        <p>
-          Cuento con certificaciones en análisis e ingeniería de datos, y busco puestos de Analista
-          de Datos, Analista BI e Ingeniero de Datos.
-        </p>
+        <div class="mt-6 flex flex-col gap-4 text-lg leading-relaxed text-body">
+          <p>
+            ¡Hola! Soy Marcelo. Me formé en Ingeniería de Sistemas y Computación, y mis primeros
+            trabajos fueron en logística, administración y soporte técnico. Ahí aprendí cómo se
+            mueve la información en el día a día, y desde un servicio de Mesa de Ayuda di el paso al
+            análisis de datos.
+          </p>
+          <p>
+            Hoy, con más de dos años de experiencia, mi trabajo se centra en el camino completo del
+            dato: creo programas que lo recolectan solos, lo limpio, lo ordeno en una base y lo
+            convierto en tableros y proyecciones que ayudan a tomar decisiones. También automatizo
+            tareas repetitivas para que el equipo dedique su tiempo a analizar.
+          </p>
+          <p>
+            Sigo aprendiendo: me certifiqué como Associate Data Engineer y Associate Data Analyst, y
+            modero talleres de datos e inteligencia artificial en Data Science Research Perú.
+          </p>
+        </div>
+
+        <h3 class="mt-10 text-lg font-bold">Algunas de las tecnologías con las que trabajo</h3>
+        <ToolChips tools={tech} class="mt-4" />
       </div>
-      <Button href={site.cvPath} variant="secondary" download>
-        <Icon name="ph:download-simple" class="size-5" aria-hidden="true" />
-        Descargar CV
-      </Button>
+
+      <div class="lg:pt-2">
+        <Button href={site.cvPath} variant="secondary" download>
+          <Icon name="ph:download-simple" class="size-5" aria-hidden="true" />
+          Descargar CV
+        </Button>
+      </div>
     </div>
+
     <div class="mt-16">
       <ExperienceList />
     </div>
