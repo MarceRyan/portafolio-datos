@@ -27,5 +27,9 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [icon({ iconDir: 'src/assets/icons' }), mdx(), sitemap()],
+  integrations: [
+    icon({ iconDir: 'src/assets/icons' }),
+    mdx(),
+    sitemap({ filter: (page) => !page.includes('/laboratorio') }),
+  ],
 });

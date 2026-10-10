@@ -1,0 +1,87 @@
+---
+// Opción B: acordeón con todos los puestos apilados; el actual abierto.
+// Usa <details> nativo: funciona sin JavaScript y con teclado.
+import { Icon } from 'astro-icon/components';
+import Education from './Education.astro';
+import RoleDetail from './RoleDetail.astro';
+import { experience, formatPeriods, type Era } from '../../data/experience';
+
+const nodeByEra: Record<Era, string> = {
+  raw: 'border-raw text-soft',
+  clean: 'border-clean text-clean',
+  decide: 'border-decide text-decide',
+};
+---
+
+<div class="flex flex-col gap-16">
+  <div>
+    <h3 class="text-2xl font-extrabold">Experiencia</h3>
+
+    <div class="relative mt-8">
+      <span aria-hidden="true" class="absolute top-8 bottom-8 left-9 w-px bg-line"></span>
+      <div class="flex flex-col gap-3">
+        {experience.map((role, index) => (
+          <details
+            class="exp-item group relative rounded-ui border border-line bg-surface open:border-soft"
+            open={index === 0}
+          >
+            <summary class="flex min-h-16 cursor-pointer list-none items-center gap-4 rounded-ui py-3 pr-4 pl-4 transition-colors duration-150 hover:bg-bg [&::-webkit-details-marker]:hidden">
+              <span
+                aria-hidden="true"
+                class:list={[
+                  'relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border-2 bg-surface',
+                  nodeByEra[role.era],
+                ]}
+              >
+                <Icon name={role.icon} class="size-5" />
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-sm font-semibold text-soft">
+                  {formatPeriods(role.periods)}
+                </span>
+                <span class="block font-display text-lg leading-snug font-extrabold text-ink sm:text-xl">
+                  {role.title}
+                </span>
+                <span class="block text-sm text-body">
+                  {role.org}, {role.place}
+                </span>
+              </span>
+              <Icon
+                name="ph:caret-down-bold"
+                aria-hidden="true"
+                class="size-5 shrink-0 text-soft transition-transform duration-200 ease-out group-open:rotate-180"
+              />
+            </summary>
+            <div class="px-5 pb-6 sm:pl-[4.5rem]">
+              <RoleDetail role={role} />
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <Education />
+</div>
+
+<style>
+  /* Apertura suave donde el navegador lo permite; sin soporte, se abre al instante. */
+  .exp-item {
+    interpolate-size: allow-keywords;
+  }
+  .exp-item::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 240ms cubic-bezier(0.23, 1, 0.32, 1),
+      content-visibility 240ms allow-discrete;
+  }
+  .exp-item[open]::details-content {
+    block-size: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .exp-item::details-content {
+      transition: none;
+    }
+  }
+</style>

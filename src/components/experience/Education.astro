@@ -1,0 +1,26 @@
+---
+import { Icon } from 'astro-icon/components';
+import { certifications } from '../../data/certifications';
+---
+
+<div>
+  <h3 class="text-2xl font-extrabold">Formación</h3>
+  <ul class="mt-6 grid gap-4 md:grid-cols-3">
+    {certifications.map((item) => (
+      <li class="flex gap-4 rounded-ui border border-line bg-surface p-4">
+        <span
+          aria-hidden="true"
+          class="flex size-11 shrink-0 items-center justify-center rounded-full bg-bg text-ink"
+        >
+          <Icon name={item.icon} class="size-5" />
+        </span>
+        <div>
+          <p class="leading-snug font-semibold text-ink">{item.title}</p>
+          <p class="mt-1 text-sm text-body">
+            {item.institution}, <span class="tabular-nums">{item.year}</span>
+          </p>
+        </div>
+      </li>
+    ))}
+  </ul>
+</div>
