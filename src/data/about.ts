@@ -1,12 +1,27 @@
-/** Textos de "Sobre mí". Se editan aquí y se reflejan en la portada. */
+/**
+ * Textos de "Sobre mí". Se editan aquí y se reflejan en la portada.
+ * Lo que va entre **dobles asteriscos** se resalta con el color del capítulo.
+ */
 export const about = {
-  headline: 'De ordenar procesos a ordenar datos.',
-  story:
-    '¡Hola! Soy Marcelo, analista de datos con formación en Ingeniería de Sistemas y Computación. Antes de dedicarme a los datos trabajé en logística, administración y soporte técnico. Di el paso al análisis gracias a la constancia y a las ganas de aprender, y hoy los datos son mi día a día.',
-  today:
-    'Con más de dos años de experiencia, mi trabajo abarca el camino completo del dato: creo programas que recolectan la información, la limpio, la ordeno en una base y la convierto en decisiones a través del storytelling con datos. También automatizo tareas repetitivas para que el equipo dedique su tiempo a analizar.',
-  learning:
-    'Sigo aprendiendo y explorando nuevas tecnologías, con especial interés en la inteligencia artificial. Me certifiqué como Associate Data Engineer y Associate Data Analyst, y modero talleres de datos e inteligencia artificial en Data Science Research Perú.',
+  /** Frase de entrada; la parte entre ** se pinta en cian. */
+  headline: 'De ordenar procesos a **ordenar datos**.',
+  chapters: [
+    {
+      title: 'De dónde vengo',
+      icon: 'ph:path-fill',
+      text: '¡Hola! Soy Marcelo, analista de datos con formación en **Ingeniería de Sistemas y Computación**. Antes de dedicarme a los datos trabajé en **logística, administración y soporte técnico**. Di el paso al análisis gracias a la constancia y a las ganas de aprender, y hoy los datos son mi día a día.',
+    },
+    {
+      title: 'Qué hago hoy',
+      icon: 'ph:chart-line-up-fill',
+      text: 'Con **más de dos años de experiencia**, mi trabajo abarca **el camino completo del dato**: creo programas que recolectan la información, la limpio, la ordeno en una base y la convierto en decisiones a través del **storytelling con datos**. También automatizo tareas repetitivas para que el equipo dedique su tiempo a analizar.',
+    },
+    {
+      title: 'Hacia dónde voy',
+      icon: 'ph:rocket-launch-fill',
+      text: 'Sigo aprendiendo y explorando nuevas tecnologías, con especial interés en la **inteligencia artificial**. Me certifiqué como **Associate Data Engineer** y **Associate Data Analyst**, y modero talleres de datos e inteligencia artificial en **Data Science Research Perú**.',
+    },
+  ],
   /** Tecnologías con las que trabajo (nombres de src/data/tool-refs.ts). */
   tech: [
     'SQL',
@@ -22,19 +37,12 @@ export const about = {
     'RStudio',
     'Claude',
   ],
-  /** Datos rápidos de la ficha (todos salen del CV). */
-  facts: [
-    {
-      label: 'Formación',
-      value: 'Bachiller en Ingeniería de Sistemas y Computación',
-      icon: 'ph:graduation-cap-fill',
-    },
-    { label: 'Experiencia', value: 'Más de dos años en datos', icon: 'ph:briefcase-fill' },
-    { label: 'Ubicación', value: 'Lima, Perú', icon: 'ph:map-pin-fill' },
-    {
-      label: 'Busco',
-      value: 'Analista de Datos, Analista BI e Ingeniero de Datos',
-      icon: 'ph:target-fill',
-    },
-  ],
 } as const;
+
+/** Separa un texto en partes normales y resaltadas (las que van entre **). */
+export function highlights(text: string): { text: string; strong: boolean }[] {
+  return text
+    .split('**')
+    .map((part, index) => ({ text: part, strong: index % 2 === 1 }))
+    .filter((part) => part.text.length > 0);
+}

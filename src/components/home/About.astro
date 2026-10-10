@@ -1,26 +1,20 @@
 ---
+// Sobre mí en tres capítulos, cada uno con el color de un estado del dato:
+// de dónde vengo (crudo), qué hago hoy (limpio) y hacia dónde voy (decisión).
 import { Icon } from 'astro-icon/components';
 import Button from '../ui/Button.astro';
-import ToolChips from '../ui/ToolChips.astro';
+import ToolIcon from '../ui/ToolIcon.astro';
 import ExperienceList from '../experience/ExperienceList.astro';
+import { about, highlights } from '../../data/about';
 import { site } from '../../data/site';
 import { resolveTools } from '../../data/tool-refs';
 
-// Tecnologías con las que trabajo a diario (nombres de src/data/tool-refs.ts).
-const tech = resolveTools([
-  'SQL',
-  'SQL Server',
-  'Python',
-  'Power BI',
-  'SSIS',
-  'Excel',
-  'Google Sheets',
-  'Apps Script',
-  'Power Automate',
-  'Selenium',
-  'RStudio',
-  'Claude',
-]);
+// Clases por capítulo. `raw` no sirve para texto: ahí el resaltado va en tinta.
+const tones = [
+  { bar: 'bg-raw-2', badge: 'bg-raw-3 text-ink', icon: 'text-raw-2', strong: 'text-ink' },
+  { bar: 'bg-clean', badge: 'bg-clean text-bg', icon: 'text-clean', strong: 'text-clean' },
+  { bar: 'bg-decide', badge: 'bg-decide text-bg', icon: 'text-decide', strong: 'text-decide' },
+];
 ---
 
 <section
@@ -33,42 +27,62 @@ const tech = resolveTools([
       Sobre mí
     </h2>
 
-    <div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
-      <div class="max-w-[62ch]">
-        <p class="font-display text-2xl leading-snug font-bold text-ink sm:text-3xl">
-          De ordenar procesos a ordenar datos.
-        </p>
-        <div class="mt-6 flex flex-col gap-4 text-lg leading-relaxed text-body">
-          <p>
-            ¡Hola! Soy Marcelo, analista de datos con formación en Ingeniería de Sistemas y
-            Computación. Antes de dedicarme a los datos trabajé en logística, administración y
-            soporte técnico. Di el paso al análisis gracias a la constancia y a las ganas de
-            aprender, y hoy los datos son mi día a día.
-          </p>
-          <p>
-            Con más de dos años de experiencia, mi trabajo abarca el camino completo del dato: creo
-            programas que recolectan la información, la limpio, la ordeno en una base y la convierto
-            en decisiones a través del storytelling con datos. También automatizo tareas repetitivas
-            para que el equipo dedique su tiempo a analizar.
-          </p>
-          <p>
-            Sigo aprendiendo y explorando nuevas tecnologías, con especial interés en la
-            inteligencia artificial. Me certifiqué como Associate Data Engineer y Associate Data
-            Analyst, y modero talleres de datos e inteligencia artificial en Data Science Research
-            Perú.
-          </p>
-        </div>
+    <div class="mt-8 flex flex-wrap items-end justify-between gap-6">
+      <p class="max-w-[22ch] border-l-4 border-clean pl-5 font-display text-3xl leading-tight font-extrabold text-ink sm:text-4xl">
+        {highlights(about.headline).map((part) =>
+          part.strong ? <span class="text-clean">{part.text}</span> : part.text,
+        )}
+      </p>
+      <Button href={site.cvPath} variant="secondary" download>
+        <Icon name="ph:download-simple" class="size-5" aria-hidden="true" />
+        Descargar CV
+      </Button>
+    </div>
 
-        <h3 class="mt-10 text-lg font-bold">Algunas de las tecnologías con las que trabajo</h3>
-        <ToolChips tools={tech} class="mt-4" />
-      </div>
+    <ol class="mt-12 grid gap-6 md:grid-cols-3">
+      {about.chapters.map((chapter, index) => {
+        const tone = tones[index] ?? tones[0]!;
+        return (
+          <li class="relative flex flex-col overflow-hidden rounded-ui border border-line bg-bg p-6 pt-7">
+            <span aria-hidden="true" class:list={['absolute inset-x-0 top-0 h-1', tone.bar]} />
+            <div class="flex items-center justify-between gap-3">
+              <span
+                class:list={[
+                  'inline-flex h-7 min-w-9 items-center justify-center rounded-full px-2.5 font-display text-sm font-black tabular-nums',
+                  tone.badge,
+                ]}
+              >
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <Icon name={chapter.icon} aria-hidden="true" class:list={['size-6', tone.icon]} />
+            </div>
+            <h3 class="mt-4 text-xl font-extrabold">{chapter.title}</h3>
+            <p class="mt-3 leading-relaxed text-body">
+              {highlights(chapter.text).map((part) =>
+                part.strong ? (
+                  <strong class:list={['font-semibold', tone.strong]}>{part.text}</strong>
+                ) : (
+                  part.text
+                ),
+              )}
+            </p>
+          </li>
+        );
+      })}
+    </ol>
 
-      <div class="lg:pt-2">
-        <Button href={site.cvPath} variant="secondary" download>
-          <Icon name="ph:download-simple" class="size-5" aria-hidden="true" />
-          Descargar CV
-        </Button>
-      </div>
+    <div class="mt-12">
+      <h3 class="text-lg font-bold">Tecnologías con las que trabajo</h3>
+      <ul class="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+        {resolveTools(about.tech).map((tool) => (
+          <li class="group flex flex-col items-center gap-2 rounded-ui border border-line bg-bg px-2 py-4 text-center text-sm font-medium text-ink transition-[border-color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:border-clean">
+            <span class="transition-colors duration-200 group-hover:text-clean [&_svg]:size-7">
+              <ToolIcon icon={tool.icon} monogram={tool.monogram} />
+            </span>
+            {tool.name}
+          </li>
+        ))}
+      </ul>
     </div>
 
     <div class="mt-16">
