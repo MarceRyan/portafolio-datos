@@ -20,7 +20,7 @@ export interface Tool {
   monogram?: string;
   /** Color oficial de la marca, para logos que solo existen en una tinta. */
   color?: string;
-  /** Dónde apliqué la herramienta. Sin dato queda un TODO visible. */
+  /** Qué hace la herramienta en el flujo, en palabras sencillas (aparece al pasar el cursor). */
   context?: string;
 }
 
@@ -86,7 +86,6 @@ export const tools: readonly Tool[] = [
     color: '#7248B9',
     context: 'Encuestas y registros que la gente llena y que se guardan solos en una tabla',
   },
-  // TODO(marcelo): confirmar o ajustar las descripciones de abajo con tus casos reales.
   {
     stage: 'fuentes',
     name: 'Texto y CSV',

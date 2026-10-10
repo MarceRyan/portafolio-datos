@@ -2,7 +2,6 @@ export const site = {
   name: 'Marcelo Morales',
   fullName: 'Marcelo Bryan Morales Rimac',
   role: 'Analista de Datos',
-  location: 'Lima, Perú',
   email: 'marcelo999546479@gmail.com',
   cvPath: '/cv/CV_Marcelo_Morales_Rimac_Documentado.pdf',
   defaultTitle: 'Marcelo Morales Rimac | Analista de Datos',

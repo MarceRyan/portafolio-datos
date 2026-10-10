@@ -25,7 +25,6 @@ function init(): void {
     buttons.forEach((button) => {
       button.setAttribute('aria-pressed', String(button.dataset.filter === selected));
     });
-    list!.dataset.filtered = String(selected !== 'all');
     if (status) {
       status.textContent =
         visible === 1 ? 'Mostrando 1 proyecto.' : `Mostrando ${visible} proyectos.`;
