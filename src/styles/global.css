@@ -198,13 +198,12 @@
   }
 }
 
+/* Movimiento reducido: cada componente decide su versión (fundidos en lugar de
+   desplazamientos, sin animaciones infinitas). Aquí solo se quita el scroll suave. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }
