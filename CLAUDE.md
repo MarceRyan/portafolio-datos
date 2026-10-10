@@ -1,6 +1,6 @@
 # Portafolio de Marcelo Morales Rimac
 
-Portafolio personal de un Analista de Datos (MINEDU, Perú). Reemplaza dos sitios antiguos de GitHub Pages. Objetivo: que un reclutador entienda en menos de 30 segundos que construyo el camino completo entre los datos crudos y la decisión de una gerencia, con resultados reales.
+Portafolio personal de un Analista de Datos (MINEDU, Perú). Se publica como un sitio nuevo en Vercel; los dos portafolios antiguos de GitHub Pages se mantienen sin cambios. Objetivo: que un reclutador entienda en menos de 30 segundos que construyo el camino completo entre los datos crudos y la decisión de una gerencia, con resultados reales.
 
 Concepto visual: **"De los datos a la decisión"**. Paleta azul noche, cian y ámbar. Tres estados con color propio: crudo (gris azulado), limpio (cian), decisión (ámbar).
 
