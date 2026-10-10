@@ -10,6 +10,6 @@ export interface NavItem {
 export const nav: readonly NavItem[] = [
   { label: 'nav.how', href: '/#como-trabajo' },
   { label: 'nav.cases', href: '/proyectos', matchPrefix: '/proyectos' },
-  { label: 'nav.about', href: '/sobre-mi', matchPrefix: '/sobre-mi' },
+  { label: 'nav.about', href: '/#sobre-mi' },
   { label: 'nav.contact', href: '/#contacto' },
 ];

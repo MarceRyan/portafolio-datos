@@ -1,0 +1,38 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '../ui/Button.astro';
+import ExperienceList from '../experience/ExperienceList.astro';
+import { site } from '../../data/site';
+---
+
+<section
+  id="sobre-mi"
+  aria-labelledby="sobre-mi-title"
+  class="border-y border-line bg-surface py-20 sm:py-24"
+>
+  <div class="wrap">
+    <h2 id="sobre-mi-title" class="text-3xl font-extrabold sm:text-4xl">
+      Sobre mí
+    </h2>
+    <div class="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-16">
+      <div class="flex max-w-[62ch] flex-col gap-4 text-lg leading-relaxed text-body">
+        <p>
+          Soy {site.fullName}, analista de datos desde enero de 2025. Mi recorrido empezó en
+          logística y administración, pasó por TI y soporte técnico en Pasco, y llegó a los datos
+          con un servicio de Mesa de Ayuda en octubre de 2024.
+        </p>
+        <p>
+          Tengo más de 2 años de experiencia en análisis, automatización y visualización de datos, y
+          busco puestos de Analista de Datos, Analista BI e Ingeniero de Datos.
+        </p>
+      </div>
+      <Button href={site.cvPath} variant="secondary" download>
+        <Icon name="ph:download-simple" class="size-5" aria-hidden="true" />
+        Descargar CV
+      </Button>
+    </div>
+    <div class="mt-16">
+      <ExperienceList />
+    </div>
+  </div>
+</section>

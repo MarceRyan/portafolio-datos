@@ -5,7 +5,7 @@ description: Actualiza la experiencia laboral, la formación, las certificacione
 
 # Actualizar experiencia
 
-Los datos viven en `src/data/` y alimentan la portada y `/sobre-mi`. No toques los componentes para cambiar contenido.
+Los datos viven en `src/data/` y alimentan la portada. No toques los componentes para cambiar contenido.
 
 | Qué cambia                         | Archivo                                      |
 | ---------------------------------- | -------------------------------------------- |
@@ -25,4 +25,4 @@ Los datos viven en `src/data/` y alimentan la portada y `/sobre-mi`. No toques l
 
 ## Verificación
 
-`npm run check && npm run lint && npm run build`, y revisa la portada (Trayectoria) y `/sobre-mi`. Si cambió el cargo actual, revisa también el texto de presentación de `src/pages/sobre-mi.astro` y el hero.
+`npm run check && npm run lint && npm run build`, y revisa la sección "Sobre mí" de la portada. Si cambió el cargo actual, revisa también la presentación en `src/components/home/About.astro` y el hero.

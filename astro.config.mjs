@@ -22,6 +22,8 @@ export default defineConfig({
     // Los casos se renombraron a proyectos; los enlaces antiguos siguen funcionando.
     '/casos': '/proyectos',
     '/casos/[slug]': '/proyectos/[slug]',
+    // Sobre mí ahora es una sección de la portada.
+    '/sobre-mi': '/#sobre-mi',
     '/cv': '/cv/CV_Marcelo_Morales_Rimac_Documentado.pdf',
   },
   i18n: {
