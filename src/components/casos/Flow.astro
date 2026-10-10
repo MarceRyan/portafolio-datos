@@ -3,8 +3,9 @@
  * Diagrama de arquitectura de un caso: el dato viaja de izquierda a derecha (de arriba
  * abajo en móvil) y cambia de color con su estado: crudo, limpio o decisión.
  * Se genera en el build como HTML y SVG de iconos: sin librerías de diagramas en el navegador.
+ * Animación (solo CSS): un pulso de dato recorre los conectores y cada etapa se enciende al
+ * recibirlo, en bucle; al pasar el cursor el bucle se pausa y la etapa señalada se destaca.
  */
-import { Icon } from 'astro-icon/components';
 import StateLegend from '../ui/StateLegend.astro';
 import ToolIcon from '../ui/ToolIcon.astro';
 import { resolveTool } from '../../data/tool-refs';
@@ -35,6 +36,11 @@ const border: Record<DataState, string> = {
   clean: 'border-clean',
   decide: 'border-decide',
 };
+const tone: Record<DataState, string> = {
+  raw: 'var(--raw)',
+  clean: 'var(--clean)',
+  decide: 'var(--decide)',
+};
 const stateName: Record<DataState, string> = {
   raw: 'dato crudo',
   clean: 'dato limpio',
@@ -47,7 +53,10 @@ const stateName: Record<DataState, string> = {
     {rows.map((row) => (
       <li>
         {row.label && <p class="mb-3 text-sm font-semibold text-soft">{row.label}</p>}
-        <ol class="flex flex-col md:flex-row md:flex-wrap md:items-center md:gap-y-4">
+        <ol
+          class="flex flex-col md:flex-row md:flex-wrap md:items-center md:gap-y-4"
+          style={`--n:${row.columns.length}`}
+        >
           {row.columns.map((column, index) => (
             <li
               class="flow-step flex flex-col items-stretch md:flex-row md:items-center"
@@ -59,9 +68,10 @@ const stateName: Record<DataState, string> = {
                   return (
                     <li
                       class:list={[
-                        'flex min-h-12 items-center gap-3 rounded-ui border bg-surface px-3.5 py-2.5 md:w-48',
+                        'flow-node flex min-h-12 items-center gap-3 rounded-ui border bg-surface px-3.5 py-2.5 md:w-48',
                         border[node.state],
                       ]}
+                      style={`--tone:${tone[node.state]}`}
                     >
                       {tool && (
                         <ToolIcon icon={tool.icon} monogram={tool.monogram} color={tool.color} />
@@ -75,9 +85,12 @@ const stateName: Record<DataState, string> = {
                 })}
               </ul>
               {index < row.columns.length - 1 && (
-                <span aria-hidden="true" class="flex justify-center py-1 text-soft md:px-2 md:py-0">
-                  <Icon name="ph:caret-down-bold" class="size-5 md:hidden" />
-                  <Icon name="ph:caret-right-bold" class="hidden size-5 md:block" />
+                <span
+                  aria-hidden="true"
+                  class="flow-link"
+                  style={`--tone:${tone[row.columns[index + 1]?.[0]?.state ?? 'clean']}`}
+                >
+                  <span class="flow-dot" />
                 </span>
               )}
             </li>
@@ -105,6 +118,145 @@ const stateName: Record<DataState, string> = {
     transition:
       opacity 420ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--c) * 150ms),
       transform 420ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--c) * 150ms);
+  }
+
+  /* Ritmo del bucle: cada etapa dura 0,9 s y al final hay una pausa de una etapa. */
+  .flow ol {
+    --step: 0.9s;
+    --cycle: calc(var(--n) * var(--step) + var(--step));
+  }
+
+  /* Conector: una pista con una punta de flecha; el pulso viaja por ella. */
+  .flow-link {
+    position: relative;
+    display: block;
+    align-self: center;
+    width: 2px;
+    height: 2rem;
+    margin: 0.25rem 0;
+    background-color: var(--line);
+    border-radius: 2px;
+  }
+  .flow-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid var(--line);
+    border-bottom: 2px solid var(--line);
+    transform: translateX(-50%) rotate(45deg);
+  }
+  .flow-dot {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    margin-left: -4px;
+    border-radius: 9999px;
+    background-color: var(--tone);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--tone) 22%, transparent);
+    opacity: 0;
+  }
+  @media (min-width: 768px) {
+    .flow-link {
+      width: 1.5rem;
+      height: 2px;
+      margin: 0 0.3rem;
+    }
+    .flow-link::after {
+      top: 50%;
+      right: -1px;
+      bottom: auto;
+      left: auto;
+      transform: translateY(-50%) rotate(-45deg);
+    }
+    .flow-dot {
+      top: 50%;
+      left: 0;
+      margin-top: -4px;
+      margin-left: 0;
+    }
+  }
+
+  .flow[data-in] .flow-dot {
+    animation: flow-travel-y var(--cycle) linear infinite;
+    animation-delay: calc(var(--c) * var(--step) + var(--step) * 0.35);
+  }
+  @media (min-width: 768px) {
+    .flow[data-in] .flow-dot {
+      animation-name: flow-travel-x;
+    }
+  }
+
+  /* Cada etapa se enciende cuando le llega el pulso. */
+  .flow-node {
+    transition:
+      transform 200ms cubic-bezier(0.23, 1, 0.32, 1),
+      box-shadow 200ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .flow[data-in] .flow-node {
+    animation: flow-glow var(--cycle) ease-out infinite;
+    animation-delay: calc(var(--c) * var(--step));
+  }
+
+  /* Interacción: al pasar el cursor el bucle se pausa y la etapa señalada se destaca. */
+  .flow:hover .flow-node,
+  .flow:hover .flow-dot {
+    animation-play-state: paused;
+  }
+  .flow .flow-node:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone) 30%, transparent);
+  }
+
+  @keyframes flow-glow {
+    0%,
+    22%,
+    100% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--tone) 0%, transparent);
+    }
+    8% {
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--tone) 35%, transparent);
+    }
+  }
+  @keyframes flow-travel-x {
+    0% {
+      left: 0;
+      opacity: 0;
+    }
+    3% {
+      opacity: 1;
+    }
+    14% {
+      left: calc(100% - 8px);
+      opacity: 1;
+    }
+    17%,
+    100% {
+      left: calc(100% - 8px);
+      opacity: 0;
+    }
+  }
+  @keyframes flow-travel-y {
+    0% {
+      top: 0;
+      opacity: 0;
+    }
+    3% {
+      opacity: 1;
+    }
+    14% {
+      top: calc(100% - 8px);
+      opacity: 1;
+    }
+    17%,
+    100% {
+      top: calc(100% - 8px);
+      opacity: 0;
+    }
   }
 </style>
 
