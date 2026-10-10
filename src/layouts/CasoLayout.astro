@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import BaseLayout from './BaseLayout.astro';
 import Button from '../components/ui/Button.astro';
+import CaseNav from '../components/casos/CaseNav.astro';
 import CoverImage from '../components/ui/CoverImage.astro';
 import ToolChips from '../components/ui/ToolChips.astro';
 import { categoryLabels } from '../data/categories';
@@ -11,10 +12,13 @@ import type { Caso } from '../data/casos';
 
 interface Props {
   caso: Caso;
+  prev?: Caso;
   next?: Caso;
+  position?: number;
+  total?: number;
 }
 
-const { caso, next } = Astro.props;
+const { caso, prev, next, position = 1, total = 1 } = Astro.props;
 const { data } = caso;
 
 const meta = [
@@ -134,23 +138,7 @@ const hasLinks = Boolean(data.links.repo || data.links.demo);
     </div>
   </article>
 
-  {next && (
-    <aside aria-labelledby="siguiente-caso" class="border-t border-line bg-surface py-14">
-      <div class="wrap flex flex-wrap items-center justify-between gap-6">
-        <div>
-          <h2 id="siguiente-caso" class="text-sm font-semibold text-soft">
-            Siguiente proyecto
-          </h2>
-          <p class="mt-2 max-w-[32ch] font-display text-2xl font-extrabold text-ink">
-            {next.data.title}
-          </p>
-        </div>
-        <Button href={`/proyectos/${next.data.slug}`} variant="secondary">
-          Ver el proyecto
-        </Button>
-      </div>
-    </aside>
-  )}
+  {prev && next && <CaseNav prev={prev} next={next} position={position} total={total} />}
 
   <script>
     import '../scripts/count-up';

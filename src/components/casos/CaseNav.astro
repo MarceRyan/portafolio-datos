@@ -1,0 +1,112 @@
+---
+// Navegación entre proyectos: anterior y siguiente con su portada, categoría y posición.
+// También responde a las flechas izquierda y derecha del teclado (src/scripts/case-nav.ts).
+import { Icon } from 'astro-icon/components';
+import CoverImage from '../ui/CoverImage.astro';
+import { categoryLabels } from '../../data/categories';
+import type { Caso } from '../../data/casos';
+
+interface Props {
+  prev: Caso;
+  next: Caso;
+  /** Posición del proyecto actual, empezando en 1. */
+  position: number;
+  total: number;
+}
+
+const { prev, next, position, total } = Astro.props;
+const items = [
+  { caso: prev, rel: 'prev', label: 'Anterior', icon: 'ph:arrow-left-bold' },
+  { caso: next, rel: 'next', label: 'Siguiente', icon: 'ph:arrow-right-bold' },
+] as const;
+---
+
+<nav aria-labelledby="nav-proyectos" class="border-t border-line bg-surface py-14" data-case-nav>
+  <div class="wrap">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <h2 id="nav-proyectos" class="text-2xl font-extrabold">
+        Sigue explorando
+      </h2>
+      <p class="text-sm text-soft">
+        Proyecto <span class="font-semibold text-ink tabular-nums">{position}</span>
+        {' de '}
+        <span class="tabular-nums">{total}</span>
+        <span class="hidden sm:inline">{' · usa las flechas ← → del teclado'}</span>
+      </p>
+    </div>
+
+    <div class="mt-3 h-1 overflow-hidden rounded-full bg-line" aria-hidden="true">
+      <div class="h-full rounded-full bg-clean" style={`width:${(position / total) * 100}%`}></div>
+    </div>
+
+    <ul class="mt-8 grid gap-4 md:grid-cols-2">
+      {items.map(({ caso, rel, label, icon }) => (
+        <li>
+          <a
+            href={`/proyectos/${caso.data.slug}`}
+            rel={rel}
+            data-nav={rel}
+            class:list={[
+              'group flex h-full items-center gap-4 rounded-ui border border-line bg-bg p-3 transition-[border-color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:border-clean sm:p-4',
+              rel === 'next' && 'flex-row-reverse text-right',
+            ]}
+          >
+            <span class="aspect-[16/9] w-28 shrink-0 overflow-hidden rounded-[6px] border border-line sm:w-40">
+              <CoverImage
+                slug={caso.data.slug}
+                cover={caso.data.cover}
+                alt=""
+                sizes="10rem"
+                class="transition-transform duration-300 ease-out group-hover:scale-[1.05]"
+              />
+            </span>
+            <span class="min-w-0 flex-1">
+              <span
+                class:list={[
+                  'flex items-center gap-1.5 text-sm font-semibold text-clean',
+                  rel === 'next' && 'justify-end',
+                ]}
+              >
+                {rel === 'prev' && (
+                  <Icon
+                    name={icon}
+                    class="size-4 transition-transform duration-200 group-hover:-translate-x-1"
+                    aria-hidden="true"
+                  />
+                )}
+                {label}
+                {rel === 'next' && (
+                  <Icon
+                    name={icon}
+                    class="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                )}
+              </span>
+              <span class="mt-1 block font-display text-lg leading-snug font-extrabold text-ink">
+                {caso.data.title}
+              </span>
+              <span class="mt-0.5 block text-sm text-soft">
+                {categoryLabels[caso.data.category]}
+              </span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-8 flex justify-center">
+      <a
+        href="/proyectos"
+        class="inline-flex min-h-11 items-center gap-2 font-semibold text-ink underline-offset-4 hover:underline"
+      >
+        <Icon name="ph:squares-four-bold" class="size-5" aria-hidden="true" />
+        Ver todos los proyectos
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  import '../../scripts/case-nav';
+</script>

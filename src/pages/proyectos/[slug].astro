@@ -7,14 +7,20 @@ export async function getStaticPaths() {
   const casos = await getCasos();
   return casos.map((caso, index) => ({
     params: { slug: caso.data.slug },
-    props: { caso, next: casos[(index + 1) % casos.length] },
+    props: {
+      caso,
+      prev: casos[(index - 1 + casos.length) % casos.length],
+      next: casos[(index + 1) % casos.length],
+      position: index + 1,
+      total: casos.length,
+    },
   }));
 }
 
-const { caso, next } = Astro.props;
+const { caso, prev, next, position, total } = Astro.props;
 const { Content } = await render(caso);
 ---
 
-<CasoLayout caso={caso} next={next}>
+<CasoLayout caso={caso} prev={prev} next={next} position={position} total={total}>
   <Content />
 </CasoLayout>
