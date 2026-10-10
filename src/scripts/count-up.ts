@@ -1,7 +1,7 @@
 /**
  * Cuenta desde 0 hasta el valor final una sola vez, cuando el número entra en pantalla.
- * El HTML ya trae el valor final: sin JavaScript o con `prefers-reduced-motion`
- * el número se queda estático.
+ * El HTML ya trae el valor final: sin JavaScript el número se queda estático.
+ * No es desplazamiento en pantalla, así que también corre con movimiento reducido.
  */
 const DURATION_MS = 1400;
 const easeOutCubic = (t: number): number => 1 - (1 - t) ** 3;
@@ -17,7 +17,6 @@ function run(el: HTMLElement, target: number, format: (value: number) => string)
 }
 
 function init(): void {
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (!('IntersectionObserver' in window)) return;
 
   document.querySelectorAll<HTMLElement>('[data-count-to]').forEach((el) => {

@@ -63,6 +63,26 @@ const present = (Object.keys(categoryLabels) as CasoCategory[]).filter((category
   </section>
 </BaseLayout>
 
+<style>
+  /* Las tarjetas que vuelven a mostrarse al filtrar entran con un fundido corto. */
+  [data-cases][data-ready] > li {
+    transition:
+      opacity 240ms cubic-bezier(0.23, 1, 0.32, 1),
+      transform 240ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  @starting-style {
+    [data-cases][data-ready] > li {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-cases][data-ready] > li {
+      transition: none;
+    }
+  }
+</style>
+
 <script>
   import '../../scripts/case-filter';
 </script>

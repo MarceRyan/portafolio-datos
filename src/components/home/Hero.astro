@@ -24,14 +24,17 @@ const corner = 'absolute size-6 border-decide';
       <h1 class="text-[clamp(2.5rem,7vw,4.5rem)] leading-[1.02] font-extrabold tracking-[-0.03em]">
         Marcelo Morales Rimac
       </h1>
-      <p class="mt-6 max-w-[26ch] font-display text-2xl leading-snug font-bold text-ink sm:text-3xl">
+      <p
+        class="rise mt-6 max-w-[26ch] font-display text-2xl leading-snug font-bold text-ink sm:text-3xl"
+        style="--d:0"
+      >
         Convierto datos desordenados en decisiones claras.
       </p>
-      <p class="mt-6 max-w-[60ch] text-lg text-body">
+      <p class="rise mt-6 max-w-[60ch] text-lg text-body" style="--d:1">
         Analista de datos. Extraigo, limpio, modelo y visualizo información para que las gerencias
         decidan con evidencia.
       </p>
-      <div class="mt-8 flex flex-wrap gap-3">
+      <div class="rise mt-8 flex flex-wrap gap-3" style="--d:2">
         <Button href="/proyectos">Ver proyectos</Button>
         {linkedin && (
           <Button
@@ -57,19 +60,23 @@ const corner = 'absolute size-6 border-decide';
       <div class="relative mx-4 sm:mx-0 lg:max-w-[22rem]">
         <span
           aria-hidden="true"
-          class:list={[corner, '-top-3 -left-3 border-t-2 border-l-2']}
+          class:list={[corner, 'corner-in -top-3 -left-3 border-t-2 border-l-2']}
+          style="--cx:-10px;--cy:-10px"
         ></span>
         <span
           aria-hidden="true"
-          class:list={[corner, '-top-3 -right-3 border-t-2 border-r-2']}
+          class:list={[corner, 'corner-in -top-3 -right-3 border-t-2 border-r-2']}
+          style="--cx:10px;--cy:-10px"
         ></span>
         <span
           aria-hidden="true"
-          class:list={[corner, '-bottom-3 -left-3 border-b-2 border-l-2']}
+          class:list={[corner, 'corner-in -bottom-3 -left-3 border-b-2 border-l-2']}
+          style="--cx:-10px;--cy:10px"
         ></span>
         <span
           aria-hidden="true"
-          class:list={[corner, '-right-3 -bottom-3 border-r-2 border-b-2']}
+          class:list={[corner, 'corner-in -right-3 -bottom-3 border-r-2 border-b-2']}
+          style="--cx:10px;--cy:10px"
         ></span>
 
         <div class="relative aspect-[4/5] overflow-hidden rounded-ui bg-raw-3">
@@ -104,7 +111,10 @@ const corner = 'absolute size-6 border-decide';
           )}
         </div>
 
-        <div class="absolute -bottom-8 -left-4 flex max-w-[17rem] items-start gap-3 rounded-ui border border-line bg-surface p-4 sm:-left-8">
+        <div
+          class="rise absolute -bottom-8 -left-4 flex max-w-[17rem] items-start gap-3 rounded-ui border border-line bg-surface p-4 sm:-left-8"
+          style="--d:4"
+        >
           <span class="relative mt-1.5 flex size-2.5 shrink-0" aria-hidden="true">
             <span class="pulse-ring absolute inline-flex size-full rounded-full bg-clean"></span>
             <span class="relative inline-flex size-full rounded-full bg-clean"></span>

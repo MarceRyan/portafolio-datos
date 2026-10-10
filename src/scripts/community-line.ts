@@ -1,10 +1,9 @@
 /**
  * Los elementos con `data-reveal` aparecen en cascada una sola vez al entrar en pantalla:
  * el script los arma (`data-armed`) y los dispara (`data-in`); cada componente define el efecto.
- * Sin JavaScript o con `prefers-reduced-motion` queda el estado final.
+ * Sin JavaScript queda el estado final. Con movimiento reducido, el CSS deja solo el fundido.
  */
 function init(): void {
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (!('IntersectionObserver' in window)) return;
 
   document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((list) => {

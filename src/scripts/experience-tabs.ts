@@ -10,6 +10,15 @@ function init(root: HTMLElement): void {
   );
   if (tabs.length === 0) return;
 
+  const tablist = root.querySelector<HTMLElement>('[role="tablist"]');
+  const indicator = root.querySelector<HTMLElement>('[data-tab-indicator]');
+
+  function moveIndicator(tab: HTMLElement | undefined): void {
+    if (!tablist || !indicator || !tab) return;
+    tablist.style.setProperty('--tab-y', `${tab.offsetTop}px`);
+    tablist.style.setProperty('--tab-h', `${tab.offsetHeight}px`);
+  }
+
   function select(index: number): void {
     tabs.forEach((tab, i) => {
       const on = i === index;
@@ -18,6 +27,7 @@ function init(root: HTMLElement): void {
       const panel = panels[i];
       if (panel) panel.hidden = !on;
     });
+    moveIndicator(tabs[index]);
   }
 
   const initial = Math.max(
@@ -25,6 +35,13 @@ function init(root: HTMLElement): void {
     tabs.findIndex((tab) => tab.getAttribute('aria-selected') === 'true'),
   );
   select(initial);
+  if (tablist && indicator) {
+    tablist.dataset.indicator = '';
+    // Si cambia el ancho (y con él el alto de las pestañas), el indicador se recoloca.
+    new ResizeObserver(() => moveIndicator(tabs.find((tab) => tab.tabIndex === 0))).observe(
+      tablist,
+    );
+  }
 
   tabs.forEach((tab, index) => {
     tab.addEventListener('click', () => select(index));

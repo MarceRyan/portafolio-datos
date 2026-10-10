@@ -42,14 +42,17 @@ const stateName: Record<DataState, string> = {
 };
 ---
 
-<figure class="flow my-10 rounded-ui border border-line bg-bg p-5 sm:p-6">
+<figure class="flow my-10 rounded-ui border border-line bg-bg p-5 sm:p-6" data-reveal>
   <ul class="flex flex-col gap-8">
     {rows.map((row) => (
       <li>
         {row.label && <p class="mb-3 text-sm font-semibold text-soft">{row.label}</p>}
         <ol class="flex flex-col md:flex-row md:flex-wrap md:items-center md:gap-y-4">
           {row.columns.map((column, index) => (
-            <li class="flex flex-col items-stretch md:flex-row md:items-center">
+            <li
+              class="flow-step flex flex-col items-stretch md:flex-row md:items-center"
+              style={`--c:${index}`}
+            >
               <ul class="flex flex-col gap-3">
                 {column.map((node) => {
                   const tool = node.tool ? resolveTool(node.tool) : undefined;
@@ -87,3 +90,20 @@ const stateName: Record<DataState, string> = {
     <p class="text-sm text-soft">{caption}</p>
   </figcaption>
 </figure>
+
+<style>
+  /* La primera vez que el diagrama entra en pantalla, las etapas aparecen en orden. */
+  .flow[data-armed] .flow-step {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  .flow[data-in] .flow-step {
+    transition:
+      opacity 420ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--c) * 150ms),
+      transform 420ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--c) * 150ms);
+  }
+</style>
+
+<script>
+  import '../../scripts/community-line';
+</script>

@@ -44,6 +44,8 @@ function init(): void {
   });
 
   apply(new URL(location.href).searchParams.get(PARAM) ?? 'all', false);
+  // Desde aquí las tarjetas que reaparecen al filtrar entran con un fundido (ver /proyectos).
+  list.dataset.ready = '';
   // Al cargar no se anuncia el conteo: solo cuando la persona cambia el filtro.
   if (status) status.textContent = '';
 }
