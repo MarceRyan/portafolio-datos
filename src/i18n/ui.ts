@@ -6,6 +6,7 @@ const es = {
   'a11y.skip': 'Saltar al contenido',
   'nav.how': 'Cómo trabajo',
   'nav.cases': 'Proyectos',
+  'nav.about': 'Sobre mí',
   'nav.contact': 'Contacto',
   'nav.cv': 'Descargar CV',
   'nav.menuOpen': 'Abrir menú',
