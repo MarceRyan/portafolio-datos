@@ -24,6 +24,7 @@ export const toolRef = {
   mysql: { name: 'MySQL', icon: 'logos:mysql-icon' },
   claude: { name: 'Claude', icon: 'logos:claude-icon' },
   outlook: { name: 'Outlook', icon: 'simple-icons:microsoftoutlook', color: '#0F78D4' },
+  onedrive: { name: 'OneDrive', icon: 'logos:microsoft-onedrive' },
   sharepoint: { name: 'SharePoint', icon: 'simple-icons:microsoftsharepoint', color: '#03787C' },
   rstudio: { name: 'RStudio', icon: 'devicon:rstudio' },
   html: { name: 'HTML', icon: 'logos:html-5' },

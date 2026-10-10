@@ -1,11 +1,11 @@
 ---
-title: Correos masivos con Excel personalizado
+title: Reportes automáticos en Excel enviados por correo
 slug: correos-masivos-excel-personalizado
 # TODO(marcelo): confirmar la pregunta de negocio.
-question: '¿Cómo enviar a cada destinatario su propio archivo sin armar los correos uno por uno?'
-summary: Flujo automatizado que envía correos masivos y adjunta a cada destinatario un archivo de Excel personalizado.
+question: '¿Cómo generar y enviar muchos reportes a la vez sin armar cada archivo ni cada correo a mano?'
+summary: Python genera varios reportes en Excel a la vez y los ordena en carpetas que se suben a OneDrive; un flujo de Power Automate los envía a varios correos a la vez.
 category: automatizacion
-stack: [Power Automate, Outlook, SharePoint, Excel]
+stack: [Python, Excel, OneDrive, Power Automate, Outlook, SharePoint]
 role: Analista de Datos
 confidential: true
 featured: false
@@ -16,22 +16,23 @@ import { Image } from 'astro:assets';
 import Flow from '../../components/casos/Flow.astro';
 import flujo from '../../assets/images/casos/detalle/flujo-power-automate.png';
 
-{/* TODO(marcelo): de dónde sale la lista de destinatarios, cómo se genera el Excel de cada uno, cuántos correos envía y qué registra el flujo de SharePoint. */}
+{/* TODO(marcelo): cuántos reportes y correos se envían en cada corrida, y cada cuánto se ejecuta. */}
 
 ## Problema
 
-Enviar correos a muchos destinatarios cuando cada uno debe recibir un archivo distinto.
+Preparar y enviar muchos reportes a distintos destinatarios, cada uno con su propio archivo, sin armar los archivos ni los correos uno por uno.
 
 ## Arquitectura
 
 <Flow
-  caption="De una lista de destinatarios a un correo con su propio archivo."
+  caption="De los datos a un reporte en Excel por destinatario, enviado por correo de forma automática."
   rows={[
     {
       columns: [
-        [{ label: 'Lista de destinatarios', tool: 'Excel', state: 'raw' }],
-        [{ label: 'Archivo personalizado por destinatario', tool: 'Excel', state: 'clean' }],
-        [{ label: 'Envío masivo de correos', tool: 'Power Automate', state: 'decide' }],
+        [{ label: 'Generación de varios reportes', tool: 'Python', state: 'raw' }],
+        [{ label: 'Archivos de Excel ordenados en carpetas', tool: 'Excel', state: 'clean' }],
+        [{ label: 'Carpetas sincronizadas en la nube', tool: 'OneDrive', state: 'clean' }],
+        [{ label: 'Envío a varios correos a la vez', tool: 'Power Automate', state: 'decide' }],
       ],
     },
   ]}
@@ -39,9 +40,9 @@ Enviar correos a muchos destinatarios cuando cada uno debe recibir un archivo di
 
 ## Solución
 
-Un flujo automatizado recorre la lista de destinatarios, prepara el archivo de Excel que le corresponde a cada uno y envía el correo con ese archivo adjunto.
+Con Python automaticé la creación de varios reportes a la vez: cada uno se genera como un archivo de Excel y se guarda en su carpeta. Esas carpetas se suben a OneDrive.
 
-## El flujo en Power Automate
+Desde ahí, un flujo de Power Automate toma los archivos y los envía a varios destinatarios a la vez, cada uno con su reporte, sin tener que armar los correos a mano.
 
 <figure>
   <Image
@@ -51,9 +52,5 @@ Un flujo automatizado recorre la lista de destinatarios, prepara el archivo de E
     sizes="(min-width: 768px) 36rem, 100vw"
     class="mx-auto w-full max-w-xl rounded-ui border border-line"
   />
-  <figcaption>
-    El flujo cruza los correos de Outlook con una lista de SharePoint y registra los que coinciden.
-  </figcaption>
+  <figcaption>El flujo de Power Automate que se encarga del envío.</figcaption>
 </figure>
-
-El flujo se inicia manualmente. Obtiene los correos de Outlook y los elementos de una lista de SharePoint, y los recorre uno a uno. En cada vuelta filtra la información y, si se cumple la condición, obtiene el correo correspondiente y crea un elemento nuevo en la lista de SharePoint.
