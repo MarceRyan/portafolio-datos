@@ -5,17 +5,18 @@ slug: correos-masivos-excel-personalizado
 question: '¿Cómo enviar a cada destinatario su propio archivo sin armar los correos uno por uno?'
 summary: Flujo automatizado que envía correos masivos y adjunta a cada destinatario un archivo de Excel personalizado.
 category: automatizacion
-# TODO(marcelo): confirmar si el flujo es de Power Automate, de Power Apps o de ambos.
-stack: [Power Automate, Excel]
+stack: [Power Automate, Outlook, SharePoint, Excel]
 role: Analista de Datos
 confidential: true
 featured: false
 order: 9
 ---
 
+import { Image } from 'astro:assets';
 import Flow from '../../components/casos/Flow.astro';
+import flujo from '../../assets/images/casos/detalle/flujo-power-automate.png';
 
-{/* TODO(marcelo): de dónde sale la lista de destinatarios, cómo se genera el Excel de cada uno y cuántos correos envía. */}
+{/* TODO(marcelo): de dónde sale la lista de destinatarios, cómo se genera el Excel de cada uno, cuántos correos envía y qué registra el flujo de SharePoint. */}
 
 ## Problema
 
@@ -39,3 +40,20 @@ Enviar correos a muchos destinatarios cuando cada uno debe recibir un archivo di
 ## Solución
 
 Un flujo automatizado recorre la lista de destinatarios, prepara el archivo de Excel que le corresponde a cada uno y envía el correo con ese archivo adjunto.
+
+## El flujo en Power Automate
+
+<figure>
+  <Image
+    src={flujo}
+    alt="Flujo de Power Automate: se inicia manualmente, obtiene correos de Outlook y elementos de una lista de SharePoint, recorre cada uno, filtra y, si se cumple la condición, obtiene el correo y crea un elemento en SharePoint."
+    widths={[480, 960]}
+    sizes="(min-width: 768px) 36rem, 100vw"
+    class="mx-auto w-full max-w-xl rounded-ui border border-line"
+  />
+  <figcaption>
+    El flujo cruza los correos de Outlook con una lista de SharePoint y registra los que coinciden.
+  </figcaption>
+</figure>
+
+El flujo se inicia manualmente. Obtiene los correos de Outlook y los elementos de una lista de SharePoint, y los recorre uno a uno. En cada vuelta filtra la información y, si se cumple la condición, obtiene el correo correspondiente y crea un elemento nuevo en la lista de SharePoint.

@@ -23,6 +23,8 @@ export const toolRef = {
   java: { name: 'Java', icon: 'logos:java' },
   mysql: { name: 'MySQL', icon: 'logos:mysql-icon' },
   claude: { name: 'Claude', icon: 'logos:claude-icon' },
+  outlook: { name: 'Outlook', icon: 'simple-icons:microsoftoutlook', color: '#0F78D4' },
+  sharepoint: { name: 'SharePoint', icon: 'simple-icons:microsoftsharepoint', color: '#03787C' },
   rstudio: { name: 'RStudio', icon: 'devicon:rstudio' },
   html: { name: 'HTML', icon: 'logos:html-5' },
   css: { name: 'CSS', icon: 'logos:css-3' },
