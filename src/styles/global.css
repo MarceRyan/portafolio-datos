@@ -190,3 +190,38 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Ventana para ver un certificado o una imagen de respaldo (<dialog> nativo).
+   La abre y cierra src/scripts/cert-dialog.ts. */
+@layer components {
+  .cert-dialog {
+    max-height: calc(100dvh - 2rem);
+    overflow: auto;
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 200ms cubic-bezier(0.23, 1, 0.32, 1),
+      transform 200ms cubic-bezier(0.23, 1, 0.32, 1),
+      overlay 200ms allow-discrete,
+      display 200ms allow-discrete;
+  }
+  .cert-dialog:not([open]) {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  @starting-style {
+    .cert-dialog[open] {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+  }
+  .cert-dialog::backdrop {
+    background-color: color-mix(in srgb, var(--bg) 35%, black 65%);
+    opacity: 0.75;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cert-dialog {
+      transition: none;
+    }
+  }
+}

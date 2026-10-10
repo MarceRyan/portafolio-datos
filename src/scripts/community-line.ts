@@ -1,12 +1,13 @@
 /**
- * La línea de talleres se dibuja una sola vez al entrar en pantalla y los talleres
- * aparecen en cascada. Sin JavaScript o con `prefers-reduced-motion` queda el estado final.
+ * Los elementos con `data-reveal` aparecen en cascada una sola vez al entrar en pantalla:
+ * el script los arma (`data-armed`) y los dispara (`data-in`); cada componente define el efecto.
+ * Sin JavaScript o con `prefers-reduced-motion` queda el estado final.
  */
 function init(): void {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (!('IntersectionObserver' in window)) return;
 
-  document.querySelectorAll<HTMLElement>('[data-community-line], [data-reveal]').forEach((list) => {
+  document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((list) => {
     if (list.hasAttribute('data-in') || list.hasAttribute('data-armed')) return;
     list.setAttribute('data-armed', '');
 

@@ -1,84 +1,167 @@
 ---
+// Voluntariado en un panel compacto. El anuncio de DSRP se ve en miniatura y se abre con un clic.
+import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import { community } from '../../data/community';
+import announcement from '../../assets/images/comunidad/dsrp-moderador.png';
 
 interface Props {
-  /** `h1` no aplica aquí; en la portada y en /sobre-mi la sección usa h2. */
   id?: string;
 }
 
 const { id = 'comunidad' } = Astro.props;
+const dialogId = `${id}-anuncio`;
+const alt = `Anuncio de ${community.organization} que presenta a Marcelo Bryan Morales Rimac como parte del staff de moderadores.`;
 ---
 
-<section {id} aria-labelledby={`${id}-title`} class="wrap py-20 sm:py-28">
+<section {id} aria-labelledby={`${id}-title`} class="wrap py-16 sm:py-20">
   <h2 id={`${id}-title`} class="text-3xl font-extrabold sm:text-4xl">
     Voluntariado
   </h2>
 
-  <div class="mt-10 grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
-    <div>
-      <p class="font-display text-2xl leading-snug font-bold text-ink sm:text-3xl">
-        {community.role} en {community.organization} ({community.short}), desde {community.since}.
-      </p>
-      <p class="mt-5 max-w-[56ch] text-lg text-body">{community.summary}</p>
-    </div>
+  <div class="mt-8 grid gap-6 rounded-ui border border-line bg-surface p-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-8 sm:p-6">
+    <div class="min-w-0">
+      <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+        <div class="flex items-center gap-4">
+          <span
+            aria-hidden="true"
+            class="flex size-12 shrink-0 items-center justify-center rounded-full bg-ink font-display text-sm font-black text-bg"
+          >
+            {community.short}
+          </span>
+          <div>
+            <p class="font-display text-xl leading-tight font-extrabold text-ink">
+              {community.role}
+            </p>
+            <p class="text-sm text-body">{community.organization}</p>
+          </div>
+        </div>
+        <p class="flex items-center gap-2 text-sm font-semibold text-ink">
+          <span
+            aria-hidden="true"
+            class="community-dot relative size-2.5 rounded-full bg-clean"
+          ></span>
+          Activo desde {community.since}
+        </p>
+      </div>
 
-    <div>
-      <h3 class="text-lg font-bold">Talleres que moderé</h3>
-      <div class="community-line relative mt-5" data-community-line>
-        <span
-          aria-hidden="true"
-          class="community-line__rail absolute top-3 bottom-3 left-[1.375rem] w-px bg-clean"
-        ></span>
-        <ol class="flex flex-col gap-3">
+      <ul class="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-body">
+        {community.tasks.map((task) => (
+          <li class="flex items-center gap-2">
+            <Icon name={task.icon} aria-hidden="true" class="size-4 shrink-0 text-clean" />
+            {task.text}
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-5 border-t border-line pt-5">
+        <h3 class="text-sm font-semibold text-soft">Talleres que moderé</h3>
+        <ul class="community-chips mt-3 flex flex-wrap gap-2" data-reveal>
           {community.workshops.map((workshop, index) => (
             <li
-              class="community-line__item relative flex items-center gap-4 rounded-ui border border-line bg-surface py-3 pr-4 pl-3 text-ink"
+              class="chip flex min-h-10 items-center gap-2 rounded-full border border-line bg-bg py-1.5 pr-4 pl-2 text-sm text-ink transition-colors duration-150 hover:border-clean"
               style={`--i:${index}`}
             >
-              <span
-                aria-hidden="true"
-                class="relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full bg-clean text-bg"
-              >
-                <Icon name="ph:chalkboard-teacher-fill" class="size-4" />
-              </span>
+              <Icon name={workshop.icon} aria-hidden="true" class="size-4 shrink-0 text-clean" />
               {workshop.title}
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </div>
+
+    <button
+      type="button"
+      data-cert-open={dialogId}
+      aria-haspopup="dialog"
+      class="group flex items-center gap-4 rounded-ui text-left sm:flex-col sm:items-stretch sm:gap-2"
+    >
+      <span class="block w-20 shrink-0 overflow-hidden rounded-ui border border-line transition-[border-color,transform] duration-200 ease-out group-hover:border-clean group-active:scale-[0.98] sm:w-32">
+        <Image
+          src={announcement}
+          alt=""
+          widths={[160, 320]}
+          sizes="8rem"
+          class="block h-auto w-full transition-transform duration-300 ease-out group-hover:scale-[1.04]"
+        />
+      </span>
+      <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-clean">
+        <Icon name="ph:seal-check-fill" class="size-4" aria-hidden="true" />
+        Ver anuncio
+      </span>
+    </button>
   </div>
+
+  <dialog
+    id={dialogId}
+    aria-labelledby={`${dialogId}-title`}
+    class="cert-dialog m-auto w-[min(32rem,calc(100vw-2rem))] rounded-ui border border-line bg-surface p-0 text-ink"
+  >
+    <div class="flex items-start justify-between gap-4 border-b border-line px-5 py-4">
+      <div>
+        <h3 id={`${dialogId}-title`} class="font-display text-xl font-extrabold">
+          Anuncio de {community.short}
+        </h3>
+        <p class="mt-0.5 text-sm text-body">{community.organization}</p>
+      </div>
+      <button
+        type="button"
+        data-cert-close
+        aria-label="Cerrar anuncio"
+        class="flex size-11 shrink-0 items-center justify-center rounded-ui text-ink transition-colors duration-150 hover:bg-bg"
+      >
+        <Icon name="ph:x-bold" class="size-5" aria-hidden="true" />
+      </button>
+    </div>
+    <div class="p-4 sm:p-5">
+      <Image
+        src={announcement}
+        alt={alt}
+        widths={[480, 900]}
+        sizes="(min-width: 560px) 30rem, 100vw"
+        class="w-full rounded-ui"
+      />
+    </div>
+  </dialog>
 </section>
 
 <style>
-  /* Estado final por defecto: sin JavaScript todo se ve. El script "arma" la lista
-     antes de entrar en pantalla y la dispara una sola vez. */
-  .community-line[data-armed] .community-line__rail {
-    transform: scaleY(0);
-    transform-origin: top;
+  .community-dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background-color: var(--clean);
+    animation: community-pulse 2.4s cubic-bezier(0.23, 1, 0.32, 1) infinite;
   }
-  .community-line[data-armed] .community-line__item {
+  @keyframes community-pulse {
+    from {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    to {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+  }
+  .community-chips[data-armed] .chip {
     opacity: 0;
-    transform: translateX(-12px);
+    transform: translateY(6px);
   }
-  .community-line[data-in] .community-line__rail {
-    transform: scaleY(1);
-    transition: transform 900ms cubic-bezier(0.77, 0, 0.175, 1);
-  }
-  .community-line[data-in] .community-line__item {
-    opacity: 1;
-    transform: none;
+  .community-chips[data-in] .chip {
     transition:
-      opacity 360ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--i) * 140ms),
-      transform 360ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--i) * 140ms),
+      opacity 360ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--i) * 80ms),
+      transform 360ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--i) * 80ms),
       border-color 150ms ease;
   }
-  .community-line__item:hover {
-    border-color: var(--clean);
+  @media (prefers-reduced-motion: reduce) {
+    .community-dot::after {
+      animation: none;
+    }
   }
 </style>
 
 <script>
   import '../../scripts/community-line';
+  import '../../scripts/cert-dialog';
 </script>
