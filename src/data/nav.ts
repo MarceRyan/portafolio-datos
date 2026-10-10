@@ -10,6 +10,5 @@ export interface NavItem {
 export const nav: readonly NavItem[] = [
   { label: 'nav.how', href: '/#como-trabajo' },
   { label: 'nav.cases', href: '/casos', matchPrefix: '/casos' },
-  { label: 'nav.now', href: '/#ahora-mismo' },
   { label: 'nav.contact', href: '/#contacto' },
 ];

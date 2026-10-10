@@ -1,6 +1,6 @@
 ---
 name: actualizar-experiencia
-description: Actualiza la experiencia laboral, la formación, las certificaciones, el voluntariado o la sección "Ahora mismo" del portafolio de Marcelo. Úsala cuando cambie su cargo, entre un curso nuevo o haya que refrescar lo que hace hoy.
+description: Actualiza la experiencia laboral, la formación, las certificaciones o el voluntariado del portafolio de Marcelo. Úsala cuando cambie su cargo o entre un curso o certificado nuevo.
 ---
 
 # Actualizar experiencia
@@ -11,7 +11,6 @@ Los datos viven en `src/data/` y alimentan la portada y `/sobre-mi`. No toques l
 | ---------------------------------- | -------------------------------------------- |
 | Cargos, periodos, métricas, logros | `src/data/experience.ts`                     |
 | Certificaciones y formación        | `src/data/certifications.ts`                 |
-| "Ahora mismo" y su fecha           | `src/data/now.ts` (actualiza `nowUpdated`)   |
 | Voluntariado y talleres            | `src/data/community.ts`                      |
 | Herramientas e iconos              | `src/data/tool-refs.ts`, `src/data/tools.ts` |
 

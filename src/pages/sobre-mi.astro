@@ -4,13 +4,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/ui/Button.astro';
 import ExperienceList from '../components/experience/ExperienceList.astro';
 import Community from '../components/home/Community.astro';
-import Now from '../components/home/Now.astro';
 import { site } from '../data/site';
 ---
 
 <BaseLayout
   title="Sobre mí"
-  description="Mi recorrido profesional, la comunidad en la que participo y lo que hago hoy."
+  description="Mi recorrido profesional, mi formación y la comunidad en la que participo."
 >
   <section class="wrap pt-12 pb-16 sm:pt-16 sm:pb-20">
     <h1 class="text-4xl font-extrabold sm:text-5xl">Sobre mí</h1>
@@ -44,6 +43,4 @@ import { site } from '../data/site';
   </section>
 
   <Community />
-
-  <Now />
 </BaseLayout>
