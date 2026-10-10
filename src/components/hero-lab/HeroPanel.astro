@@ -1,0 +1,81 @@
+---
+// Opción C: foto grande con etiquetas de herramientas flotando; texto a la izquierda.
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import photo from '../../assets/photo/perfil.jpg';
+import { buttonClasses } from '../ui/button-classes';
+
+const tags = [
+  { name: 'SQL', icon: 'ph:database-fill', pos: 'top-[12%] -left-6' },
+  { name: 'Python', icon: 'simple-icons:python', pos: 'top-[40%] -right-8' },
+  { name: 'Power BI', icon: 'simple-icons:powerbi', pos: 'bottom-[14%] -left-8' },
+];
+---
+
+<section class="hero-backdrop">
+  <div class="wrap grid items-center gap-14 py-14 lg:grid-cols-[1.2fr_1fr] lg:py-16">
+    <div>
+      <p class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-sm font-semibold text-ink">
+        <span aria-hidden="true" class="size-2 rounded-full bg-clean"></span>
+        Analista de Datos
+      </p>
+      <h1 class="mt-5 text-[clamp(2.5rem,6.5vw,4.25rem)] leading-[1.02] font-extrabold tracking-[-0.03em]">
+        Marcelo Morales Rimac
+      </h1>
+      <p class="mt-5 max-w-[24ch] font-display text-2xl leading-snug font-bold text-ink sm:text-3xl">
+        Convierto datos desordenados en <span class="text-clean">decisiones claras</span>.
+      </p>
+      <p class="mt-5 max-w-[48ch] text-lg text-body">
+        Más de dos años recolectando, limpiando y ordenando datos para que las gerencias decidan con
+        evidencia.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/proyectos" class={buttonClasses('primary')}>
+          Ver proyectos
+        </a>
+        <a href="/#sobre-mi" class={buttonClasses('secondary')}>
+          Conóceme
+        </a>
+      </div>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-[22rem]">
+      <Image
+        src={photo}
+        alt="Retrato profesional de Marcelo Morales Rimac"
+        widths={[360, 560, 720]}
+        sizes="22rem"
+        loading="eager"
+        class="aspect-[4/5] w-full rounded-ui object-cover"
+      />
+      {tags.map((tag, index) => (
+        <span
+          class:list={[
+            'panel-tag absolute flex items-center gap-2 rounded-ui border border-line bg-surface px-3 py-2 text-sm font-semibold text-ink shadow-sm',
+            tag.pos,
+          ]}
+          style={`--i:${index}`}
+          aria-hidden="true"
+        >
+          <Icon name={tag.icon} class="size-4 text-clean" />
+          {tag.name}
+        </span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Las etiquetas flotan suavemente, cada una a su ritmo. */
+  @media (prefers-reduced-motion: no-preference) {
+    .panel-tag {
+      animation: tag-float 5s ease-in-out infinite;
+      animation-delay: calc(var(--i) * -1.6s);
+    }
+  }
+  @keyframes tag-float {
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+</style>

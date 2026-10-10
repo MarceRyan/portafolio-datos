@@ -1,0 +1,23 @@
+---
+// Página temporal para comparar presentaciones del inicio.
+// TODO(marcelo): elegir una opción; después reemplaza al Hero actual y se borra esta página.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroGreeting from '../components/hero-lab/HeroGreeting.astro';
+import HeroTyping from '../components/hero-lab/HeroTyping.astro';
+import HeroPanel from '../components/hero-lab/HeroPanel.astro';
+---
+
+<BaseLayout title="Laboratorio del inicio" noindex>
+  <p class="wrap pt-10 text-2xl font-extrabold text-ink">
+    <span class="text-decide">A</span> Saludo, como la referencia
+  </p>
+  <HeroGreeting />
+  <p class="wrap border-t border-line pt-10 text-2xl font-extrabold text-ink">
+    <span class="text-decide">B</span> Rol que se escribe
+  </p>
+  <HeroTyping />
+  <p class="wrap border-t border-line pt-10 text-2xl font-extrabold text-ink">
+    <span class="text-decide">C</span> Foto con herramientas
+  </p>
+  <HeroPanel />
+</BaseLayout>
