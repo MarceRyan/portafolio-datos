@@ -1,0 +1,54 @@
+---
+// Opción B: frase grande con barra cian y tres capítulos numerados (antes, hoy, ahora);
+// las tecnologías como cuadrícula de logos grandes.
+import { Icon } from 'astro-icon/components';
+import Button from '../ui/Button.astro';
+import ToolIcon from '../ui/ToolIcon.astro';
+import { about } from '../../data/about';
+import { site } from '../../data/site';
+import { resolveTools } from '../../data/tool-refs';
+
+const chapters = [
+  { title: 'De dónde vengo', text: about.story },
+  { title: 'Qué hago hoy', text: about.today },
+  { title: 'Hacia dónde voy', text: about.learning },
+];
+---
+
+<div>
+  <div class="flex flex-wrap items-end justify-between gap-6">
+    <p class="max-w-[24ch] border-l-4 border-clean pl-5 font-display text-3xl leading-tight font-extrabold text-ink sm:text-4xl">
+      {about.headline}
+    </p>
+    <Button href={site.cvPath} variant="secondary" download>
+      <Icon name="ph:download-simple" class="size-5" aria-hidden="true" />
+      Descargar CV
+    </Button>
+  </div>
+
+  <ol class="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
+    {chapters.map((chapter, index) => (
+      <li class="border-t-2 border-line pt-5">
+        <p class="font-display text-sm font-bold text-clean tabular-nums">
+          {String(index + 1).padStart(2, '0')}
+        </p>
+        <h3 class="mt-1 text-xl font-extrabold">{chapter.title}</h3>
+        <p class="mt-3 leading-relaxed text-body">{chapter.text}</p>
+      </li>
+    ))}
+  </ol>
+
+  <div class="mt-12">
+    <p class="text-sm font-semibold text-soft">Tecnologías con las que trabajo</p>
+    <ul class="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+      {resolveTools(about.tech).map((tool) => (
+        <li class="flex flex-col items-center gap-2 rounded-ui border border-line bg-bg px-2 py-4 text-center text-sm font-medium text-ink transition-colors duration-150 hover:border-clean">
+          <span class="[&_svg]:size-7">
+            <ToolIcon icon={tool.icon} monogram={tool.monogram} />
+          </span>
+          {tool.name}
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
