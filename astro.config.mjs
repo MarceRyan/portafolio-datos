@@ -17,14 +17,14 @@ export default defineConfig({
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : 'http://localhost:4321'),
   output: 'static',
-  // /cv lleva al PDF del CV (public/cv/CV_Marcelo_Morales_Rimac_Documentado.pdf).
+  // /cv lleva al PDF del CV (public/cv/CV_Marcelo_Morales_Rimac.pdf).
   redirects: {
     // Los casos se renombraron a proyectos; los enlaces antiguos siguen funcionando.
     '/casos': '/proyectos',
     '/casos/[slug]': '/proyectos/[slug]',
     // Sobre mí ahora es una sección de la portada.
     '/sobre-mi': '/#sobre-mi',
-    '/cv': '/cv/CV_Marcelo_Morales_Rimac_Documentado.pdf',
+    '/cv': '/cv/CV_Marcelo_Morales_Rimac.pdf',
   },
   i18n: {
     defaultLocale: 'es',

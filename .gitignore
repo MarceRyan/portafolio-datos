@@ -25,3 +25,8 @@ pnpm-debug.log*
 
 # capturas originales sin anonimizar: nunca se suben
 src/assets/images/casos/_originales/
+
+# documentos de trabajo (Word del CV, etc.): nunca se publican
+documentos-privados/
+~$*
+public/cv/*.docx

@@ -14,7 +14,7 @@
 - [ ] La palabra "TODO" no aparece en `dist/` (`grep -rl "TODO" dist`)
 - [ ] Sin rayas largas en `src` (em dash)
 - [ ] Casos confidenciales con `confidential: true` y sin datos reales
-- [ ] CV en `public/cv/CV_Marcelo_Morales_Rimac_Documentado.pdf`, foto en `src/assets/photo/`, capturas en `src/assets/images/casos/`
+- [ ] CV en `public/cv/CV_Marcelo_Morales_Rimac.pdf`, foto en `src/assets/photo/`, capturas en `src/assets/images/casos/`
 - [ ] Enlaces a repositorios y demos funcionan
 
 ## Diseño y accesibilidad

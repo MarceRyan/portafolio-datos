@@ -3,7 +3,7 @@ export const site = {
   fullName: 'Marcelo Bryan Morales Rimac',
   role: 'Analista de Datos',
   email: 'marcelo999546479@gmail.com',
-  cvPath: '/cv/CV_Marcelo_Morales_Rimac_Documentado.pdf',
+  cvPath: '/cv/CV_Marcelo_Morales_Rimac.pdf',
   defaultTitle: 'Marcelo Morales Rimac | Analista de Datos',
   description:
     'Analista de datos. Extraigo, limpio, modelo y visualizo información para que las gerencias decidan con evidencia.',
