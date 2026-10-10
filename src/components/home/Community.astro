@@ -18,7 +18,7 @@ const { id = 'comunidad' } = Astro.props;
   <div class="mt-10 grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
     <div>
       <p class="font-display text-2xl leading-snug font-bold text-ink sm:text-3xl">
-        {community.role} en {community.organization}, desde {community.since}.
+        {community.role} en {community.organization} ({community.short}), desde {community.since}.
       </p>
       <p class="mt-5 max-w-[56ch] text-lg text-body">{community.summary}</p>
     </div>
@@ -42,7 +42,7 @@ const { id = 'comunidad' } = Astro.props;
               >
                 <Icon name="ph:chalkboard-teacher-fill" class="size-4" />
               </span>
-              {workshop}
+              {workshop.title}
             </li>
           ))}
         </ol>

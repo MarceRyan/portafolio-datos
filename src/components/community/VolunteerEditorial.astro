@@ -1,0 +1,82 @@
+---
+// Opción A: editorial. Cifra grande, lo que hago en cada sesión y los talleres numerados.
+import { Icon } from 'astro-icon/components';
+import { community } from '../../data/community';
+---
+
+<div class="grid gap-12">
+  <div class="grid items-end gap-8 lg:grid-cols-[1.4fr_1fr]">
+    <div>
+      <p class="text-sm font-semibold text-soft">Desde {community.since}</p>
+      <p class="mt-2 font-display text-3xl leading-tight font-extrabold text-ink sm:text-4xl">
+        {community.role} en {community.organization}{' '}
+        <span class="text-clean">({community.short})</span>
+      </p>
+    </div>
+    <div class="flex items-end gap-4 lg:justify-end">
+      <span class="font-display text-7xl leading-none font-black text-decide tabular-nums">
+        {community.workshops.length}
+      </span>
+      <span class="pb-2 text-lg leading-tight text-body">
+        talleres
+        <br />
+        moderados
+      </span>
+    </div>
+  </div>
+
+  <div>
+    <p class="text-sm font-semibold text-soft">En cada sesión</p>
+    <ul class="mt-4 grid gap-px overflow-hidden rounded-ui border border-line bg-line md:grid-cols-3">
+      {community.tasks.map((task) => (
+        <li class="flex items-center gap-4 bg-surface p-5">
+          <span
+            aria-hidden="true"
+            class="flex size-11 shrink-0 items-center justify-center rounded-full bg-clean text-bg"
+          >
+            <Icon name={task.icon} class="size-5" />
+          </span>
+          <span class="font-medium text-ink">{task.text}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div>
+    <p class="text-sm font-semibold text-soft">Talleres que moderé</p>
+    <ol class="ed-list mt-2" data-reveal>
+      {community.workshops.map((workshop, index) => (
+        <li
+          class="ed-row group flex items-center gap-6 border-b border-line py-5"
+          style={`--i:${index}`}
+        >
+          <span class="w-14 shrink-0 font-display text-3xl font-black text-soft tabular-nums transition-colors duration-150 group-hover:text-clean">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span class="flex-1 font-display text-xl font-bold text-ink sm:text-2xl">
+            {workshop.title}
+          </span>
+          <Icon
+            name={workshop.icon}
+            aria-hidden="true"
+            class="size-6 shrink-0 text-soft transition-colors duration-150 group-hover:text-clean"
+          />
+        </li>
+      ))}
+    </ol>
+  </div>
+</div>
+
+<style>
+  .ed-list[data-armed] .ed-row {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .ed-list[data-in] .ed-row {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 420ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--i) * 110ms),
+      transform 420ms cubic-bezier(0.23, 1, 0.32, 1) calc(var(--i) * 110ms);
+  }
+</style>

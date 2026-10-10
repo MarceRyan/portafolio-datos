@@ -6,8 +6,8 @@ function init(): void {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (!('IntersectionObserver' in window)) return;
 
-  document.querySelectorAll<HTMLElement>('[data-community-line]').forEach((list) => {
-    if (list.hasAttribute('data-in')) return;
+  document.querySelectorAll<HTMLElement>('[data-community-line], [data-reveal]').forEach((list) => {
+    if (list.hasAttribute('data-in') || list.hasAttribute('data-armed')) return;
     list.setAttribute('data-armed', '');
 
     const observer = new IntersectionObserver(
@@ -23,5 +23,7 @@ function init(): void {
 }
 
 document.addEventListener('astro:page-load', init);
+// Si el script llega después del aviso de carga (pasa en desarrollo), arranca igual.
+if (document.readyState !== 'loading') init();
 
 export {};
