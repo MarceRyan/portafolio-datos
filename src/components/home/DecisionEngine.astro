@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import ToolIcon from '../ui/ToolIcon.astro';
-import { alsoUse, stages, stageStates, tools } from '../../data/tools';
+import { alsoUse, alsoUseGroups, stages, stageStates, tools } from '../../data/tools';
 
 const legend = [
   { state: 'raw', label: 'Dato crudo', swatch: 'bg-raw' },
@@ -96,16 +96,40 @@ const columns = stages.map((stage) => ({
       ))}
     </ol>
 
-    <div class="mt-14 border-t border-line pt-8">
-      <h3 class="text-lg font-bold">También uso</h3>
-      <ul class="mt-4 flex flex-wrap gap-3">
-        {alsoUse.map((skill) => (
-          <li class="flex min-h-11 items-center gap-3 rounded-ui border border-line bg-bg px-4 text-[0.95rem] font-medium text-ink">
-            <Icon name={skill.icon} class="size-5 shrink-0" aria-hidden="true" />
-            {skill.name}
-          </li>
+    <div class="mt-16 border-t border-line pt-10">
+      <h3 class="text-2xl font-extrabold">También uso</h3>
+      <div class="mt-8 grid gap-10 lg:grid-cols-[2fr_1fr] lg:gap-12">
+        {(Object.keys(alsoUseGroups) as (keyof typeof alsoUseGroups)[]).map((group) => (
+          <div>
+            <p class="text-sm font-semibold text-soft">{alsoUseGroups[group]}</p>
+            <ul
+              class:list={[
+                'mt-4 grid gap-3',
+                group === 'apoyo' ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-1',
+              ]}
+            >
+              {alsoUse
+                .filter((skill) => skill.group === group)
+                .map((skill) => (
+                  <li class="flex items-start gap-4 rounded-ui border border-line bg-bg p-4 transition-colors duration-150 ease-out hover:border-clean">
+                    <span
+                      aria-hidden="true"
+                      class="flex size-11 shrink-0 items-center justify-center rounded-ui border border-line bg-surface text-ink"
+                    >
+                      <Icon name={skill.icon} class="size-6" />
+                    </span>
+                    <span>
+                      <span class="block font-display text-base font-bold text-ink">
+                        {skill.name}
+                      </span>
+                      <span class="mt-1 block text-sm text-body">{skill.description}</span>
+                    </span>
+                  </li>
+                ))}
+            </ul>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   </div>
 </section>
@@ -146,6 +170,7 @@ const columns = stages.map((stage) => ({
   /* Móvil: no hay hover, así que el texto se muestra siempre bajo la herramienta. */
   @media (max-width: 767.98px) {
     .tool-tip {
+      display: block;
       position: static;
       width: auto;
       max-width: none;
