@@ -1,11 +1,11 @@
 ---
-title: Logística y Horómetro
+title: Control HM, horómetro, alquiler y combustible
 slug: logistica-horometro
 # TODO(marcelo): confirmar la pregunta de negocio.
-question: '¿Cómo controlar equipos, turnos y costos sin repartir la información en varios archivos?'
-summary: Aplicación en Apps Script para controlar equipos, turnos, costos de alquiler, combustible y reportes desde un único lugar.
+question: '¿Cuántas horas trabajó cada equipo hoy, cuánto costó y qué turnos faltan registrar?'
+summary: Sistema en Apps Script para registrar los turnos de cada equipo y controlar a diario sus horas de horómetro, combustible, alquiler y costo total.
 category: automatizacion
-stack: [Apps Script]
+stack: [Apps Script, Google Sheets]
 # TODO(marcelo): indicar para quién se hizo (organización o proyecto personal), tu rol y el período.
 confidential: false
 featured: false
@@ -14,25 +14,31 @@ order: 10
 
 import Flow from '../../components/casos/Flow.astro';
 
-{/* TODO(marcelo): contar cómo se registra el horómetro, cómo se calculan los costos y qué reportes genera. */}
+{/* TODO(marcelo): confirmar que los datos se guardan en Google Sheets y contar cómo se calculan las metas y los costos. */}
 
 ## Problema
 
-Controlar los equipos, sus turnos, el costo de alquiler y el combustible desde un único lugar.
+Saber cada día cuántas horas trabajó cada equipo, cuánto combustible usó, cuánto costó y qué turnos quedaron sin registrar.
 
 ## Arquitectura
 
 <Flow
-  caption="Del registro de cada turno a los reportes de costos."
+  caption="Del registro de cada turno al control diario de horas y costos."
   rows={[
     {
       columns: [
+        [{ label: 'Registro de turnos día y noche', tool: 'Apps Script', state: 'raw' }],
         [
-          { label: 'Equipos y turnos', state: 'raw' },
-          { label: 'Combustible', state: 'raw' },
+          {
+            label: 'Horas, combustible y costos por equipo',
+            tool: 'Google Sheets',
+            state: 'clean',
+          },
         ],
-        [{ label: 'Control de horas y costos de alquiler', tool: 'Apps Script', state: 'clean' }],
-        [{ label: 'Reportes', tool: 'Apps Script', state: 'decide' }],
+        [
+          { label: 'Control diario por equipo', tool: 'Apps Script', state: 'decide' },
+          { label: 'Dashboard e historial HM', tool: 'Apps Script', state: 'decide' },
+        ],
       ],
     },
   ]}
@@ -40,4 +46,8 @@ Controlar los equipos, sus turnos, el costo de alquiler y el combustible desde u
 
 ## Solución
 
-Una aplicación en Apps Script que controla equipos, turnos, costos de alquiler, combustible y reportes desde un único lugar.
+El sistema tiene cuatro vistas: dashboard, registro de turno, control diario e historial de horómetro.
+
+El control diario se filtra por fecha, proyecto y ubicación. Arriba resume el día: horas de horómetro de todos los equipos, galones de combustible, costo de alquiler, costo de petróleo, otros gastos y costo total.
+
+Debajo, una matriz muestra cada equipo con su turno de día y de noche, las horas registradas frente a la meta y la diferencia, los galones y los costos. El estado indica si el equipo está completo, si le falta un turno o si no tiene registros, y basta con hacer clic en un turno pendiente para registrarlo.
