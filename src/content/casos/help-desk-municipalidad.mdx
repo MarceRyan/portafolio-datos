@@ -1,0 +1,53 @@
+---
+title: Sistema de Help Desk
+slug: help-desk-municipalidad
+# TODO(marcelo): confirmar la pregunta de negocio.
+question: '¿Cómo registrar y seguir cada incidente de soporte técnico en un solo lugar?'
+summary: Plataforma web para gestionar los incidentes de soporte técnico, con acceso para el personal de soporte y para los usuarios, y reporte final en Excel.
+category: web
+stack: [PHP, MySQL, HTML, CSS, JavaScript, Excel]
+organization: Municipalidad Distrital de Yanacancha
+role: Practicante de TI
+confidential: false
+featured: false
+order: 11
+links:
+  repo: https://github.com/MarceRyan/Proyecto_Help_Desk
+---
+
+import Flow from '../../components/casos/Flow.astro';
+
+## Contexto
+
+Sistema de Help Desk diseñado para la Municipalidad Distrital de Yanacancha, para facilitar la gestión del soporte técnico del área de informática.
+
+## Problema
+
+Registrar los incidentes informáticos que reportan los usuarios de la municipalidad y hacer seguimiento de su avance hasta resolverlos.
+
+## Arquitectura
+
+<Flow
+  caption="Del incidente reportado al reporte de incidentes resueltos."
+  rows={[
+    {
+      columns: [
+        [{ label: 'Solicitud de ayuda del usuario', tool: 'HTML', state: 'raw' }],
+        [{ label: 'Registro y gestión del incidente', tool: 'PHP', state: 'clean' }],
+        [{ label: 'Incidentes y usuarios', tool: 'MySQL', state: 'clean' }],
+        [{ label: 'Reporte de incidentes resueltos', tool: 'Excel', state: 'decide' }],
+      ],
+    },
+  ]}
+/>
+
+## Solución
+
+El sistema tiene dos accesos: uno para el personal de soporte técnico y otro para los usuarios de la municipalidad.
+
+- **Usuarios:** envían solicitudes de ayuda según el tipo de problema de su equipo y siguen el progreso de sus incidentes.
+- **Soporte técnico:** registra y gestiona los incidentes, ve en tiempo real la lista de usuarios con incidentes y controla su estado (en proceso o aprobado).
+
+Al finalizar, el sistema genera un reporte en Excel con los incidentes resueltos y aprobados por los usuarios.
+
+La interfaz está hecha con HTML, CSS y JavaScript; el backend con PHP y la base de datos en MySQL.

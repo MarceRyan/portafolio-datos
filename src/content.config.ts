@@ -11,7 +11,7 @@ const casos = defineCollection({
       /** La pregunta de negocio que originó el caso. */
       question: z.string(),
       summary: z.string(),
-      category: z.enum(['ingenieria', 'analisis', 'bi', 'automatizacion']),
+      category: z.enum(['ingenieria', 'analisis', 'bi', 'automatizacion', 'web']),
       /** Nombres de herramientas; se resuelven a iconos en src/data/tool-refs.ts. */
       stack: z.array(z.string()),
       organization: z.string().optional(),

@@ -1,0 +1,40 @@
+---
+title: Casos de COVID-19 en el Perú
+slug: dashboard-covid-19
+# TODO(marcelo): confirmar la pregunta de negocio.
+question: '¿Dónde y en qué grupos de edad se concentraron los casos positivos de COVID-19?'
+summary: Dashboard en Power BI con medidas DAX que muestra los casos positivos de COVID-19 por departamento, región y grupo de edad.
+category: bi
+stack: [Power BI]
+organization: Proyecto personal
+confidential: false
+featured: false
+order: 13
+---
+
+import Flow from '../../components/casos/Flow.astro';
+
+{/* TODO(marcelo): indicar la fuente de los datos (por ejemplo, datos abiertos del MINSA) y la fecha de corte. */}
+
+## Problema
+
+Ver de un vistazo cómo se distribuyeron los casos positivos de COVID-19 en el país.
+
+## Arquitectura
+
+<Flow
+  caption="De los registros de casos positivos a un tablero por región, departamento y edad."
+  rows={[
+    {
+      columns: [
+        [{ label: 'Registros de casos positivos', state: 'raw' }],
+        [{ label: 'Medidas con DAX', tool: 'Power BI', state: 'clean' }],
+        [{ label: 'Dashboard de casos', tool: 'Power BI', state: 'decide' }],
+      ],
+    },
+  ]}
+/>
+
+## Solución
+
+El dashboard reúne el total de casos positivos, un mapa por regiones (costa, sierra y selva), la tabla de casos por departamento y los casos por grupos de edad, de 1 a 10 años hasta más de 100. Se filtra por región y por rango de edad.

@@ -24,6 +24,10 @@ export const toolRef = {
   mysql: { name: 'MySQL', icon: 'logos:mysql-icon' },
   claude: { name: 'Claude', icon: 'logos:claude-icon' },
   rstudio: { name: 'RStudio', icon: 'devicon:rstudio' },
+  html: { name: 'HTML', icon: 'logos:html-5' },
+  css: { name: 'CSS', icon: 'logos:css-3' },
+  javascript: { name: 'JavaScript', icon: 'logos:javascript' },
+  php: { name: 'PHP', icon: 'logos:php' },
 } as const satisfies Record<string, ToolRef>;
 
 const byName = new Map<string, ToolRef>(Object.values(toolRef).map((tool) => [tool.name, tool]));

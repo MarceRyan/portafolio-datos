@@ -6,7 +6,8 @@ import { categoryLabels } from '../../data/categories';
 import { getCasos } from '../../data/casos';
 import { resolveTools } from '../../data/tool-refs';
 
-const casos = await getCasos();
+// En la portada, los nueve primeros; el resto está en /proyectos.
+const casos = (await getCasos()).slice(0, 9);
 ---
 
 <section id="proyectos" aria-labelledby="proyectos-title" class="wrap pb-20 sm:pb-28">
