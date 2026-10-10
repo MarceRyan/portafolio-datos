@@ -321,8 +321,7 @@
       animation-delay: calc(var(--d, 0) * 90ms + 120ms);
     }
     /* Las apariciones en cascada quedan como fundidos, sin desplazamiento. */
-    [data-armed] .flow-step,
-    [data-armed] .chip {
+    [data-armed] .flow-step {
       transform: none !important;
     }
   }
