@@ -36,6 +36,14 @@
   --grid-dot: rgb(11 27 58 / 0.1);
   --grid-line: rgb(11 27 58 / 0.06);
 
+  /* Interruptor día/noche: mismos colores en ambos temas (muestran el estado, no el tema). */
+  --switch-day: #4aa8d4;
+  --switch-night: #101b33;
+  --switch-sun: #ffb224;
+  --switch-cloud: #ffffff;
+  --switch-moon: #d7dfeb;
+  --switch-crater: #a5b3c7;
+
   --header-h: 4rem;
   --radius: 0.625rem;
 }

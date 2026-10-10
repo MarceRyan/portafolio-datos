@@ -1,4 +1,6 @@
 ---
+// Interruptor día/noche: de día, sol a la izquierda y nubes en el cielo;
+// de noche, la perilla se desliza a la derecha, se vuelve luna y aparecen estrellas.
 import { Icon } from 'astro-icon/components';
 import { useTranslations } from '../../i18n/utils';
 
@@ -10,22 +12,164 @@ const t = useTranslations('es');
   data-theme-toggle
   aria-pressed="false"
   aria-label={t('theme.toggle')}
-  class="theme-toggle inline-flex size-11 items-center justify-center rounded-ui text-ink transition-[background-color,transform] duration-150 ease-out hover:bg-surface active:scale-[0.97]"
+  class="group inline-flex h-11 w-[4.5rem] shrink-0 items-center justify-center rounded-full active:scale-[0.97]"
 >
-  <Icon name="ph:moon" class="icon-moon size-5" aria-hidden="true" />
-  <Icon name="ph:sun" class="icon-sun size-5" aria-hidden="true" />
+  <span aria-hidden="true" class="switch-track">
+    <span class="switch-clouds">
+      <Icon name="ph:cloud-fill" class="cloud cloud-a" />
+      <Icon name="ph:cloud-fill" class="cloud cloud-b" />
+    </span>
+    <span class="switch-stars">
+      <Icon name="ph:star-four-fill" class="star star-a" />
+      <Icon name="ph:star-four-fill" class="star star-b" />
+      <Icon name="ph:star-four-fill" class="star star-c" />
+    </span>
+    <span class="switch-knob">
+      <span class="crater crater-a"></span>
+      <span class="crater crater-b"></span>
+      <span class="crater crater-c"></span>
+    </span>
+  </span>
 </button>
 
 <style>
-  /* Se muestra el icono de la acción disponible: luna en claro, sol en oscuro. */
-  .icon-sun {
-    display: none;
-  }
-  :global(:root[data-theme='dark']) .icon-moon {
-    display: none;
-  }
-  :global(:root[data-theme='dark']) .icon-sun {
+  .switch-track {
+    position: relative;
     display: block;
+    width: 4rem;
+    height: 2rem;
+    overflow: hidden;
+    border-radius: 9999px;
+    background-color: var(--switch-day);
+    box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.18);
+    transition: background-color 320ms cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  /* Perilla: sol de día, luna de noche. */
+  .switch-knob {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 9999px;
+    background-color: var(--switch-sun);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
+    transition:
+      transform 320ms cubic-bezier(0.77, 0, 0.175, 1),
+      background-color 320ms cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  .crater {
+    position: absolute;
+    border-radius: 9999px;
+    background-color: var(--switch-crater);
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+  .crater-a {
+    top: 0.35rem;
+    left: 0.35rem;
+    width: 0.45rem;
+    height: 0.45rem;
+  }
+  .crater-b {
+    top: 0.85rem;
+    left: 0.85rem;
+    width: 0.3rem;
+    height: 0.3rem;
+  }
+  .crater-c {
+    top: 0.3rem;
+    left: 1rem;
+    width: 0.2rem;
+    height: 0.2rem;
+  }
+
+  /* Nubes (día) a la derecha; estrellas (noche) a la izquierda. */
+  .switch-clouds,
+  .switch-stars {
+    position: absolute;
+    inset: 0;
+    transition:
+      opacity 280ms ease,
+      transform 320ms cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  .cloud {
+    position: absolute;
+    color: var(--switch-cloud);
+  }
+  .cloud-a {
+    top: 0.2rem;
+    right: 0.45rem;
+    width: 1rem;
+    height: 1rem;
+  }
+  .cloud-b {
+    bottom: 0.15rem;
+    right: 1.15rem;
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+  .switch-stars {
+    opacity: 0;
+    transform: translateY(-0.4rem);
+  }
+  .star {
+    position: absolute;
+    color: var(--switch-moon);
+  }
+  .star-a {
+    top: 0.35rem;
+    left: 0.55rem;
+    width: 0.55rem;
+    height: 0.55rem;
+  }
+  .star-b {
+    bottom: 0.35rem;
+    left: 0.95rem;
+    width: 0.45rem;
+    height: 0.45rem;
+  }
+  .star-c {
+    top: 0.5rem;
+    left: 1.6rem;
+    width: 0.35rem;
+    height: 0.35rem;
+  }
+
+  /* Noche. */
+  :global(:root[data-theme='dark']) .switch-track {
+    background-color: var(--switch-night);
+  }
+  :global(:root[data-theme='dark']) .switch-knob {
+    transform: translateX(2rem);
+    background-color: var(--switch-moon);
+  }
+  :global(:root[data-theme='dark']) .crater {
+    opacity: 1;
+  }
+  :global(:root[data-theme='dark']) .switch-clouds {
+    opacity: 0;
+    transform: translateY(0.4rem);
+  }
+  :global(:root[data-theme='dark']) .switch-stars {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Al pasar el cursor, la perilla se asoma hacia el otro lado. */
+  @media (hover: hover) {
+    .group:hover .switch-knob {
+      transform: translateX(0.2rem);
+    }
+    :global(:root[data-theme='dark']) .group:hover .switch-knob {
+      transform: translateX(1.8rem);
+    }
+  }
+  /* Responde al clic: se anima también con movimiento reducido. */
+  .group:focus-visible {
+    outline: 2px solid var(--decide);
+    outline-offset: 2px;
   }
 </style>
 
