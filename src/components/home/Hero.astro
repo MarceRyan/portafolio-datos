@@ -1,10 +1,12 @@
 ---
+// Inicio: saludo, nombre, el puesto que se escribe y se borra rotando entre los que busca,
+// una línea de presentación, dos botones, cifras reales y la foto en un anillo de datos.
+import { getCollection } from 'astro:content';
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
-import { Icon } from 'astro-icon/components';
-import Button from '../ui/Button.astro';
 import Placeholder from '../ui/Placeholder.astro';
-import { socials } from '../../data/socials';
+import { buttonClasses } from '../ui/button-classes';
+import { certifications } from '../../data/certifications';
 
 // Si existe src/assets/photo/perfil.(jpg|png|webp|avif) se usa; si no, silueta + TODO.
 const photos = import.meta.glob<{ default: ImageMetadata }>(
@@ -13,143 +15,114 @@ const photos = import.meta.glob<{ default: ImageMetadata }>(
 );
 const photo = Object.values(photos)[0]?.default;
 
-const linkedin = socials.find((s) => s.id === 'linkedin');
-const github = socials.find((s) => s.id === 'github');
-const corner = 'absolute size-6 border-decide';
+const roles = ['Analista de Datos', 'Analista BI', 'Ingeniero de Datos'];
+const projects = (await getCollection('casos')).length;
+const certificates = certifications.filter((item) => item.certificate).length;
+const stats = [
+  { value: '+2', label: 'años de experiencia' },
+  { value: String(projects), label: 'proyectos' },
+  { value: String(certificates), label: 'certificaciones' },
+];
 ---
 
 <section class="hero-backdrop">
-  <div class="wrap grid items-center gap-14 py-12 lg:grid-cols-[1.25fr_1fr] lg:gap-16 lg:py-16">
+  <div class="wrap grid items-center gap-12 py-12 lg:grid-cols-[1.3fr_1fr] lg:py-16">
     <div>
-      <h1 class="text-[clamp(2.5rem,7vw,4.5rem)] leading-[1.02] font-extrabold tracking-[-0.03em]">
+      <p class="rise text-lg font-semibold text-soft" style="--d:0">
+        Hola, soy
+      </p>
+      <h1 class="mt-2 text-[clamp(2.5rem,6.5vw,4.25rem)] leading-[1.02] font-extrabold tracking-[-0.03em]">
         Marcelo Morales Rimac
       </h1>
-      <p
-        class="rise mt-6 max-w-[26ch] font-display text-2xl leading-snug font-bold text-ink sm:text-3xl"
-        style="--d:0"
-      >
-        Convierto datos desordenados en decisiones claras.
+      <p class="mt-3 font-display text-[clamp(1.75rem,4.5vw,2.75rem)] leading-tight font-extrabold">
+        <span class="sr-only">Analista de Datos, Analista BI e Ingeniero de Datos</span>
+        <span aria-hidden="true" class="typing text-clean" data-typing={JSON.stringify(roles)}>
+          {roles[0]}
+        </span>
       </p>
-      <p class="rise mt-6 max-w-[60ch] text-lg text-body" style="--d:1">
-        Analista de datos. Extraigo, limpio, modelo y visualizo información para que las gerencias
-        decidan con evidencia.
+      <p class="rise mt-5 max-w-[48ch] text-lg text-body" style="--d:1">
+        Convierto datos desordenados en decisiones claras: los recolecto, los limpio y los convierto
+        en tableros que se entienden de un vistazo.
       </p>
       <div class="rise mt-8 flex flex-wrap gap-3" style="--d:2">
-        <Button href="/proyectos">Ver proyectos</Button>
-        {linkedin && (
-          <Button
-            href={linkedin.href}
-            variant="secondary"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Icon name="ph:linkedin-logo" class="size-5" aria-hidden="true" />
-            LinkedIn
-          </Button>
-        )}
-        {github && (
-          <Button href={github.href} variant="secondary" target="_blank" rel="noopener noreferrer">
-            <Icon name="ph:github-logo" class="size-5" aria-hidden="true" />
-            GitHub
-          </Button>
-        )}
+        <a href="/proyectos" class={buttonClasses('primary')}>
+          Ver proyectos
+        </a>
+        <a href="/#sobre-mi" class={buttonClasses('secondary')}>
+          Conóceme
+        </a>
       </div>
+      <dl
+        class="rise mt-10 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-6"
+        style="--d:3"
+      >
+        {stats.map((stat) => (
+          <div>
+            <dt class="sr-only">{stat.label}</dt>
+            <dd class="font-display text-4xl leading-none font-black text-decide tabular-nums">
+              {stat.value}
+            </dd>
+            <p aria-hidden="true" class="mt-1 text-sm text-body">
+              {stat.label}
+            </p>
+          </div>
+        ))}
+      </dl>
     </div>
 
-    <div class="mx-auto w-full max-w-sm pb-10 lg:max-w-none lg:justify-self-end">
-      <div class="relative mx-4 sm:mx-0 lg:max-w-[22rem]">
-        <span
-          aria-hidden="true"
-          class:list={[corner, 'corner-in -top-3 -left-3 border-t-2 border-l-2']}
-          style="--cx:-10px;--cy:-10px"
-        ></span>
-        <span
-          aria-hidden="true"
-          class:list={[corner, 'corner-in -top-3 -right-3 border-t-2 border-r-2']}
-          style="--cx:10px;--cy:-10px"
-        ></span>
-        <span
-          aria-hidden="true"
-          class:list={[corner, 'corner-in -bottom-3 -left-3 border-b-2 border-l-2']}
-          style="--cx:-10px;--cy:10px"
-        ></span>
-        <span
-          aria-hidden="true"
-          class:list={[corner, 'corner-in -right-3 -bottom-3 border-r-2 border-b-2']}
-          style="--cx:10px;--cy:10px"
-        ></span>
-
-        <div class="relative aspect-[4/5] overflow-hidden rounded-ui bg-raw-3">
-          {photo ? (
-            <Image
-              src={photo}
-              alt="Retrato profesional de Marcelo Morales Rimac"
-              widths={[360, 560, 720]}
-              sizes="(min-width: 1024px) 22rem, 90vw"
-              loading="eager"
-              fetchpriority="high"
-              class="size-full object-cover"
-            />
-          ) : (
-            <div class="flex size-full flex-col items-center justify-between">
-              <Placeholder
-                class="m-4 bg-bg text-center"
-                todo="TODO(marcelo): foto profesional vertical 4:5 en src/assets/photo/perfil.jpg"
-              >
-                Foto profesional
-              </Placeholder>
-              <svg
-                viewBox="0 0 160 200"
-                class="w-3/4 text-raw-2"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <circle cx="80" cy="74" r="34"></circle>
-                <path d="M16 200c0-44 28-74 64-74s64 30 64 74z"></path>
-              </svg>
-            </div>
-          )}
-        </div>
-
-        <div
-          class="rise absolute -bottom-8 -left-4 flex max-w-[17rem] items-start gap-3 rounded-ui border border-line bg-surface p-4 sm:-left-8"
-          style="--d:4"
-        >
-          <span class="relative mt-1.5 flex size-2.5 shrink-0" aria-hidden="true">
-            <span class="pulse-ring absolute inline-flex size-full rounded-full bg-clean"></span>
-            <span class="relative inline-flex size-full rounded-full bg-clean"></span>
-          </span>
-          <p class="text-sm leading-snug text-body">
-            <strong class="font-semibold text-ink">Abierto a nuevos retos:</strong> Analista de
-            Datos, Analista BI e Ingeniero de Datos
-          </p>
-        </div>
+    <div class="flex justify-center">
+      <div class="relative">
+        <span aria-hidden="true" class="photo-ring absolute -inset-3 rounded-full"></span>
+        {photo ? (
+          <Image
+            src={photo}
+            alt="Retrato profesional de Marcelo Morales Rimac"
+            widths={[320, 480, 640]}
+            sizes="(min-width: 640px) 20rem, 16rem"
+            loading="eager"
+            fetchpriority="high"
+            class="relative size-64 rounded-full object-cover object-top sm:size-80"
+          />
+        ) : (
+          <div class="relative flex size-64 items-center justify-center rounded-full bg-raw-3 sm:size-80">
+            <Placeholder
+              class="bg-bg text-center"
+              todo="TODO(marcelo): foto profesional vertical 4:5 en src/assets/photo/perfil.jpg"
+            >
+              Foto profesional
+            </Placeholder>
+          </div>
+        )}
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  /* Pulso suave del indicador de disponibilidad; se desactiva con movimiento reducido. */
-  @media (prefers-reduced-motion: no-preference) {
-    .pulse-ring {
-      animation: availability-pulse 2.4s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+  /* Cursor de escritura al final del puesto. */
+  .typing::after {
+    content: '|';
+    margin-left: 0.05em;
+    font-weight: 400;
+    animation: caret-blink 1s steps(1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .typing::after {
+      animation: none;
     }
   }
-  @keyframes availability-pulse {
-    0% {
-      transform: scale(1);
-      opacity: 0.55;
-    }
-    70%,
-    100% {
-      transform: scale(2.6);
+  @keyframes caret-blink {
+    50% {
       opacity: 0;
     }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .pulse-ring {
-      display: none;
-    }
+  /* Anillo de datos alrededor de la foto: limpio (cian), decisión (ámbar) y el resto en línea. */
+  .photo-ring {
+    background: conic-gradient(var(--clean) 0 62%, var(--decide) 62% 78%, var(--line) 78% 100%);
+    mask: radial-gradient(farthest-side, transparent calc(100% - 4px), black calc(100% - 3px));
   }
 </style>
+
+<script>
+  import '../../scripts/typing';
+</script>
