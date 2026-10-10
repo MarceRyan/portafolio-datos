@@ -2,10 +2,9 @@
 title: Extracción y carga automatizada de avances docentes
 slug: extraccion-avances-docentes
 question: '¿Cómo saber el avance de cada docente sin descargar reportes a mano?'
-summary: Web scraping del campus virtual del SIFODS con Selenium y Python, y un paquete de SSIS que carga notas, intentos y progreso a SQL Server.
+summary: Web scraping del campus virtual con Selenium y Python, y un paquete de SSIS que carga notas, intentos y progreso a SQL Server.
 category: ingenieria
 stack: [Selenium, Python, SSIS, SQL Server]
-organization: MINEDU, programa Educación Básica para Todos
 role: Analista de Datos
 confidential: true
 featured: false
@@ -18,7 +17,7 @@ import Flow from '../../components/casos/Flow.astro';
 
 ## Contexto
 
-El campus virtual del SIFODS concentra las notas y los avances de los docentes.
+El campus virtual concentra las notas y los avances de los docentes.
 
 ## Problema
 
@@ -26,7 +25,7 @@ Para conocer el avance de cada docente había que descargar reportes a mano.
 
 ## Datos
 
-Notas, intentos y progreso de docentes publicados en el campus virtual del SIFODS.
+Notas, intentos y progreso de docentes publicados en el campus virtual.
 
 ## Arquitectura
 
@@ -36,7 +35,7 @@ Notas, intentos y progreso de docentes publicados en el campus virtual del SIFOD
     {
       label: 'Extracción',
       columns: [
-        [{ label: 'Campus virtual del SIFODS', state: 'raw' }],
+        [{ label: 'Campus virtual', state: 'raw' }],
         [{ label: 'Scraping automatizado', tool: 'Selenium', state: 'raw' }],
         [{ label: 'Migración de los datos', tool: 'Python', state: 'clean' }],
         [{ label: 'Base de datos', tool: 'SQL Server', state: 'clean' }],
@@ -56,7 +55,7 @@ Notas, intentos y progreso de docentes publicados en el campus virtual del SIFOD
 
 ## Solución
 
-Web scraping con Selenium del campus virtual del SIFODS y migración a SQL Server con Python.
+Web scraping con Selenium del campus virtual y migración a SQL Server con Python.
 
 La carga la ordena un paquete de SSIS. Descarga los Excel, carga las notas, los intentos y el progreso, retira los registros de docentes con error, pasa por la capa staging y su validación, y termina en las capas fact de notas, intentos y progreso. Al final carga la base de llamadas y el progreso diario.
 

@@ -111,7 +111,7 @@ export const tools: readonly Tool[] = [
     stage: 'extraccion',
     name: 'Selenium',
     icon: 'simple-icons:selenium',
-    context: 'Scraping del campus virtual del SIFODS',
+    context: 'Scraping de un campus virtual',
   },
   {
     stage: 'extraccion',
@@ -165,7 +165,7 @@ export const tools: readonly Tool[] = [
     stage: 'decision',
     name: 'Power BI y DAX',
     icon: 'simple-icons:powerbi',
-    context: 'Tableros para gerencias del MINEDU',
+    context: 'Tableros que las gerencias usan para decidir',
   },
   {
     stage: 'decision',

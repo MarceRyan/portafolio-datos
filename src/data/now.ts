@@ -8,7 +8,7 @@ export interface NowItem {
 }
 
 export const now: readonly NowItem[] = [
-  { text: 'Tableros y automatizaciones en el MINEDU.', icon: 'ph:chart-line-up-fill' },
+  { text: 'Construyendo tableros y automatizaciones de datos.', icon: 'ph:chart-line-up-fill' },
   {
     text: 'Moderación de talleres en Data Science Research Perú (DSRP).',
     icon: 'ph:users-three-fill',

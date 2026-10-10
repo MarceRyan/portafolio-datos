@@ -1,6 +1,6 @@
 # Portafolio de Marcelo Morales Rimac
 
-Portafolio personal de un Analista de Datos (MINEDU, Perú). Reemplaza dos sitios antiguos de GitHub Pages. Objetivo: que un reclutador entienda en menos de 30 segundos que construyo el camino completo entre los datos crudos y la decisión de una gerencia, con resultados reales en el sector público.
+Portafolio personal de un Analista de Datos (MINEDU, Perú). Reemplaza dos sitios antiguos de GitHub Pages. Objetivo: que un reclutador entienda en menos de 30 segundos que construyo el camino completo entre los datos crudos y la decisión de una gerencia, con resultados reales.
 
 Concepto visual: **"De los datos a la decisión"**. Paleta azul noche, cian y ámbar. Tres estados con color propio: crudo (gris azulado), limpio (cian), decisión (ámbar).
 
@@ -43,6 +43,7 @@ Astro 7 (salida 100% estática), TypeScript estricto, Tailwind CSS v4 (plugin de
 ## Reglas de contenido
 
 - **No inventar métricas, fechas, logros ni experiencias.** Si falta un dato, anotar `TODO(marcelo): ...` en el código (comentario o atributo `todo` de `Placeholder`) y en la lista de pendientes de la fase. En pantalla va un texto neutro ("Foto profesional", "Captura del tablero"), nunca la palabra TODO.
+- El discurso habla del trabajo que hago, no del empleador: el MINEDU solo aparece como dato en la experiencia laboral (Trayectoria) y en el título de la tesis. Los casos no llevan `organization` salvo proyectos de otro origen.
 - Las secciones de un caso sin datos reales se omiten; no se rellenan con texto genérico.
 - Casos con `confidential: true` muestran el aviso de anonimización y no exponen datos reales.
 - Los textos oficiales (hero, etapas, casos, experiencia) están en el prompt original del proyecto; no parafrasear.
