@@ -18,6 +18,8 @@ export interface Tool {
   icon?: string;
   /** Texto del monograma de respaldo cuando no hay logo disponible. */
   monogram?: string;
+  /** Color oficial de la marca, para logos que solo existen en una tinta. */
+  color?: string;
   /** Dónde apliqué la herramienta. Sin dato queda un TODO visible. */
   context?: string;
 }
@@ -74,12 +76,14 @@ export const tools: readonly Tool[] = [
     stage: 'fuentes',
     name: 'Excel',
     icon: 'simple-icons:microsoftexcel',
+    color: '#21A366',
     context: 'Hojas de cálculo donde se registra y comparte la información del día a día',
   },
   {
     stage: 'fuentes',
     name: 'Formularios',
     icon: 'simple-icons:googleforms',
+    color: '#7248B9',
     context: 'Encuestas y registros que la gente llena y que se guardan solos en una tabla',
   },
   // TODO(marcelo): confirmar o ajustar las descripciones de abajo con tus casos reales.
@@ -93,6 +97,7 @@ export const tools: readonly Tool[] = [
     stage: 'fuentes',
     name: 'JSON',
     icon: 'simple-icons:json',
+    color: '#F5A623',
     context: 'Datos que entregan las aplicaciones y que se pasan a tablas',
   },
   {
@@ -104,19 +109,20 @@ export const tools: readonly Tool[] = [
   {
     stage: 'extraccion',
     name: 'Python',
-    icon: 'simple-icons:python',
+    icon: 'logos:python',
     context: 'Scripts que juntan, limpian y cruzan datos sin trabajo manual',
   },
   {
     stage: 'extraccion',
     name: 'Selenium',
-    icon: 'simple-icons:selenium',
+    icon: 'logos:selenium',
     context: 'Un navegador que se maneja solo para descargar información de una web',
   },
   {
     stage: 'extraccion',
     name: 'Apps Script',
     icon: 'simple-icons:googleappsscript',
+    color: '#4285F4',
     context: 'Pequeños programas que automatizan tareas en hojas, correos y formularios',
   },
   {
@@ -140,19 +146,19 @@ export const tools: readonly Tool[] = [
   {
     stage: 'modelado',
     name: 'SQL Server',
-    icon: 'simple-icons:microsoftsqlserver',
+    icon: 'devicon:microsoftsqlserver',
     context: 'Base de datos donde la información queda guardada y lista para consultar',
   },
   {
     stage: 'modelado',
     name: 'PostgreSQL',
-    icon: 'simple-icons:postgresql',
+    icon: 'logos:postgresql',
     context: 'Base de datos libre para guardar y consultar tablas',
   },
   {
     stage: 'modelado',
     name: 'Snowflake',
-    icon: 'simple-icons:snowflake',
+    icon: 'logos:snowflake-icon',
     context: 'Almacén de datos en la nube que crece según lo que se necesite',
   },
   {
@@ -164,19 +170,20 @@ export const tools: readonly Tool[] = [
   {
     stage: 'decision',
     name: 'Power BI y DAX',
-    icon: 'simple-icons:powerbi',
+    icon: 'logos:microsoft-power-bi',
     context: 'Tableros interactivos que muestran lo importante de un vistazo',
   },
   {
     stage: 'decision',
     name: 'Modelos predictivos en Python',
-    icon: 'simple-icons:python',
+    icon: 'logos:python',
     context: 'Estima qué va a pasar a partir de lo que ya pasó',
   },
   {
     stage: 'decision',
     name: 'Power Automate',
     icon: 'simple-icons:powerautomate',
+    color: '#0066FF',
     context: 'Flujos que envían correos y avisos de forma automática',
   },
 ];

@@ -77,7 +77,7 @@ const tones = [
         {resolveTools(about.tech).map((tool) => (
           <li class="group flex flex-col items-center gap-2 rounded-ui border border-line bg-bg px-2 py-4 text-center text-sm font-medium text-ink transition-[border-color,transform] duration-200 ease-out hover:-translate-y-0.5 hover:border-clean">
             <span class="transition-colors duration-200 group-hover:text-clean [&_svg]:size-7">
-              <ToolIcon icon={tool.icon} monogram={tool.monogram} />
+              <ToolIcon icon={tool.icon} monogram={tool.monogram} color={tool.color} />
             </span>
             {tool.name}
           </li>

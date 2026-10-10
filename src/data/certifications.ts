@@ -13,6 +13,8 @@ export interface Credential {
   year: number;
   /** Icono de Iconify que representa a la institución o el tipo de título. */
   icon: string;
+  /** Color oficial de la marca, para logos que solo existen en una tinta. */
+  color?: string;
   /** Si existe, la tarjeta abre el certificado en una ventana. */
   certificate?: Certificate;
 }
@@ -29,6 +31,7 @@ export const certifications: readonly Credential[] = [
     institution: 'DataCamp',
     year: 2024,
     icon: 'simple-icons:datacamp',
+    color: '#03EF62',
     certificate: {
       image: 'associate-data-engineer',
       credentialId: 'DEA0017621016194',
@@ -42,6 +45,7 @@ export const certifications: readonly Credential[] = [
     // El certificado indica "Certified on January 18, 2025".
     year: 2025,
     icon: 'simple-icons:datacamp',
+    color: '#03EF62',
     certificate: {
       image: 'associate-data-analyst',
       credentialId: 'DAA0019221260436',

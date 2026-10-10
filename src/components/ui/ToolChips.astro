@@ -21,7 +21,7 @@ const { tools, variant = 'labeled', class: className } = Astro.props;
       ]}
       title={variant === 'icons' ? tool.name : undefined}
     >
-      <ToolIcon icon={tool.icon} monogram={tool.monogram} />
+      <ToolIcon icon={tool.icon} monogram={tool.monogram} color={tool.color} />
       {variant === 'labeled' ? tool.name : <span class="sr-only">{tool.name}</span>}
     </li>
   ))}

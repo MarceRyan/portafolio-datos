@@ -52,3 +52,7 @@ Otros: `--header-h: 4rem`, `--radius: 0.625rem` (`rounded-ui`), clase `wrap` (co
 - `--grid-dot`: cuadrícula de puntos de 24 px en `body` (papel de datos). Las franjas `bg-surface` la tapan, así alternan textura y superficie lisa.
 - `--grid-line`: cuadrícula de 48 px del inicio (`.hero-backdrop`), desvanecida con máscara radial y con un brillo cian suave detrás de la foto.
 - Ambas son muy tenues (6 a 13 %): no compiten con el texto ni cambian el contraste.
+
+## Logos de herramientas
+
+Las herramientas usan su color oficial. Preferir `logos:*` o `devicon:*` (ya vienen a color). Si solo existe en `simple-icons` (monocromo), agregar `color` con el tono de marca en `tool-refs.ts`, `tools.ts` o `certifications.ts`; `ToolIcon` lo aplica. Verificar que se lea en ambos temas.

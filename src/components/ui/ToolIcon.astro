@@ -5,13 +5,20 @@ interface Props {
   icon?: string;
   /** Texto del monograma cuando no hay logo (se muestra en un recuadro neutro). */
   monogram?: string;
+  /** Color oficial de la marca (logos monocromos). */
+  color?: string;
 }
 
-const { icon, monogram } = Astro.props;
+const { icon, monogram, color } = Astro.props;
 ---
 
 {icon ? (
-  <Icon name={icon} class="size-[1.375rem] shrink-0" aria-hidden="true" />
+  <Icon
+    name={icon}
+    class="size-[1.375rem] shrink-0"
+    style={color ? `color:${color}` : undefined}
+    aria-hidden="true"
+  />
 ) : (
   <span
     aria-hidden="true"

@@ -82,7 +82,7 @@ const columns = stages.map((stage) => ({
                   aria-expanded="false"
                   class="flex min-h-11 w-full items-center gap-3 rounded-ui px-2 py-1.5 text-left text-[0.95rem] font-medium text-ink transition-colors duration-150 hover:bg-bg"
                 >
-                  <ToolIcon icon={tool.icon} monogram={tool.monogram} />
+                  <ToolIcon icon={tool.icon} monogram={tool.monogram} color={tool.color} />
                   {tool.name}
                 </button>
                 <span id={tool.id} role="tooltip" class="tool-tip">

@@ -63,7 +63,9 @@ const stateName: Record<DataState, string> = {
                         border[node.state],
                       ]}
                     >
-                      {tool && <ToolIcon icon={tool.icon} monogram={tool.monogram} />}
+                      {tool && (
+                        <ToolIcon icon={tool.icon} monogram={tool.monogram} color={tool.color} />
+                      )}
                       <span class="text-sm leading-snug font-medium text-ink">
                         {node.label}
                         <span class="sr-only"> ({stateName[node.state]})</span>
