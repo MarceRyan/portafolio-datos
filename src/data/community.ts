@@ -29,5 +29,6 @@ export const community = {
     { title: 'Análisis avanzado', icon: 'ph:chart-line-up-fill' },
     { title: 'Documentación y razonamiento con Claude', icon: 'ph:file-text-fill' },
     { title: 'Potencia tu pipeline con IA', icon: 'ph:flow-arrow-fill' },
+    { title: 'Claude, AI Agents y Nuevas Tecnologías IA', icon: 'ph:robot-fill' },
   ] satisfies Workshop[],
 } as const;
