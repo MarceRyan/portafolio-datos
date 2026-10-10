@@ -1,5 +1,5 @@
 /**
- * Filtro por categoría de /casos. Sin JavaScript se ven todos los casos.
+ * Filtro por categoría de /proyectos. Sin JavaScript se ven todos los proyectos.
  * La categoría elegida se refleja en la URL (?categoria=bi) para poder compartirla.
  */
 const PARAM = 'categoria';
@@ -27,7 +27,8 @@ function init(): void {
     });
     list!.dataset.filtered = String(selected !== 'all');
     if (status) {
-      status.textContent = visible === 1 ? 'Mostrando 1 caso.' : `Mostrando ${visible} casos.`;
+      status.textContent =
+        visible === 1 ? 'Mostrando 1 proyecto.' : `Mostrando ${visible} proyectos.`;
     }
     if (updateUrl) {
       const url = new URL(location.href);

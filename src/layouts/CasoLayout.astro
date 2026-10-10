@@ -30,11 +30,11 @@ const hasLinks = Boolean(data.links.repo || data.links.demo);
   <article>
     <header class="wrap pt-10 pb-12 sm:pt-14">
       <a
-        href="/casos"
+        href="/proyectos"
         class="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-ink underline underline-offset-4"
       >
         <Icon name="ph:caret-left-bold" class="size-4" aria-hidden="true" />
-        Volver a casos
+        Volver a proyectos
       </a>
 
       <p class="mt-8 text-sm font-semibold text-soft">{categoryLabels[data.category]}</p>
@@ -88,7 +88,7 @@ const hasLinks = Boolean(data.links.repo || data.links.demo);
           role="note"
           class="mt-8 max-w-[62ch] rounded-ui border border-line bg-surface px-4 py-3 text-sm text-body"
         >
-          Los datos de este caso fueron anonimizados por confidencialidad.
+          Los datos de este proyecto fueron anonimizados por confidencialidad.
         </p>
       )}
     </header>
@@ -139,14 +139,14 @@ const hasLinks = Boolean(data.links.repo || data.links.demo);
       <div class="wrap flex flex-wrap items-center justify-between gap-6">
         <div>
           <h2 id="siguiente-caso" class="text-sm font-semibold text-soft">
-            Siguiente caso
+            Siguiente proyecto
           </h2>
           <p class="mt-2 max-w-[32ch] font-display text-2xl font-extrabold text-ink">
             {next.data.title}
           </p>
         </div>
-        <Button href={`/casos/${next.data.slug}`} variant="secondary">
-          Leer el caso
+        <Button href={`/proyectos/${next.data.slug}`} variant="secondary">
+          Ver el proyecto
         </Button>
       </div>
     </aside>

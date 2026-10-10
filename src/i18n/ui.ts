@@ -5,7 +5,7 @@ export const defaultLang: Lang = 'es';
 const es = {
   'a11y.skip': 'Saltar al contenido',
   'nav.how': 'Cómo trabajo',
-  'nav.cases': 'Casos',
+  'nav.cases': 'Proyectos',
   'nav.contact': 'Contacto',
   'nav.cv': 'Descargar CV',
   'nav.menuOpen': 'Abrir menú',

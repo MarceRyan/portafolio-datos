@@ -18,7 +18,12 @@ export default defineConfig({
       : 'http://localhost:4321'),
   output: 'static',
   // /cv lleva al PDF del CV (public/cv/CV_Marcelo_Morales_Rimac_Documentado.pdf).
-  redirects: { '/cv': '/cv/CV_Marcelo_Morales_Rimac_Documentado.pdf' },
+  redirects: {
+    // Los casos se renombraron a proyectos; los enlaces antiguos siguen funcionando.
+    '/casos': '/proyectos',
+    '/casos/[slug]': '/proyectos/[slug]',
+    '/cv': '/cv/CV_Marcelo_Morales_Rimac_Documentado.pdf',
+  },
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],

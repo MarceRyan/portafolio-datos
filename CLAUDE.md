@@ -22,7 +22,7 @@ Astro 7 (salida 100% estática), TypeScript estricto, Tailwind CSS v4 (plugin de
 
 ## Estructura
 
-- `src/pages/` rutas. `src/layouts/` BaseLayout y CasoLayout. `src/components/{layout,home,casos,ui}/`.
+- `src/pages/` rutas (los proyectos viven en `/proyectos`; `/casos` redirige ahí). `src/layouts/` BaseLayout y CasoLayout. `src/components/{layout,home,casos,ui}/`.
 - `src/data/` contenido estructurado (site, socials, nav, tools, tool-refs, experience, certifications, now, casos-preview temporal).
 - `src/content/casos/*.mdx` casos de estudio, validados por `src/content.config.ts`. Las capturas van en `src/assets/images/casos/<slug>.png` (o `cover` en el frontmatter). El diagrama de arquitectura se escribe con `<Flow rows={...} />` (`src/components/casos/Flow.astro`).
 - Transiciones de vista (`ClientRouter`): los scripts del navegador usan delegación de eventos y `astro:page-load`; la portada de cada caso comparte `transition:name="cover-<slug>"` entre la tarjeta y la página.

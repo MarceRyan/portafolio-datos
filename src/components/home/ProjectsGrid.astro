@@ -37,7 +37,7 @@ const casos = await getCasos();
             <p class="text-sm font-semibold text-soft">{categoryLabels[caso.data.category]}</p>
             <h3 class="font-display text-lg leading-snug font-bold text-ink">
               <a
-                href={`/casos/${caso.data.slug}`}
+                href={`/proyectos/${caso.data.slug}`}
                 class="underline-offset-4 after:absolute after:inset-0 hover:underline"
               >
                 {caso.data.title}
@@ -51,8 +51,8 @@ const casos = await getCasos();
   </ul>
 
   <div class="mt-10">
-    <Button href="/casos" variant="secondary">
-      Ver casos
+    <Button href="/proyectos" variant="secondary">
+      Ver todos los proyectos
     </Button>
   </div>
 </section>

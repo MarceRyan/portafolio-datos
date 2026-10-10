@@ -1,6 +1,6 @@
 ---
 name: agregar-caso
-description: Agrega un caso de estudio nuevo al portafolio de Marcelo (archivo MDX validado por el esquema, portada, herramientas y orden). Úsala cuando Marcelo quiera sumar un proyecto a /casos.
+description: Agrega un caso de estudio nuevo al portafolio de Marcelo (archivo MDX validado por el esquema, portada, herramientas y orden). Úsala cuando Marcelo quiera sumar un proyecto a /proyectos.
 ---
 
 # Agregar un caso
@@ -21,7 +21,7 @@ Un caso es un archivo en `src/content/casos/<slug>.mdx`. El esquema (`src/conten
 4. Redacta el cuerpo con la skill `redactar-caso`. Las secciones sin datos reales se **eliminan**, no se rellenan.
 5. El diagrama usa `<Flow rows={...} />` con estados `raw` (crudo), `clean` (limpio) y `decide` (decisión). El `tool` de cada nodo debe ser un nombre de `tool-refs.ts`.
 6. Portada: pide a Marcelo la captura y guárdala en `src/assets/images/casos/<slug>.png` (o `.jpg`, `.webp`, `.avif`). Si no existe, se ve un recuadro neutro "Captura del tablero" y se anota `TODO(marcelo)`.
-7. Verifica: `npm run check && npm run lint && npm run build`. Abre `/casos` y `/casos/<slug>` en 390 px y en escritorio.
+7. Verifica: `npm run check && npm run lint && npm run build`. Abre `/proyectos` y `/proyectos/<slug>` en 390 px y en escritorio.
 
 ## Prohibido
 

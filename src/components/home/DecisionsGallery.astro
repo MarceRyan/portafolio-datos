@@ -21,7 +21,7 @@ const zoom =
   {main && (
     <article class="group mt-12 grid items-center gap-x-10 gap-y-6 lg:grid-cols-12">
       <a
-        href={`/casos/${main.data.slug}`}
+        href={`/proyectos/${main.data.slug}`}
         tabindex="-1"
         aria-hidden="true"
         transition:name={`cover-${main.data.slug}`}
@@ -38,7 +38,7 @@ const zoom =
       </a>
       <div class="lg:col-span-4">
         <h3 class="max-w-[20ch] text-2xl font-extrabold sm:text-3xl">
-          <a href={`/casos/${main.data.slug}`} class="underline-offset-4 hover:underline">
+          <a href={`/proyectos/${main.data.slug}`} class="underline-offset-4 hover:underline">
             {main.data.title}
           </a>
         </h3>
@@ -66,7 +66,7 @@ const zoom =
     {rest.map((caso) => (
       <article class="group">
         <a
-          href={`/casos/${caso.data.slug}`}
+          href={`/proyectos/${caso.data.slug}`}
           tabindex="-1"
           aria-hidden="true"
           transition:name={`cover-${caso.data.slug}`}
@@ -81,7 +81,7 @@ const zoom =
           />
         </a>
         <h3 class="mt-4 max-w-[30ch] text-xl font-bold">
-          <a href={`/casos/${caso.data.slug}`} class="underline-offset-4 hover:underline">
+          <a href={`/proyectos/${caso.data.slug}`} class="underline-offset-4 hover:underline">
             {caso.data.title}
           </a>
         </h3>
@@ -90,7 +90,7 @@ const zoom =
   </div>
 
   <p class="mt-12 text-sm text-soft">
-    Los datos de estos casos fueron anonimizados por confidencialidad.
+    Los datos de estos proyectos fueron anonimizados por confidencialidad.
   </p>
 </section>
 
