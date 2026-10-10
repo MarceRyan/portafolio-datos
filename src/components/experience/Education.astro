@@ -1,26 +1,167 @@
 ---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 import { certifications } from '../../data/certifications';
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/images/certificados/*.{png,jpg,jpeg,webp}',
+  { eager: true },
+);
+const imageFor = (name: string): ImageMetadata | undefined =>
+  Object.entries(images).find(
+    ([path]) => (path.split('/').pop() ?? '').replace(/\.[^.]+$/, '') === name,
+  )?.[1].default;
+
+const items = certifications.map((item, index) => ({
+  ...item,
+  dialogId: `certificado-${index}`,
+  picture: item.certificate ? imageFor(item.certificate.image) : undefined,
+}));
+const card = 'flex h-full w-full gap-4 rounded-ui border border-line bg-surface p-4 text-left';
 ---
 
 <div>
   <h3 class="text-2xl font-extrabold">Formación</h3>
   <ul class="mt-6 grid gap-4 md:grid-cols-3">
-    {certifications.map((item) => (
-      <li class="flex gap-4 rounded-ui border border-line bg-surface p-4">
-        <span
-          aria-hidden="true"
-          class="flex size-11 shrink-0 items-center justify-center rounded-full bg-bg text-ink"
-        >
-          <Icon name={item.icon} class="size-5" />
-        </span>
-        <div>
-          <p class="leading-snug font-semibold text-ink">{item.title}</p>
-          <p class="mt-1 text-sm text-body">
-            {item.institution}, <span class="tabular-nums">{item.year}</span>
-          </p>
-        </div>
-      </li>
-    ))}
+    {items.map((item) => {
+      const body = (
+        <>
+          <span
+            aria-hidden="true"
+            class="flex size-11 shrink-0 items-center justify-center rounded-full bg-bg text-ink"
+          >
+            <Icon name={item.icon} class="size-5" />
+          </span>
+          <span class="flex flex-col">
+            <span class="leading-snug font-semibold text-ink">{item.title}</span>
+            <span class="mt-1 text-sm text-body">
+              {item.institution}, <span class="tabular-nums">{item.year}</span>
+            </span>
+            {item.picture && (
+              <span class="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-clean">
+                <Icon name="ph:seal-check-fill" class="size-4" aria-hidden="true" />
+                Ver certificado
+              </span>
+            )}
+          </span>
+        </>
+      );
+      return (
+        <li>
+          {item.picture ? (
+            <button
+              type="button"
+              data-cert-open={item.dialogId}
+              aria-haspopup="dialog"
+              class:list={[
+                card,
+                'cursor-pointer transition-[border-color,transform] duration-150 ease-out hover:border-clean active:scale-[0.98]',
+              ]}
+            >
+              {body}
+            </button>
+          ) : (
+            <div class={card}>{body}</div>
+          )}
+        </li>
+      );
+    })}
   </ul>
+
+  {items.map(
+    (item) =>
+      item.picture &&
+      item.certificate && (
+        <dialog
+          id={item.dialogId}
+          aria-labelledby={`${item.dialogId}-title`}
+          class="cert-dialog m-auto w-[min(56rem,calc(100vw-2rem))] rounded-ui border border-line bg-surface p-0 text-ink"
+        >
+          <div class="flex items-start justify-between gap-4 border-b border-line px-5 py-4">
+            <div>
+              <h4 id={`${item.dialogId}-title`} class="font-display text-xl font-extrabold">
+                {item.title}
+              </h4>
+              <p class="mt-0.5 text-sm text-body">
+                {item.institution}, <span class="tabular-nums">{item.year}</span>
+              </p>
+            </div>
+            <button
+              type="button"
+              data-cert-close
+              aria-label="Cerrar certificado"
+              class="flex size-11 shrink-0 items-center justify-center rounded-ui text-ink transition-colors duration-150 hover:bg-bg"
+            >
+              <Icon name="ph:x-bold" class="size-5" aria-hidden="true" />
+            </button>
+          </div>
+          <div class="p-4 sm:p-5">
+            <Image
+              src={item.picture}
+              alt={`Certificado ${item.title} de ${item.institution} a nombre de Marcelo Bryan Morales Rimac.`}
+              widths={[600, 1000]}
+              sizes="(min-width: 960px) 54rem, 100vw"
+              class="w-full rounded-ui border border-line"
+            />
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-3 border-t border-line px-5 py-4 text-sm">
+            <p class="text-body">
+              Código:{' '}
+              <span class="font-semibold text-ink tabular-nums">
+                {item.certificate.credentialId}
+              </span>
+            </p>
+            {item.certificate.verifyUrl && (
+              <a
+                href={item.certificate.verifyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex min-h-11 items-center gap-2 font-semibold text-ink underline underline-offset-4"
+              >
+                Verificar en {item.institution}
+                <Icon name="ph:arrow-square-out" class="size-4" aria-hidden="true" />
+              </a>
+            )}
+          </div>
+        </dialog>
+      ),
+  )}
 </div>
+
+<style>
+  .cert-dialog {
+    max-height: calc(100dvh - 2rem);
+    overflow: auto;
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 200ms cubic-bezier(0.23, 1, 0.32, 1),
+      transform 200ms cubic-bezier(0.23, 1, 0.32, 1),
+      overlay 200ms allow-discrete,
+      display 200ms allow-discrete;
+  }
+  .cert-dialog:not([open]) {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  @starting-style {
+    .cert-dialog[open] {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+  }
+  .cert-dialog::backdrop {
+    background-color: color-mix(in srgb, var(--bg) 35%, black 65%);
+    opacity: 0.75;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cert-dialog {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import '../../scripts/cert-dialog';
+</script>
