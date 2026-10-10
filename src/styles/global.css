@@ -32,6 +32,9 @@
   --raw3: #ccd6e8;
   /* Tono representativo del dato crudo (leyenda y marcadores). */
   --raw: var(--raw1);
+  /* Textura de fondo: puntos (papel de datos) y líneas (plano técnico). */
+  --grid-dot: rgb(11 27 58 / 0.1);
+  --grid-line: rgb(11 27 58 / 0.06);
 
   --header-h: 4rem;
   --radius: 0.625rem;
@@ -52,6 +55,8 @@
     --raw2: #7587aa;
     --raw3: #2a3957;
     --raw: var(--raw2);
+    --grid-dot: rgb(143 162 196 / 0.13);
+    --grid-line: rgb(143 162 196 / 0.08);
   }
 }
 
@@ -69,6 +74,8 @@
   --raw2: #7587aa;
   --raw3: #2a3957;
   --raw: var(--raw2);
+  --grid-dot: rgb(143 162 196 / 0.13);
+  --grid-line: rgb(143 162 196 / 0.08);
 }
 
 /* Los tokens se exponen a Tailwind como utilidades que siguen al tema vigente. */
@@ -103,6 +110,9 @@
 
   body {
     min-height: 100dvh;
+    /* Cuadrícula de puntos, como el lienzo de un gráfico. Las franjas lisas (bg-surface) la tapan. */
+    background-image: radial-gradient(circle at 1px 1px, var(--grid-dot) 1px, transparent 0);
+    background-size: 24px 24px;
     font-family: var(--font-sans);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -223,5 +233,38 @@
     .cert-dialog {
       transition: none;
     }
+  }
+}
+
+/* Inicio: cuadrícula de plano técnico que se desvanece y un brillo cian detrás de la foto. */
+@layer components {
+  .hero-backdrop {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: var(--bg);
+  }
+  .hero-backdrop::before,
+  .hero-backdrop::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .hero-backdrop::before {
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: center top;
+    mask-image: radial-gradient(ellipse 75% 85% at 65% 45%, black 25%, transparent 78%);
+  }
+  .hero-backdrop::after {
+    background-image: radial-gradient(
+      circle at 72% 45%,
+      color-mix(in srgb, var(--clean) 16%, transparent),
+      transparent 38%
+    );
   }
 }

@@ -46,3 +46,9 @@ Otros: `--header-h: 4rem`, `--radius: 0.625rem` (`rounded-ui`), clase `wrap` (co
 
 - Leyenda y marcadores usan `--raw` (claro: raw1, oscuro: raw2), `--clean` y `--decide`. Con ellos la distinción en visión normal es ΔE 22.3 (claro) y 21.2 (oscuro), y con daltonismo ΔE 12.3 o más.
 - El validador marca croma bajo en el crudo (gris azulado por diseño) y contraste 2.31:1 de `raw1` en claro: se compensa con etiquetas visibles, nunca solo color.
+
+## Textura de fondo
+
+- `--grid-dot`: cuadrícula de puntos de 24 px en `body` (papel de datos). Las franjas `bg-surface` la tapan, así alternan textura y superficie lisa.
+- `--grid-line`: cuadrícula de 48 px del inicio (`.hero-backdrop`), desvanecida con máscara radial y con un brillo cian suave detrás de la foto.
+- Ambas son muy tenues (6 a 13 %): no compiten con el texto ni cambian el contraste.

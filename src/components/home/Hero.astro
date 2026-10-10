@@ -18,92 +18,102 @@ const github = socials.find((s) => s.id === 'github');
 const corner = 'absolute size-6 border-decide';
 ---
 
-<section class="wrap grid items-center gap-14 py-12 lg:grid-cols-[1.25fr_1fr] lg:gap-16 lg:py-16">
-  <div>
-    <h1 class="text-[clamp(2.5rem,7vw,4.5rem)] leading-[1.02] font-extrabold tracking-[-0.03em]">
-      Marcelo Morales Rimac
-    </h1>
-    <p class="mt-6 max-w-[26ch] font-display text-2xl leading-snug font-bold text-ink sm:text-3xl">
-      Convierto datos desordenados en decisiones claras.
-    </p>
-    <p class="mt-6 max-w-[60ch] text-lg text-body">
-      Analista de datos. Extraigo, limpio, modelo y visualizo información para que las gerencias
-      decidan con evidencia.
-    </p>
-    <div class="mt-8 flex flex-wrap gap-3">
-      <Button href="/proyectos">Ver proyectos</Button>
-      {linkedin && (
-        <Button href={linkedin.href} variant="secondary" target="_blank" rel="noopener noreferrer">
-          <Icon name="ph:linkedin-logo" class="size-5" aria-hidden="true" />
-          LinkedIn
-        </Button>
-      )}
-      {github && (
-        <Button href={github.href} variant="secondary" target="_blank" rel="noopener noreferrer">
-          <Icon name="ph:github-logo" class="size-5" aria-hidden="true" />
-          GitHub
-        </Button>
-      )}
-    </div>
-  </div>
-
-  <div class="mx-auto w-full max-w-sm pb-10 lg:max-w-none lg:justify-self-end">
-    <div class="relative mx-4 sm:mx-0 lg:max-w-[22rem]">
-      <span aria-hidden="true" class:list={[corner, '-top-3 -left-3 border-t-2 border-l-2']}></span>
-      <span
-        aria-hidden="true"
-        class:list={[corner, '-top-3 -right-3 border-t-2 border-r-2']}
-      ></span>
-      <span
-        aria-hidden="true"
-        class:list={[corner, '-bottom-3 -left-3 border-b-2 border-l-2']}
-      ></span>
-      <span
-        aria-hidden="true"
-        class:list={[corner, '-right-3 -bottom-3 border-r-2 border-b-2']}
-      ></span>
-
-      <div class="relative aspect-[4/5] overflow-hidden rounded-ui bg-raw-3">
-        {photo ? (
-          <Image
-            src={photo}
-            alt="Retrato profesional de Marcelo Morales Rimac"
-            widths={[360, 560, 720]}
-            sizes="(min-width: 1024px) 22rem, 90vw"
-            loading="eager"
-            fetchpriority="high"
-            class="size-full object-cover"
-          />
-        ) : (
-          <div class="flex size-full flex-col items-center justify-between">
-            <Placeholder
-              class="m-4 bg-bg text-center"
-              todo="TODO(marcelo): foto profesional vertical 4:5 en src/assets/photo/perfil.jpg"
-            >
-              Foto profesional
-            </Placeholder>
-            <svg
-              viewBox="0 0 160 200"
-              class="w-3/4 text-raw-2"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <circle cx="80" cy="74" r="34"></circle>
-              <path d="M16 200c0-44 28-74 64-74s64 30 64 74z"></path>
-            </svg>
-          </div>
+<section class="hero-backdrop">
+  <div class="wrap grid items-center gap-14 py-12 lg:grid-cols-[1.25fr_1fr] lg:gap-16 lg:py-16">
+    <div>
+      <h1 class="text-[clamp(2.5rem,7vw,4.5rem)] leading-[1.02] font-extrabold tracking-[-0.03em]">
+        Marcelo Morales Rimac
+      </h1>
+      <p class="mt-6 max-w-[26ch] font-display text-2xl leading-snug font-bold text-ink sm:text-3xl">
+        Convierto datos desordenados en decisiones claras.
+      </p>
+      <p class="mt-6 max-w-[60ch] text-lg text-body">
+        Analista de datos. Extraigo, limpio, modelo y visualizo información para que las gerencias
+        decidan con evidencia.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href="/proyectos">Ver proyectos</Button>
+        {linkedin && (
+          <Button
+            href={linkedin.href}
+            variant="secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon name="ph:linkedin-logo" class="size-5" aria-hidden="true" />
+            LinkedIn
+          </Button>
+        )}
+        {github && (
+          <Button href={github.href} variant="secondary" target="_blank" rel="noopener noreferrer">
+            <Icon name="ph:github-logo" class="size-5" aria-hidden="true" />
+            GitHub
+          </Button>
         )}
       </div>
+    </div>
 
-      <div class="absolute -bottom-8 -left-4 flex max-w-[17rem] items-start gap-3 rounded-ui border border-line bg-surface p-4 sm:-left-8">
-        <span class="relative mt-1.5 flex size-2.5 shrink-0" aria-hidden="true">
-          <span class="pulse-ring absolute inline-flex size-full rounded-full bg-clean"></span>
-          <span class="relative inline-flex size-full rounded-full bg-clean"></span>
-        </span>
-        <p class="text-sm leading-snug text-body">
-          <strong class="font-semibold text-ink">Abierto a nuevos retos:</strong> Analista de Datos,
-          Analista BI e Ingeniero de Datos
-        </p>
+    <div class="mx-auto w-full max-w-sm pb-10 lg:max-w-none lg:justify-self-end">
+      <div class="relative mx-4 sm:mx-0 lg:max-w-[22rem]">
+        <span
+          aria-hidden="true"
+          class:list={[corner, '-top-3 -left-3 border-t-2 border-l-2']}
+        ></span>
+        <span
+          aria-hidden="true"
+          class:list={[corner, '-top-3 -right-3 border-t-2 border-r-2']}
+        ></span>
+        <span
+          aria-hidden="true"
+          class:list={[corner, '-bottom-3 -left-3 border-b-2 border-l-2']}
+        ></span>
+        <span
+          aria-hidden="true"
+          class:list={[corner, '-right-3 -bottom-3 border-r-2 border-b-2']}
+        ></span>
+
+        <div class="relative aspect-[4/5] overflow-hidden rounded-ui bg-raw-3">
+          {photo ? (
+            <Image
+              src={photo}
+              alt="Retrato profesional de Marcelo Morales Rimac"
+              widths={[360, 560, 720]}
+              sizes="(min-width: 1024px) 22rem, 90vw"
+              loading="eager"
+              fetchpriority="high"
+              class="size-full object-cover"
+            />
+          ) : (
+            <div class="flex size-full flex-col items-center justify-between">
+              <Placeholder
+                class="m-4 bg-bg text-center"
+                todo="TODO(marcelo): foto profesional vertical 4:5 en src/assets/photo/perfil.jpg"
+              >
+                Foto profesional
+              </Placeholder>
+              <svg
+                viewBox="0 0 160 200"
+                class="w-3/4 text-raw-2"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <circle cx="80" cy="74" r="34"></circle>
+                <path d="M16 200c0-44 28-74 64-74s64 30 64 74z"></path>
+              </svg>
+            </div>
+          )}
+        </div>
+
+        <div class="absolute -bottom-8 -left-4 flex max-w-[17rem] items-start gap-3 rounded-ui border border-line bg-surface p-4 sm:-left-8">
+          <span class="relative mt-1.5 flex size-2.5 shrink-0" aria-hidden="true">
+            <span class="pulse-ring absolute inline-flex size-full rounded-full bg-clean"></span>
+            <span class="relative inline-flex size-full rounded-full bg-clean"></span>
+          </span>
+          <p class="text-sm leading-snug text-body">
+            <strong class="font-semibold text-ink">Abierto a nuevos retos:</strong> Analista de
+            Datos, Analista BI e Ingeniero de Datos
+          </p>
+        </div>
       </div>
     </div>
   </div>
