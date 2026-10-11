@@ -68,6 +68,6 @@ Prioridad ante conflicto: 1) el prompt del proyecto (concepto, paleta, tipograf�
 
 `sistema-de-diseno` (UI, tokens, componentes), `agregar-caso` (con `plantilla-caso.mdx`), `redactar-caso`, `actualizar-experiencia`, `traducir` y `revisar-y-publicar` (solo se ejecuta si Marcelo la invoca; incluye `checklist.md`).
 
-SEO: `BaseLayout` emite canonical, Open Graph, Twitter y (en la portada, prop `person`) JSON-LD de Persona. `robots.txt` y sitemap se generan en el build desde `site` (`SITE_URL` o el dominio de Vercel). La imagen social se regenera con `node scripts/generate-og.mjs`. El formulario envía por fetch a Formspree (`src/scripts/contact-form.ts`).
+SEO: `BaseLayout` emite canonical, Open Graph, Twitter y (en la portada, prop `person`) JSON-LD de Persona. `robots.txt` y sitemap se generan en el build desde `site` (`SITE_URL` o el dominio de Vercel). La imagen social (`public/og/default.png`, 1200×630) es una captura del inicio en tema oscuro; si cambia el inicio, hay que volver a capturarla. El formulario envía por fetch a Formspree (`src/scripts/contact-form.ts`).
 
 CI: `.github/workflows/ci.yml` corre check, lint, format:check y build en cada PR. La plantilla de PR está en `.github/pull_request_template.md`.
